@@ -8,7 +8,7 @@ type Api struct {
 
 func (api *Api) InitRoutes() {
 	api.Router.HandleFunc("/user/create", api.CreateUserHandler)
-	api.Router.HandleFunc("/user/{id}/read", api.ReadUserHandler)
-	api.Router.HandleFunc("/user/{id}/update", api.UpdateUserHandler)
-	api.Router.HandleFunc("/user/{id}/delete", api.DeleteUserHandler)
+	api.Router.HandleFunc("/user/{id}/read", IdControl(api.ReadUserHandler))
+	api.Router.HandleFunc("/user/{id}/update", IdControl(api.UpdateUserHandler))
+	api.Router.HandleFunc("/user/{id}/delete", IdControl(api.DeleteUserHandler))
 }
