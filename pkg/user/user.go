@@ -2,7 +2,11 @@ package user
 
 import (
 	"encoding/json"
+	"fmt"
+	"os"
+	"strconv"
 
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
@@ -38,4 +42,52 @@ func (u *User) JsonToArray(arr string) ([]uint, error) {
 		return array, err
 	}
 	return array, nil
+}
+
+func (u *User) IsAuth(db *gorm.DB) (bool, error) {
+	user := User{
+		Username: u.Username,
+	}
+
+	err := user.Read(db)
+	if err != nil {
+		return false, err
+	}
+	if user.Username == u.Username {
+		if u.CheckPasswordHash(u.Password, user.Password) {
+			return true, nil
+		}
+	}
+	return false, nil
+}
+func (u *User) Signup(db *gorm.DB) error {
+	var err error
+	hashedPassword, err := u.HashPassword(u.Password)
+	if err != nil {
+		return err
+	}
+	nonHashedPassword := u.Password
+	u.Password = hashedPassword
+	err = u.Create(db)
+	if err != nil {
+		return err
+	}
+	u.Password = nonHashedPassword
+	return nil
+
+}
+func (u *User) HashPassword(password string) (string, error) {
+
+	key, err := strconv.Atoi(os.Getenv("HASH_KEY"))
+	if err != nil {
+		return "", err
+	}
+	fmt.Println(key)
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), key)
+	return string(bytes), err
+}
+
+func (u *User) CheckPasswordHash(password, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	return err == nil
 }

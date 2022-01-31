@@ -14,10 +14,13 @@ type Api struct {
 }
 
 func (api *Api) InitRoutes() {
-	api.Router.HandleFunc("/user/create", api.CreateUserHandler)
-	api.Router.HandleFunc("/user/{id}/read", IdControl(api.ReadUserHandler))
-	api.Router.HandleFunc("/user/{id}/update", IdControl(api.UpdateUserHandler))
-	api.Router.HandleFunc("/user/{id}/delete", IdControl(api.DeleteUserHandler))
+	api.Router.HandleFunc("/user/login", api.CreateUserHandler).Methods("POST")
+	api.Router.HandleFunc("/user/logout", api.CreateUserHandler).Methods("POST")
+	api.Router.HandleFunc("/user/register", api.CreateUserHandler).Methods("POST")
+	api.Router.HandleFunc("/user/create", api.CreateUserHandler).Methods("POST")
+	//api.Router.HandleFunc("/user/{id}/read", IdControl(api.ReadUserHandler)).Methods("GET")
+	//api.Router.HandleFunc("/user/{id}/update", IdControl(api.UpdateUserHandler)).Methods("PATCH")
+	//api.Router.HandleFunc("/user/{id}/delete", IdControl(api.DeleteUserHandler)).Methods("DELETE")
 	if os.Getenv("ENV") != "prod" {
 		api.Router.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)
 	}

@@ -16,7 +16,7 @@ import (
 // @Produce  json
 // @Param id path int true "Create User With Id"
 // @Success 200
-// @Router /user/{id}/create [get]
+// @Router /user/create [post]
 func (api *Api) CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "returnValue")
 	return
