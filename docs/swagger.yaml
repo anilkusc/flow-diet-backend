@@ -49,6 +49,26 @@ info:
   title: Flow-Diet-Backend API
   version: "1.0"
 paths:
+  /user/signin:
+    post:
+      consumes:
+      - application/json
+      description: Sign in with specified user
+      parameters:
+      - description: Sign In
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/user.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Signin User
+      tags:
+      - user
   /user/signup:
     post:
       consumes:
@@ -68,5 +88,5 @@ paths:
           description: ""
       summary: Signup User
       tags:
-      - users
+      - user
 swagger: "2.0"

@@ -9,8 +9,7 @@ import (
 )
 
 func (app *App) InitRoutes() {
-	//api.Router.HandleFunc("/user/login", api.CreateUserHandler).Methods("POST")
-	//api.Router.HandleFunc("/user/logout", api.CreateUserHandler).Methods("POST")
+	app.Router.HandleFunc("/user/signin", app.SigninHandler).Methods("POST")
 	app.Router.HandleFunc("/user/signup", app.SignupHandler).Methods("POST")
 	//api.Router.HandleFunc("/user/{id}/read", IdControl(api.ReadUserHandler)).Methods("GET")
 	//api.Router.HandleFunc("/user/{id}/update", IdControl(api.UpdateUserHandler)).Methods("PATCH")

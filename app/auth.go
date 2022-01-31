@@ -18,3 +18,16 @@ func (app *App) Signup(userJson string) error {
 	}
 	return nil
 }
+func (app *App) Signin(userJson string) (bool, error) {
+	var user user.User
+	var isauth bool
+	err := json.Unmarshal([]byte(userJson), &user)
+	if err != nil {
+		return false, err
+	}
+	isauth, err = user.IsAuth(app.DB)
+	if err != nil {
+		return false, err
+	}
+	return isauth, nil
+}
