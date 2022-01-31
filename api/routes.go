@@ -8,6 +8,15 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+// CreateUserHandler godoc
+// @Summary Create a new user
+// @Description Create a new user
+// @Tags users
+// @Accept  json
+// @Produce  json
+// @Param id path int true "Create User With Id"
+// @Success 200
+// @Router /user/{id}/create [get]
 func (api *Api) CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "returnValue")
 	return

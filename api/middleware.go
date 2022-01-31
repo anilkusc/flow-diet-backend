@@ -12,7 +12,7 @@ func IdControl(next http.HandlerFunc) http.HandlerFunc {
 		vars := mux.Vars(r)
 		_, ok := vars["id"]
 		if !ok {
-			log.Error("id is missing in URI")
+			log.Info("id is missing in URI")
 			http.Error(w, "id is missing in URI", http.StatusBadRequest)
 			return
 		}
