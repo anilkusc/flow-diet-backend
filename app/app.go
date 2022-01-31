@@ -1,16 +1,17 @@
 package app
 
 import (
-	"database/sql"
 	"flag"
 	"net/http"
 	"os"
 
-	"github.com/anilkusc/flow-diet-backend/api"
+	user "github.com/anilkusc/flow-diet-backend/pkg/user"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 	"github.com/joho/godotenv"
 	log "github.com/sirupsen/logrus"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
 var (
@@ -21,16 +22,17 @@ var (
 
 // App method is the main struct for the application
 type App struct {
-	API api.Api
-	DB  *sql.DB
+	Router *mux.Router
+	DB     *gorm.DB
 }
 
 func (app *App) Init() {
+	var err error
 	if os.Getenv("ENV") == "" {
-		godotenv.Load("../.env")
+		godotenv.Load()
 	}
-	app.API.Router = mux.NewRouter()
-	app.API.InitRoutes()
+	app.Router = mux.NewRouter()
+	app.InitRoutes()
 	if os.Getenv("ENV") == "dev" {
 		log.SetLevel(log.DebugLevel)
 	} else if os.Getenv("ENV") == "stg" {
@@ -41,6 +43,17 @@ func (app *App) Init() {
 		log.SetLevel(log.TraceLevel)
 	}
 	flag.Parse()
+	if os.Getenv("DB_CONN") == "sqlite" {
+		log.Info("connecting sqlite database")
+		app.DB, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+		if err != nil {
+			log.Fatal(err)
+		}
+		log.Info("connected")
+		log.Info("creating tables")
+		app.DB.AutoMigrate(&user.User{})
+		log.Info("created")
+	}
 }
 
 func (app *App) Start() {
@@ -48,10 +61,10 @@ func (app *App) Start() {
 
 	if *https {
 		log.Warn("Serving with TLS on: " + *port)
-		log.Fatal(http.ListenAndServeTLS(":"+*port, "./certs/server.crt", "./certs/server.key", app.API.Router))
+		log.Fatal(http.ListenAndServeTLS(":"+*port, "./certs/server.crt", "./certs/server.key", app.Router))
 	} else {
 		log.Warn("Serving on: " + *port)
-		log.Fatal(http.ListenAndServe(":"+*port, app.API.Router))
+		log.Fatal(http.ListenAndServe(":"+*port, app.Router))
 	}
 
 }

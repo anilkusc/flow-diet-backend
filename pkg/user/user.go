@@ -11,18 +11,18 @@ import (
 )
 
 type User struct {
-	gorm.Model
-	Username                string `gorm:"unique;not null"`
-	Name                    string
-	Password                string
-	Weight                  uint8
-	Height                  uint8
-	Age                     uint8
-	Diet                    string //vegaterian , vegan , omnivor , carnivor
-	Favorite_Recipes        []uint `gorm:"-"` //
-	Favorite_Recipes_String string
-	Address                 string
-	Role                    string // user,admin,dietician,editor
+	gorm.Model              `json:"-" swaggerignore:"true"`
+	Username                string `gorm:"unique;not null" json:"username" example:"testuser"`
+	Name                    string `json:"name" example:"test user"`
+	Password                string `json:"password" example:"testpass"`
+	Weight                  uint8  `json:"weight" example:"70"`
+	Height                  uint8  `json:"height" example:"170"`
+	Age                     uint8  `json:"age" example:"25"`
+	Diet                    string `json:"diet" example:"omnivor"` //vegaterian , vegan , omnivor , carnivor
+	Favorite_Recipes        []uint `json:"favorite_recipes" gorm:"-"`
+	Favorite_Recipes_String string `json:"-" swaggerignore:"true"`
+	Address                 string `json:"address" example:"myadress 123121"`
+	Role                    string `json:"role" example:"user"` // user,admin,dietician,editor
 }
 
 func (u *User) ArrayToJson(arr []uint) (string, error) {

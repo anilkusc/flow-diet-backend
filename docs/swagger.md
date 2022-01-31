@@ -26,7 +26,7 @@ add followings to the handler
 // @Success 200 {array} Order
 // @Router /orders [get]
 
-swag init
+swag init --parseDependency --parseInternal
 
 add followings to the page of init routers
 

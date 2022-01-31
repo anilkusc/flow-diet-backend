@@ -1,4 +1,41 @@
 basePath: /
+definitions:
+  user.User:
+    properties:
+      address:
+        example: myadress 123121
+        type: string
+      age:
+        example: 25
+        type: integer
+      diet:
+        description: vegaterian , vegan , omnivor , carnivor
+        example: omnivor
+        type: string
+      favorite_recipes:
+        items:
+          type: integer
+        type: array
+      height:
+        example: 170
+        type: integer
+      name:
+        example: test user
+        type: string
+      password:
+        example: testpass
+        type: string
+      role:
+        description: user,admin,dietician,editor
+        example: user
+        type: string
+      username:
+        example: testuser
+        type: string
+      weight:
+        example: 70
+        type: integer
+    type: object
 host: localhost:8080
 info:
   contact:
@@ -12,23 +49,24 @@ info:
   title: Flow-Diet-Backend API
   version: "1.0"
 paths:
-  /user/{id}/create:
-    get:
+  /user/signup:
+    post:
       consumes:
       - application/json
       description: Create a new user
       parameters:
-      - description: Create User With Id
-        in: path
-        name: id
+      - description: Create New User
+        in: body
+        name: user
         required: true
-        type: integer
+        schema:
+          $ref: '#/definitions/user.User'
       produces:
       - application/json
       responses:
         "200":
           description: ""
-      summary: Create a new user
+      summary: Signup User
       tags:
       - users
 swagger: "2.0"

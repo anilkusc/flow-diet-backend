@@ -31,8 +31,8 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/user/{id}/create": {
-            "get": {
+        "/user/signup": {
+            "post": {
                 "description": "Create a new user",
                 "consumes": [
                     "application/json"
@@ -43,20 +43,73 @@ var doc = `{
                 "tags": [
                     "users"
                 ],
-                "summary": "Create a new user",
+                "summary": "Signup User",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "Create User With Id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
+                        "description": "Create New User",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.User"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": ""
                     }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "user.User": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string",
+                    "example": "myadress 123121"
+                },
+                "age": {
+                    "type": "integer",
+                    "example": 25
+                },
+                "diet": {
+                    "description": "vegaterian , vegan , omnivor , carnivor",
+                    "type": "string",
+                    "example": "omnivor"
+                },
+                "favorite_recipes": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "height": {
+                    "type": "integer",
+                    "example": 170
+                },
+                "name": {
+                    "type": "string",
+                    "example": "test user"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "testpass"
+                },
+                "role": {
+                    "description": "user,admin,dietician,editor",
+                    "type": "string",
+                    "example": "user"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "testuser"
+                },
+                "weight": {
+                    "type": "integer",
+                    "example": 70
                 }
             }
         }
