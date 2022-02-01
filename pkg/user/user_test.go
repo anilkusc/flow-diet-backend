@@ -20,6 +20,7 @@ func Construct() (*gorm.DB, User) {
 		Username:                "testuser1",
 		Name:                    "test user",
 		Email:                   "testmail@test.com",
+		Phone:                   "+905355353535",
 		Password:                "testpass",
 		Weight:                  70,
 		Height:                  173,

@@ -12,7 +12,8 @@ type User struct {
 	gorm.Model              `json:"-" swaggerignore:"true"`
 	Username                string `gorm:"unique;not null" json:"username" example:"testuser"`
 	Name                    string `json:"name" example:"test user"`
-	Email                   string `gorm:"unique;not null" json:"email" example:"test@test.com"`
+	Email                   string `gorm:"unique" json:"email" example:"test@test.com"`
+	Phone                   string `gorm:"unique" json:"phone" example:"+905355353535"`
 	Password                string `json:"password" example:"testpass"`
 	Weight                  uint8  `json:"weight" example:"70"`
 	Height                  uint8  `json:"height" example:"170"`
@@ -21,7 +22,7 @@ type User struct {
 	Favorite_Recipes        []uint `json:"favorite_recipes" gorm:"-"`
 	Favorite_Recipes_String string `json:"-" swaggerignore:"true"`
 	Address                 string `json:"address" example:"myadress 123121"`
-	Role                    string `json:"role" example:"user"` // user,admin,dietician,editor
+	Role                    string `json:"role" example:"user"` // root,admin,editor,user,anonymous
 }
 
 func (u *User) ArrayToJson(arr []uint) (string, error) {

@@ -1,4 +1,4 @@
 # TODOS
 * User
-	- auth system
-	
+	- mail or phone based authentication
+	- role based access
