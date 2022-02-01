@@ -54,10 +54,11 @@ func (app *App) Init() {
 		app.DB.AutoMigrate(&user.User{})
 		log.Info("created")
 	}
-	u := user.User{Password: os.Getenv("ROOT_PASS")}
+	// TODO: will be implemented on rolebased access
+	/*u := user.User{Password: os.Getenv("ROOT_PASS")}
 	pass, _ := u.HashPassword(u.Password)
 	app.DB.Exec("INSERT INTO users (id, username, password,role) SELECT * FROM (SELECT '1','" + os.Getenv("ROOT_USER") + "','" + pass + "','root') AS tmp WHERE NOT EXISTS ( SELECT username FROM users WHERE username = '" + os.Getenv("ROOT_USER") + "');")
-
+	*/
 	log.Info("creating session store")
 	app.SessionStore = sessions.NewCookieStore([]byte(os.Getenv("STORE_KEY")))
 	log.Info("created")
