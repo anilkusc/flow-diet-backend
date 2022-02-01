@@ -2,6 +2,7 @@ package app
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -28,8 +29,8 @@ func (app *App) SignupHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	err = app.Signup(string(body))
 	if err != nil {
-		log.Error("cannot signup : ", err)
-		http.Error(w, "cannot signup", http.StatusInternalServerError)
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
 		return
 	}
 	log.Info("user has been created: ", string(body))
@@ -87,6 +88,27 @@ func (app *App) SigninHandler(w http.ResponseWriter, r *http.Request) {
 	log.Info("session updated")
 	log.Info("user has been logged in: ", string(userJson))
 	http.Error(w, string(userJson), http.StatusOK)
+	return
+}
+
+// LogoutHandler godoc
+// @Summary Logout User
+// @Description Logout for the user
+// @Tags user
+// @Accept  json
+// @Produce  json
+// @Success 200
+// @Router /user/logout [post]
+func (app *App) LogoutHandler(w http.ResponseWriter, r *http.Request) {
+	session, err := app.SessionStore.Get(r, "session")
+	if err != nil {
+		log.Error("cannot get session store : ", err)
+		http.Error(w, "cannot get session store", http.StatusInternalServerError)
+		return
+	}
+	session.Values["authenticated"] = "false"
+	session.Save(r, w)
+	http.Error(w, "OK", http.StatusOK)
 	return
 }
 

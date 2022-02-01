@@ -31,6 +31,26 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/user/logout": {
+            "post": {
+                "description": "Logout for the user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Logout User",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/user/signin": {
             "post": {
                 "description": "Sign in with specified user",
@@ -110,6 +130,10 @@ var doc = `{
                     "description": "vegaterian , vegan , omnivor , carnivor",
                     "type": "string",
                     "example": "omnivor"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "test@test.com"
                 },
                 "favorite_recipes": {
                     "type": "array",

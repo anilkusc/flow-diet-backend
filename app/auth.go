@@ -12,6 +12,10 @@ func (app *App) Signup(userJson string) error {
 	if err != nil {
 		return err
 	}
+	err = user.IsCredentialsExist(app.DB)
+	if err != nil {
+		return err
+	}
 	err = user.Signup(app.DB)
 	if err != nil {
 		return err

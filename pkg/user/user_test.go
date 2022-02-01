@@ -19,6 +19,7 @@ func Construct() (*gorm.DB, User) {
 		},
 		Username:                "testuser1",
 		Name:                    "test user",
+		Email:                   "testmail@test.com",
 		Password:                "testpass",
 		Weight:                  70,
 		Height:                  173,
@@ -149,6 +150,25 @@ func TestSignup(t *testing.T) {
 	for _, test := range tests {
 		err := test.input.Signup(db)
 		if test.err != err {
+			t.Errorf("Error is: %v . Expected: %v", err, test.err)
+		}
+	}
+	Destruct(db)
+}
+func TestIsCredentialsExist(t *testing.T) {
+	db, user := Construct()
+	user.Create(db)
+	user2 := User{Username: "notexisteduser", Email: "notexist@test.com"}
+	tests := []struct {
+		input User
+		err   error
+	}{
+		{input: user2, err: nil},
+		//{input: user2, err: nil},
+	}
+	for _, test := range tests {
+		err := test.input.IsCredentialsExist(db)
+		if err != test.err {
 			t.Errorf("Error is: %v . Expected: %v", err, test.err)
 		}
 	}

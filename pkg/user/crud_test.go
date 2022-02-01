@@ -29,23 +29,24 @@ func TestCreate(t *testing.T) {
 func TestRead(t *testing.T) {
 	db, user := Construct()
 	user.Create(db)
+	user.ID = 1
 	tests := []struct {
-		input  uint
+		input  User
 		output User
 		err    error
 	}{
-		{input: 1, output: user, err: nil},
+		{input: user, output: user, err: nil},
 	}
 	for _, test := range tests {
-		testuser := User{Model: gorm.Model{ID: 1}}
-		err := testuser.Read(db)
+
+		err := test.input.Read(db)
 		if test.err != err {
 			t.Errorf("Error is: %v . Expected: %v", err, test.err)
 		}
-		testuser.CreatedAt, testuser.UpdatedAt, test.output.CreatedAt, test.output.UpdatedAt = time.Time{}, time.Time{}, time.Time{}, time.Time{}
-		testuser.DeletedAt, test.output.DeletedAt = gorm.DeletedAt{Time: time.Time{}, Valid: false}, gorm.DeletedAt{Time: time.Time{}, Valid: false}
-		if !reflect.DeepEqual(testuser, test.output) {
-			t.Errorf("Result is: %v . Expected: %v", testuser, test.output)
+		test.input.CreatedAt, test.input.UpdatedAt, test.output.CreatedAt, test.output.UpdatedAt = time.Time{}, time.Time{}, time.Time{}, time.Time{}
+		test.input.DeletedAt, test.output.DeletedAt = gorm.DeletedAt{Time: time.Time{}, Valid: false}, gorm.DeletedAt{Time: time.Time{}, Valid: false}
+		if !reflect.DeepEqual(test.input, test.output) {
+			t.Errorf("Result is: %v . Expected: %v", test.input, test.output)
 		}
 	}
 	Destruct(db)

@@ -12,6 +12,9 @@ definitions:
         description: vegaterian , vegan , omnivor , carnivor
         example: omnivor
         type: string
+      email:
+        example: test@test.com
+        type: string
       favorite_recipes:
         items:
           type: integer
@@ -49,6 +52,19 @@ info:
   title: Flow-Diet-Backend API
   version: "1.0"
 paths:
+  /user/logout:
+    post:
+      consumes:
+      - application/json
+      description: Logout for the user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Logout User
+      tags:
+      - user
   /user/signin:
     post:
       consumes:

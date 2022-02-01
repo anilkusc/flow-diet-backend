@@ -2,6 +2,7 @@ package user
 
 import (
 	"encoding/json"
+	"errors"
 
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
@@ -11,6 +12,7 @@ type User struct {
 	gorm.Model              `json:"-" swaggerignore:"true"`
 	Username                string `gorm:"unique;not null" json:"username" example:"testuser"`
 	Name                    string `json:"name" example:"test user"`
+	Email                   string `gorm:"unique;not null" json:"email" example:"test@test.com"`
 	Password                string `json:"password" example:"testpass"`
 	Weight                  uint8  `json:"weight" example:"70"`
 	Height                  uint8  `json:"height" example:"170"`
@@ -58,7 +60,12 @@ func (u *User) IsAuth(db *gorm.DB) (bool, error) {
 	return false, nil
 }
 func (u *User) Signup(db *gorm.DB) error {
+
 	var err error
+	//user := User{
+	//	Username: u.Username,
+	//}
+
 	hashedPassword, err := u.HashPassword(u.Password)
 	if err != nil {
 		return err
@@ -82,4 +89,16 @@ func (u *User) HashPassword(password string) (string, error) {
 func (u *User) CheckPasswordHash(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
+}
+func (u *User) IsCredentialsExist(db *gorm.DB) error {
+	var result int
+	db.Raw("SELECT COUNT(username) FROM users WHERE username = ?;", u.Username).Scan(&result)
+	if result != 0 {
+		return errors.New("username is already exist")
+	}
+	db.Raw("SELECT COUNT(email) FROM users WHERE email = ?;", u.Email).Scan(&result)
+	if result != 0 {
+		return errors.New("email is already exist")
+	}
+	return nil
 }
