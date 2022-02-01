@@ -74,7 +74,23 @@ func (app *App) SigninHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "cannot signin", http.StatusInternalServerError)
 		return
 	}
+	session, err := app.SessionStore.Get(r, "session")
+	if err != nil {
+		log.Error("cannot get session store : ", err)
+		http.Error(w, "cannot get session store", http.StatusInternalServerError)
+		return
+	}
+	log.Info("updating session")
+	session.Values["authenticated"] = "true"
+	session.Values["role"] = user.Role
+	session.Save(r, w)
+	log.Info("session updated")
 	log.Info("user has been logged in: ", string(userJson))
 	http.Error(w, string(userJson), http.StatusOK)
+	return
+}
+
+func (app *App) TestHandler(w http.ResponseWriter, r *http.Request) {
+	http.Error(w, "Hello", http.StatusOK)
 	return
 }

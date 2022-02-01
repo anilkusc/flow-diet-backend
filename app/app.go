@@ -17,13 +17,13 @@ import (
 var (
 	port  = flag.String("port", "8080", "Specifiy Port(default:8080)")
 	https = flag.Bool("https", false, "Enable or disable https(default:false)")
-	store = sessions.NewCookieStore([]byte(os.Getenv("STORE_KEY")))
 )
 
 // App method is the main struct for the application
 type App struct {
-	Router *mux.Router
-	DB     *gorm.DB
+	Router       *mux.Router
+	DB           *gorm.DB
+	SessionStore *sessions.CookieStore
 }
 
 func (app *App) Init() {
@@ -54,6 +54,9 @@ func (app *App) Init() {
 		app.DB.AutoMigrate(&user.User{})
 		log.Info("created")
 	}
+	log.Info("creating session store")
+	app.SessionStore = sessions.NewCookieStore([]byte(os.Getenv("STORE_KEY")))
+	log.Info("created")
 }
 
 func (app *App) Start() {

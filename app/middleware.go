@@ -7,7 +7,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func IdControl(next http.HandlerFunc) http.HandlerFunc {
+func (app *App) IdControl(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		_, ok := vars["id"]
@@ -17,5 +17,21 @@ func IdControl(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 		next(w, r)
+	}
+}
+func (app *App) Auth(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		session, _ := app.SessionStore.Get(r, "session")
+		//if err != nil {
+		//	log.Error("cannot get session store : ", err)
+		//	http.Error(w, "cannot get session store", http.StatusInternalServerError)
+		//	return
+		//}
+		if session.Values["authenticated"] != "true" {
+			http.Error(w, "Forbidden", http.StatusForbidden)
+			return
+		} else {
+			next(w, r)
+		}
 	}
 }
