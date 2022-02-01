@@ -1,11 +1,12 @@
 package app
 
 import (
-	"io"
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	"time"
 
-	"github.com/gorilla/mux"
+	user "github.com/anilkusc/flow-diet-backend/pkg/user"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -46,6 +47,9 @@ func (app *App) SignupHandler(w http.ResponseWriter, r *http.Request) {
 // @Success 200
 // @Router /user/signin [post]
 func (app *App) SigninHandler(w http.ResponseWriter, r *http.Request) {
+	//this sleep is for preventing brute force
+	time.Sleep(1 * time.Second)
+	var user user.User
 	var isauth bool
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -53,7 +57,7 @@ func (app *App) SigninHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid user", http.StatusBadRequest)
 		return
 	}
-	isauth, err = app.Signin(string(body))
+	user, isauth, err = app.Signin(string(body))
 	if err != nil {
 		log.Error("cannot signin : ", err)
 		http.Error(w, "cannot signin", http.StatusInternalServerError)
@@ -64,18 +68,13 @@ func (app *App) SigninHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid credentials", http.StatusForbidden)
 		return
 	}
-	log.Info("user has been logged in: ", string(body))
-	http.Error(w, "OK", http.StatusOK)
-	return
-}
-
-func (app *App) ReadUserHandler(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	// TODO add this process to the middleware
-	id, ok := vars["id"]
-	if !ok {
-		log.Error("id is missing in URI")
+	userJson, err := json.Marshal(user)
+	if err != nil {
+		log.Error("cannot signin : ", err)
+		http.Error(w, "cannot signin", http.StatusInternalServerError)
+		return
 	}
-	io.WriteString(w, id)
+	log.Info("user has been logged in: ", string(userJson))
+	http.Error(w, string(userJson), http.StatusOK)
 	return
 }

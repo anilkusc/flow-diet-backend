@@ -33,12 +33,11 @@ func Construct() (*gorm.DB, User) {
 	db.AutoMigrate(&User{})
 	return db, user
 }
-func Destruct() {
-	db, _ := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+func Destruct(db *gorm.DB) {
 	db.Exec("DROP TABLE users")
 }
 func TestArrayToJson(t *testing.T) {
-	_, user := Construct()
+	db, user := Construct()
 
 	tests := []struct {
 		input  User
@@ -56,10 +55,10 @@ func TestArrayToJson(t *testing.T) {
 			t.Errorf("Result is: %v . Expected: %v", res, test.output.Favorite_Recipes_String)
 		}
 	}
-	Destruct()
+	Destruct(db)
 }
 func TestJsonToArray(t *testing.T) {
-	_, user := Construct()
+	db, user := Construct()
 
 	tests := []struct {
 		input  User
@@ -77,7 +76,7 @@ func TestJsonToArray(t *testing.T) {
 			t.Errorf("Result is: %v . Expected: %v", res, test.output.Favorite_Recipes)
 		}
 	}
-	Destruct()
+	Destruct(db)
 }
 func TestIsAuth(t *testing.T) {
 	db, user := Construct()
@@ -101,10 +100,10 @@ func TestIsAuth(t *testing.T) {
 			t.Errorf("Result is: %v . Expected: %v", res, test.output)
 		}
 	}
-	Destruct()
+	Destruct(db)
 }
 func TestHashPassword(t *testing.T) {
-	_, user := Construct()
+	db, user := Construct()
 	tests := []struct {
 		input string
 		err   error
@@ -118,7 +117,7 @@ func TestHashPassword(t *testing.T) {
 			t.Errorf("Error is: %v . Expected: %v", err, test.err)
 		}
 	}
-	Destruct()
+	Destruct(db)
 }
 func TestCheckPasswordHash(t *testing.T) {
 	db, user := Construct()
@@ -137,7 +136,7 @@ func TestCheckPasswordHash(t *testing.T) {
 			t.Errorf("Result is: %v . Expected: %v", out, test.output)
 		}
 	}
-	Destruct()
+	Destruct(db)
 }
 func TestSignup(t *testing.T) {
 	db, user := Construct()
@@ -153,5 +152,5 @@ func TestSignup(t *testing.T) {
 			t.Errorf("Error is: %v . Expected: %v", err, test.err)
 		}
 	}
-	Destruct()
+	Destruct(db)
 }

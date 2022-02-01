@@ -11,9 +11,6 @@ import (
 func (app *App) InitRoutes() {
 	app.Router.HandleFunc("/user/signin", app.SigninHandler).Methods("POST")
 	app.Router.HandleFunc("/user/signup", app.SignupHandler).Methods("POST")
-	//api.Router.HandleFunc("/user/{id}/read", IdControl(api.ReadUserHandler)).Methods("GET")
-	//api.Router.HandleFunc("/user/{id}/update", IdControl(api.UpdateUserHandler)).Methods("PATCH")
-	//api.Router.HandleFunc("/user/{id}/delete", IdControl(api.DeleteUserHandler)).Methods("DELETE")
 	if os.Getenv("ENV") != "prod" {
 		app.Router.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)
 	}

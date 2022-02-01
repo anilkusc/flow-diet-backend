@@ -23,7 +23,7 @@ func TestCreate(t *testing.T) {
 			t.Errorf("Error is: %v . Expected: %v", err, test.err)
 		}
 	}
-	Destruct()
+	Destruct(db)
 }
 
 func TestRead(t *testing.T) {
@@ -48,7 +48,7 @@ func TestRead(t *testing.T) {
 			t.Errorf("Result is: %v . Expected: %v", testuser, test.output)
 		}
 	}
-	Destruct()
+	Destruct(db)
 }
 func TestUpdate(t *testing.T) {
 	db, user := Construct()
@@ -67,7 +67,7 @@ func TestUpdate(t *testing.T) {
 		}
 	}
 
-	Destruct()
+	Destruct(db)
 }
 func TestDelete(t *testing.T) {
 	db, user := Construct()
@@ -88,7 +88,7 @@ func TestDelete(t *testing.T) {
 			t.Errorf("Error is: %v . Expected: %v", err, test.err)
 		}
 	}
-	Destruct()
+	Destruct(db)
 }
 
 func TestHardDelete(t *testing.T) {
@@ -110,7 +110,7 @@ func TestHardDelete(t *testing.T) {
 			t.Errorf("Error is: %v . Expected: %v", err, test.err)
 		}
 	}
-	Destruct()
+	Destruct(db)
 }
 
 func TestList(t *testing.T) {
@@ -144,5 +144,5 @@ func TestList(t *testing.T) {
 		}
 
 	}
-	Destruct()
+	Destruct(db)
 }

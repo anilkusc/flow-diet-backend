@@ -4,7 +4,7 @@ WORKDIR /src
 COPY go.sum go.mod ./
 RUN go mod download
 COPY . .
-RUN go test -v ./...
+RUN go test -v -cover ./...
 RUN go build -a -ldflags "-linkmode external -extldflags '-static' -s -w" -o /bin/app .
 
 FROM alpine

@@ -2,9 +2,6 @@ package user
 
 import (
 	"encoding/json"
-	"fmt"
-	"os"
-	"strconv"
 
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
@@ -78,12 +75,7 @@ func (u *User) Signup(db *gorm.DB) error {
 }
 func (u *User) HashPassword(password string) (string, error) {
 
-	key, err := strconv.Atoi(os.Getenv("HASH_KEY"))
-	if err != nil {
-		return "", err
-	}
-	fmt.Println(key)
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), key)
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 12)
 	return string(bytes), err
 }
 
