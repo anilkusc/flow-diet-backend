@@ -9,11 +9,17 @@ import (
 
 func (app *App) IdControl(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		session, _ := app.SessionStore.Get(r, "session")
 		vars := mux.Vars(r)
-		_, ok := vars["id"]
+		id, ok := vars["id"]
 		if !ok {
 			log.Info("id is missing in Path")
 			http.Error(w, "id is missing in Path", http.StatusBadRequest)
+			return
+		}
+		if id != session.Values["id"] {
+			log.Info("user sent wrong id")
+			http.Error(w, "Forbidden", http.StatusForbidden)
 			return
 		}
 		next(w, r)

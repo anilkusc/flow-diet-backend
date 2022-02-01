@@ -28,8 +28,11 @@ definitions:
       password:
         example: testpass
         type: string
+      phone:
+        example: "+905355353535"
+        type: string
       role:
-        description: user,admin,dietician,editor
+        description: root,admin,editor,user,anonymous
         example: user
         type: string
       username:
@@ -52,6 +55,19 @@ info:
   title: Flow-Diet-Backend API
   version: "1.0"
 paths:
+  /calendar/recipes:
+    get:
+      consumes:
+      - application/json
+      description: Get recipes of the user weekly
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Get recipes of user weekly
+      tags:
+      - calendar
   /user/logout:
     post:
       consumes:

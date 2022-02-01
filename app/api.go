@@ -12,7 +12,7 @@ func (app *App) InitRoutes() {
 	app.Router.HandleFunc("/user/signup", app.SignupHandler).Methods("POST")
 	app.Router.HandleFunc("/user/signin", app.SigninHandler).Methods("POST")
 	app.Router.HandleFunc("/user/logout", app.Auth(app.LogoutHandler)).Methods("POST")
-	app.Router.HandleFunc("/user/test", app.TestHandler).Methods("GET")
+	app.Router.HandleFunc("/calendar/recipes", app.Auth(app.GetRecipesHandler)).Methods("GET")
 	if os.Getenv("ENV") != "prod" {
 		app.Router.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)
 	}

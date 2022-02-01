@@ -39,3 +39,13 @@ add follownig to routes
 
 go 
 http://localhost:8080/swagger/index.html
+
+
+@Param [param_name] [param_type] [data_type] [required/mandatory] [description]
+
+[param_type]:
+1 query (indicates a query param)
+2 path (indicates a path param)
+3 header (indicates a header param)
+4 body
+5 formData

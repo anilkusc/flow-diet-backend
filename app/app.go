@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/anilkusc/flow-diet-backend/pkg/calendar"
+	"github.com/anilkusc/flow-diet-backend/pkg/recipe"
 	user "github.com/anilkusc/flow-diet-backend/pkg/user"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
@@ -51,7 +53,7 @@ func (app *App) Init() {
 		}
 		log.Info("connected")
 		log.Info("creating tables")
-		app.DB.AutoMigrate(&user.User{})
+		app.DB.AutoMigrate(&user.User{}, &calendar.Calendar{}, &recipe.Recipe{})
 		log.Info("created")
 	}
 	// TODO: will be implemented on rolebased access

@@ -71,7 +71,7 @@ func (app *App) SigninHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	userJson, err := json.Marshal(user)
 	if err != nil {
-		log.Error("cannot signin : ", err)
+		log.Error("cannot marshall calendars json: ", err)
 		http.Error(w, "cannot signin", http.StatusInternalServerError)
 		return
 	}
@@ -81,9 +81,12 @@ func (app *App) SigninHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "cannot get session store", http.StatusInternalServerError)
 		return
 	}
+	user.Read(app.DB)
 	log.Info("updating session")
 	session.Values["authenticated"] = "true"
 	session.Values["role"] = user.Role
+	//session.Values["id"] = strconv.FormatUint(uint64(user.ID), 10)
+	session.Values["id"] = user.ID
 	session.Save(r, w)
 	log.Info("session updated")
 	log.Info("user has been logged in: ", string(userJson))
@@ -109,6 +112,38 @@ func (app *App) LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	session.Values["authenticated"] = "false"
 	session.Save(r, w)
 	http.Error(w, "OK", http.StatusOK)
+	return
+}
+
+// GetRecipesHandler godoc
+// @Summary Get recipes of user weekly
+// @Description Get recipes of the user weekly
+// @Tags calendar
+// @Accept  json
+// @Produce  json
+// @Success 200
+// @Router /calendar/recipes [get]
+func (app *App) GetRecipesHandler(w http.ResponseWriter, r *http.Request) {
+	session, err := app.SessionStore.Get(r, "session")
+	if err != nil {
+		log.Error("cannot get session store : ", err)
+		http.Error(w, "cannot get session store", http.StatusInternalServerError)
+		return
+	}
+	calendars, err := app.GetMyCalendar(session.Values["id"].(uint))
+	if err != nil {
+		log.Error(err)
+		http.Error(w, "cannot get recipes", http.StatusInternalServerError)
+		return
+	}
+	calendarsJson, err := json.Marshal(calendars)
+	if err != nil {
+		log.Error("cannot marshall calendars json : ", err)
+		http.Error(w, "Calendar Error", http.StatusInternalServerError)
+		return
+	}
+	log.Info("user got his calendar: ", string(calendarsJson))
+	http.Error(w, string(calendarsJson), http.StatusOK)
 	return
 }
 

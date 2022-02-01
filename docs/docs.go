@@ -31,6 +31,26 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/calendar/recipes": {
+            "get": {
+                "description": "Get recipes of the user weekly",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "calendar"
+                ],
+                "summary": "Get recipes of user weekly",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/user/logout": {
             "post": {
                 "description": "Logout for the user",
@@ -153,8 +173,12 @@ var doc = `{
                     "type": "string",
                     "example": "testpass"
                 },
+                "phone": {
+                    "type": "string",
+                    "example": "+905355353535"
+                },
                 "role": {
-                    "description": "user,admin,dietician,editor",
+                    "description": "root,admin,editor,user,anonymous",
                     "type": "string",
                     "example": "user"
                 },
