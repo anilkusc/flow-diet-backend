@@ -55,8 +55,8 @@ func TestAuth(t *testing.T) {
 	handler.ServeHTTP(rr, req)
 	sessionCookie := rr.Header()["Set-Cookie"][0]
 	ck := strings.Split(sessionCookie, " ")
-	ck = strings.Split(ck[0], "=")
-	cookie := ck[1] + "="
+	ck = strings.Split(ck[0], "session=")
+	cookie := ck[1]
 	tests := []struct {
 		cookie string
 		output string
