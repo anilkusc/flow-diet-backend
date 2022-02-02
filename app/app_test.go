@@ -43,4 +43,6 @@ func Construct() (App, user.User, calendar.Calendar) {
 }
 func Destruct(app App) {
 	app.DB.Exec("DROP TABLE users")
+	app.DB.Exec("DROP TABLE calendars")
+	app.DB.Exec("DROP TABLE recipes")
 }

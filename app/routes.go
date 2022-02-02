@@ -123,7 +123,7 @@ func (app *App) LogoutHandler(w http.ResponseWriter, r *http.Request) {
 // @Produce  json
 // @Success 200
 // @Router /calendar/recipes [get]
-func (app *App) GetRecipesHandler(w http.ResponseWriter, r *http.Request) {
+func (app *App) GetCalendarRecipesHandler(w http.ResponseWriter, r *http.Request) {
 	session, err := app.SessionStore.Get(r, "session")
 	if err != nil {
 		log.Error("cannot get session store : ", err)
@@ -144,6 +144,111 @@ func (app *App) GetRecipesHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Info("user got his calendar: ", string(calendarsJson))
 	http.Error(w, string(calendarsJson), http.StatusOK)
+	return
+}
+
+// CreateCalendarRecipeHandler godoc
+// @Summary Create Recipe In User Calendar
+// @Description User creates a recipe in the calendar
+// @Tags calendar
+// @Accept  json
+// @Produce  json
+// @Param calendar body calendar.Calendar true "Create Recipe In Calendar"
+// @Success 200
+// @Router /calendar/recipes/create [post]
+func (app *App) CreateCalendarRecipeHandler(w http.ResponseWriter, r *http.Request) {
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Error("cannot read body: ", err)
+		http.Error(w, "wrong calendar object", http.StatusBadRequest)
+		return
+	}
+	session, err := app.SessionStore.Get(r, "session")
+	if err != nil {
+		log.Error("cannot get session store : ", err)
+		http.Error(w, "cannot get session store", http.StatusInternalServerError)
+		return
+	}
+	err = app.CreateCalendar(string(body), session.Values["id"].(uint))
+	if err != nil {
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Info("created recipe in the calendar: ", string(body))
+	http.Error(w, "OK", http.StatusOK)
+	return
+}
+
+// UpdateCalendarRecipeHandler godoc
+// @Summary Update Recipe In User Calendar
+// @Description Update Recipe In User Calendar
+// @Tags calendar
+// @Accept  json
+// @Produce  json
+// @Param calendar body calendar.Calendar true "Update Recipe In Calendar"
+// @Success 200
+// @Router /calendar/recipes/update [post]
+func (app *App) UpdateCalendarRecipeHandler(w http.ResponseWriter, r *http.Request) {
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Error("cannot read body: ", err)
+		http.Error(w, "wrong calendar object", http.StatusBadRequest)
+		return
+	}
+	session, err := app.SessionStore.Get(r, "session")
+	if err != nil {
+		log.Error("cannot get session store : ", err)
+		http.Error(w, "cannot get session store", http.StatusInternalServerError)
+		return
+	}
+	err = app.UpdateCalendar(string(body), session.Values["id"].(uint))
+	if err != nil {
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Info("updated recipe in the calendar: ", string(body))
+	http.Error(w, "OK", http.StatusOK)
+	return
+}
+
+// DeleteCalendarRecipeHandler godoc
+// @Summary Delete Recipe In User Calendar
+// @Description Delete Recipe In User Calendar
+// @Tags calendar
+// @Accept  json
+// @Produce  json
+// @Param calendar body calendar.Calendar true "Delete Recipe In Calendar. Please Use thisfor send request: {'ID':1}"
+// @Success 200
+// @Router /calendar/recipes/delete [post]
+func (app *App) DeleteCalendarRecipeHandler(w http.ResponseWriter, r *http.Request) {
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Error("cannot read body: ", err)
+		http.Error(w, "wrong calendar object", http.StatusBadRequest)
+		return
+	}
+	session, err := app.SessionStore.Get(r, "session")
+	if err != nil {
+		log.Error("cannot get session store : ", err)
+		http.Error(w, "cannot get session store", http.StatusInternalServerError)
+		return
+	}
+	err = app.DeleteCalendar(string(body), session.Values["id"].(uint))
+	if err != nil {
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Info("deleted recipe in the calendar: ", string(body))
+	http.Error(w, "OK", http.StatusOK)
 	return
 }
 

@@ -37,6 +37,99 @@
                 }
             }
         },
+        "/calendar/recipes/create": {
+            "post": {
+                "description": "User creates a recipe in the calendar",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "calendar"
+                ],
+                "summary": "Create Recipe In User Calendar",
+                "parameters": [
+                    {
+                        "description": "Create Recipe In Calendar",
+                        "name": "calendar",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/calendar.Calendar"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/calendar/recipes/delete": {
+            "post": {
+                "description": "Delete Recipe In User Calendar",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "calendar"
+                ],
+                "summary": "Delete Recipe In User Calendar",
+                "parameters": [
+                    {
+                        "description": "Delete Recipe In Calendar. Please Use thisfor send request: {'ID':1}",
+                        "name": "calendar",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/calendar.Calendar"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/calendar/recipes/update": {
+            "post": {
+                "description": "Update Recipe In User Calendar",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "calendar"
+                ],
+                "summary": "Update Recipe In User Calendar",
+                "parameters": [
+                    {
+                        "description": "Update Recipe In Calendar",
+                        "name": "calendar",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/calendar.Calendar"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/user/logout": {
             "post": {
                 "description": "Logout for the user",
@@ -121,6 +214,23 @@
         }
     },
     "definitions": {
+        "calendar.Calendar": {
+            "type": "object",
+            "properties": {
+                "date_epoch": {
+                    "type": "integer",
+                    "example": 1643743444
+                },
+                "recipe_id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "user_id": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
         "user.User": {
             "type": "object",
             "properties": {

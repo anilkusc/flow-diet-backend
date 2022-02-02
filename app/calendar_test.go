@@ -1,6 +1,7 @@
 package app
 
 import (
+	"encoding/json"
 	"reflect"
 	"testing"
 	"time"
@@ -33,6 +34,65 @@ func TestGetMyCalendar(t *testing.T) {
 				t.Errorf("Result list is: %v . Expected list: %v", res, test.output)
 			}
 		}
+	}
+	Destruct(app)
+}
+func TestCreateCalendar(t *testing.T) {
+	app, _, clndr := Construct()
+	calendarJson, _ := json.Marshal(clndr)
+	tests := []struct {
+		userid uint
+		input  string
+		err    error
+	}{
+		{userid: 1, input: string(calendarJson), err: nil},
+	}
+	for _, test := range tests {
+		err := app.CreateCalendar(test.input, test.userid)
+		if err != nil {
+			t.Errorf("Error is: %v . Expected: %v", err, test.err)
+		}
+
+	}
+	Destruct(app)
+}
+func TestUpdateCalendar(t *testing.T) {
+	app, _, clndr := Construct()
+	clndr.Create(app.DB)
+	calendarJson, _ := json.Marshal(clndr)
+	tests := []struct {
+		userid uint
+		input  string
+		err    error
+	}{
+		{userid: 1, input: string(calendarJson), err: nil},
+	}
+	for _, test := range tests {
+		err := app.UpdateCalendar(test.input, test.userid)
+		if err != nil {
+			t.Errorf("Error is: %v . Expected: %v", err, test.err)
+		}
+
+	}
+	Destruct(app)
+}
+func TestDeleteCalendar(t *testing.T) {
+	app, _, clndr := Construct()
+	clndr.Create(app.DB)
+	calendarJson, _ := json.Marshal(clndr)
+	tests := []struct {
+		userid uint
+		input  string
+		err    error
+	}{
+		{userid: 1, input: string(calendarJson), err: nil},
+	}
+	for _, test := range tests {
+		err := app.DeleteCalendar(test.input, test.userid)
+		if err != nil {
+			t.Errorf("Error is: %v . Expected: %v", err, test.err)
+		}
+
 	}
 	Destruct(app)
 }

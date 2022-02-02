@@ -1,5 +1,17 @@
 basePath: /
 definitions:
+  calendar.Calendar:
+    properties:
+      date_epoch:
+        example: 1643743444
+        type: integer
+      recipe_id:
+        example: 1
+        type: integer
+      user_id:
+        example: 1
+        type: integer
+    type: object
   user.User:
     properties:
       address:
@@ -66,6 +78,67 @@ paths:
         "200":
           description: ""
       summary: Get recipes of user weekly
+      tags:
+      - calendar
+  /calendar/recipes/create:
+    post:
+      consumes:
+      - application/json
+      description: User creates a recipe in the calendar
+      parameters:
+      - description: Create Recipe In Calendar
+        in: body
+        name: calendar
+        required: true
+        schema:
+          $ref: '#/definitions/calendar.Calendar'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Create Recipe In User Calendar
+      tags:
+      - calendar
+  /calendar/recipes/delete:
+    post:
+      consumes:
+      - application/json
+      description: Delete Recipe In User Calendar
+      parameters:
+      - description: 'Delete Recipe In Calendar. Please Use thisfor send request:
+          {''ID'':1}'
+        in: body
+        name: calendar
+        required: true
+        schema:
+          $ref: '#/definitions/calendar.Calendar'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Delete Recipe In User Calendar
+      tags:
+      - calendar
+  /calendar/recipes/update:
+    post:
+      consumes:
+      - application/json
+      description: Update Recipe In User Calendar
+      parameters:
+      - description: Update Recipe In Calendar
+        in: body
+        name: calendar
+        required: true
+        schema:
+          $ref: '#/definitions/calendar.Calendar'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Update Recipe In User Calendar
       tags:
       - calendar
   /user/logout:
