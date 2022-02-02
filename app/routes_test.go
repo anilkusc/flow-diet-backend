@@ -10,7 +10,7 @@ import (
 )
 
 func TestSignupHandler(t *testing.T) {
-	app, user := Construct()
+	app, user, _ := Construct()
 	userJson, _ := json.Marshal(user)
 	tests := []struct {
 		input  string
@@ -43,7 +43,7 @@ func TestSignupHandler(t *testing.T) {
 	Destruct(app)
 }
 func TestSigninHandler(t *testing.T) {
-	app, user := Construct()
+	app, user, _ := Construct()
 	userJson, _ := json.Marshal(user)
 	app.Signup(string(userJson))
 	user.Password = ""
@@ -79,7 +79,7 @@ func TestSigninHandler(t *testing.T) {
 	Destruct(app)
 }
 func TestLogoutHandler(t *testing.T) {
-	app, user := Construct()
+	app, user, _ := Construct()
 
 	userJson, _ := json.Marshal(user)
 	app.Signup(string(userJson))
@@ -109,6 +109,53 @@ func TestLogoutHandler(t *testing.T) {
 		req.AddCookie(&http.Cookie{Name: "session", Value: test.cookie})
 		rr := httptest.NewRecorder()
 		handler := http.HandlerFunc(app.Auth(app.LogoutHandler))
+
+		handler.ServeHTTP(rr, req)
+
+		if rr.Result().StatusCode != test.status {
+			t.Errorf("Response status is: %v . Expected: %v", rr.Result().StatusCode, test.status)
+		}
+		body, _ := ioutil.ReadAll(rr.Body)
+		if string(body) != string(test.output) {
+			t.Errorf("Response is: %v . Expected: %v", string(body), test.output)
+		}
+
+	}
+	Destruct(app)
+}
+
+func TestGetRecipesHandler(t *testing.T) {
+	app, user, clndr := Construct()
+	clndr.Create(app.DB)
+	calendar, _ := clndr.List(app.DB)
+	calendarJson, _ := json.Marshal(calendar)
+	userJson, _ := json.Marshal(user)
+	app.Signup(string(userJson))
+	req, _ := http.NewRequest("POST", "/user/signin", strings.NewReader(string(userJson)))
+
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(app.SigninHandler)
+
+	handler.ServeHTTP(rr, req)
+	sessionCookie := rr.Header()["Set-Cookie"][0]
+	ck := strings.Split(sessionCookie, " ")
+	ck = strings.Split(ck[0], "session=")
+	cookie := ck[1]
+	tests := []struct {
+		output string
+		status int
+		err    error
+	}{
+		{output: string(calendarJson) + "\n", status: 200, err: nil},
+	}
+	for _, test := range tests {
+		req, err := http.NewRequest("GET", "/calendar/recipes", strings.NewReader(""))
+		if err != nil {
+			t.Errorf("Error is: %v . Expected: %v", err, test.err)
+		}
+		req.AddCookie(&http.Cookie{Name: "session", Value: cookie})
+		rr := httptest.NewRecorder()
+		handler := http.HandlerFunc(app.Auth(app.GetRecipesHandler))
 
 		handler.ServeHTTP(rr, req)
 

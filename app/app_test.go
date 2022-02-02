@@ -3,12 +3,13 @@ package app
 import (
 	"time"
 
+	"github.com/anilkusc/flow-diet-backend/pkg/calendar"
 	user "github.com/anilkusc/flow-diet-backend/pkg/user"
 	"github.com/joho/godotenv"
 	"gorm.io/gorm"
 )
 
-func Construct() (App, user.User) {
+func Construct() (App, user.User, calendar.Calendar) {
 	godotenv.Load("../.env")
 	app := App{}
 	app.Init()
@@ -29,7 +30,16 @@ func Construct() (App, user.User) {
 		Address:                 "",
 		Role:                    "user",
 	}
-	return app, user
+	var calendar = calendar.Calendar{
+		Model: gorm.Model{
+			//ID:        1,
+			UpdatedAt: time.Time{}, CreatedAt: time.Time{}, DeletedAt: gorm.DeletedAt{Time: time.Time{}, Valid: false},
+		},
+		Recipe_Id:  1,
+		User_Id:    1,
+		Date_Epoch: 1643743444,
+	}
+	return app, user, calendar
 }
 func Destruct(app App) {
 	app.DB.Exec("DROP TABLE users")

@@ -9,7 +9,7 @@ import (
 )
 
 func TestSignup(t *testing.T) {
-	app, user := Construct()
+	app, user, _ := Construct()
 	userJson, _ := json.Marshal(user)
 	tests := []struct {
 		input string
@@ -26,7 +26,7 @@ func TestSignup(t *testing.T) {
 	Destruct(app)
 }
 func TestSignin(t *testing.T) {
-	app, usr := Construct()
+	app, usr, _ := Construct()
 
 	userJson, _ := json.Marshal(usr)
 	app.Signup(string(userJson))
