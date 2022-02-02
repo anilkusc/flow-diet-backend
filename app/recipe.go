@@ -36,3 +36,23 @@ func (app *App) CreateRecipe(recipeJson string) error {
 	}
 	return nil
 }
+
+func (app *App) GetRecipe(recipeJson string) (string, error) {
+
+	var recipe recipe.Recipe
+	var err error
+	err = json.Unmarshal([]byte(recipeJson), &recipe)
+	if err != nil {
+		return "", err
+	}
+
+	recipe.Read(app.DB)
+	if err != nil {
+		return "", err
+	}
+	recipeStr, err := json.Marshal(recipe)
+	if err != nil {
+		return "", err
+	}
+	return string(recipeStr), nil
+}

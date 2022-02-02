@@ -231,7 +231,7 @@ paths:
       parameters:
       - description: Create New Recipe
         in: body
-        name: calendar
+        name: recipe
         required: true
         schema:
           $ref: '#/definitions/recipe.Recipe'
@@ -241,6 +241,26 @@ paths:
         "200":
           description: ""
       summary: Create a new recipe
+      tags:
+      - recipe
+  /recipes/get:
+    post:
+      consumes:
+      - application/json
+      description: Get a recipe
+      parameters:
+      - description: Get Recipe
+        in: body
+        name: recipe
+        required: true
+        schema:
+          $ref: '#/definitions/recipe.Recipe'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Get a recipe
       tags:
       - recipe
   /user/logout:

@@ -166,7 +166,38 @@
                 "parameters": [
                     {
                         "description": "Create New Recipe",
-                        "name": "calendar",
+                        "name": "recipe",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/recipe.Recipe"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/recipes/get": {
+            "post": {
+                "description": "Get a recipe",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipe"
+                ],
+                "summary": "Get a recipe",
+                "parameters": [
+                    {
+                        "description": "Get Recipe",
+                        "name": "recipe",
                         "in": "body",
                         "required": true,
                         "schema": {

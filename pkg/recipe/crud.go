@@ -1,6 +1,10 @@
 package recipe
 
-import "gorm.io/gorm"
+import (
+	"errors"
+
+	"gorm.io/gorm"
+)
 
 func (r *Recipe) Create(db *gorm.DB) error {
 	var err error
@@ -15,12 +19,20 @@ func (r *Recipe) Create(db *gorm.DB) error {
 func (r *Recipe) Read(db *gorm.DB) error {
 
 	var err error
+	var result *gorm.DB
+
+	if r.ID != 0 {
+		result = db.Where("id=?", r.ID).First(&r)
+	} else {
+		return errors.New("id cannot found")
+	}
+	//else {
+	//result = db.Where("username=?", u.Username).First(&r)
+	//}
 	r.Ingredients, err = r.JsonToArray(r.Ingredients_String)
 	if err != nil {
 		return err
 	}
-
-	result := db.First(&r)
 	return result.Error
 }
 func (r *Recipe) Update(db *gorm.DB) error {

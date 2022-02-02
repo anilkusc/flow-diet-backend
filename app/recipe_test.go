@@ -49,3 +49,28 @@ func TestCreateRecipe(t *testing.T) {
 	}
 	Destruct(app)
 }
+
+func TestGetRecipe(t *testing.T) {
+	app, _, _, rcp := Construct()
+	rcp.Create(app.DB)
+	tests := []struct {
+		input  string
+		output string
+		err    error
+	}{
+		{
+			input: "{\"id\":1}",
+			//output: "string",
+			err: nil},
+	}
+	for _, test := range tests {
+		_, err := app.GetRecipe(test.input)
+		if err != nil {
+			t.Errorf("Error is: %v . Expected: %v", err, test.err)
+		} /*
+			if output != test.output {
+				t.Errorf("Result is: %v . Expected: %v", output, test.output)
+			}*/
+	}
+	Destruct(app)
+}

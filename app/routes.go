@@ -280,7 +280,7 @@ func (app *App) GetAllRecipesHandler(w http.ResponseWriter, r *http.Request) {
 // @Tags recipe
 // @Accept  json
 // @Produce  json
-// @Param calendar body recipe.Recipe true "Create New Recipe"
+// @Param recipe body recipe.Recipe true "Create New Recipe"
 // @Success 200
 // @Router /recipes/create [post]
 func (app *App) CreateRecipeHandler(w http.ResponseWriter, r *http.Request) {
@@ -301,6 +301,34 @@ func (app *App) CreateRecipeHandler(w http.ResponseWriter, r *http.Request) {
 
 	log.Info("recipe is create: ", string(body))
 	http.Error(w, "OK", http.StatusOK)
+	return
+}
+
+// GetRecipeHandler godoc
+// @Summary Get a recipe
+// @Description  Get a recipe
+// @Tags recipe
+// @Accept  json
+// @Produce  json
+// @Param recipe body recipe.Recipe true "Get Recipe"
+// @Success 200
+// @Router /recipes/get [post]
+func (app *App) GetRecipeHandler(w http.ResponseWriter, r *http.Request) {
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Error("cannot read body: ", err)
+		http.Error(w, "wrong calendar object", http.StatusBadRequest)
+		return
+	}
+	recipe, err := app.GetRecipe(string(body))
+	if err != nil {
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Info("recipe is readed: ", recipe)
+	http.Error(w, recipe, http.StatusOK)
 	return
 }
 
