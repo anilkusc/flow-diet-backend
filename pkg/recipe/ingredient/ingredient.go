@@ -1,11 +1,15 @@
 package ingredient
 
-import "gorm.io/gorm"
+import (
+	"github.com/anilkusc/flow-diet-backend/pkg/recipe/material"
+	"github.com/anilkusc/flow-diet-backend/pkg/recipe/measurement"
+)
 
 type Ingredient struct {
-	gorm.Model `json:"-" swaggerignore:"true"`
-	Size       float32
-	Recipe_Id  uint   `gorm:"not null" json:"recipe_id" example:"1"`
-	User_Id    int    `gorm:"not null" json:"user_id" example:"1"`
-	Date_Epoch string `gorm:"not null" json:"date_epoch" example:"1643743444"`
+	//gorm.Model  `json:"-" swaggerignore:"true"`
+	//Size        float32
+	Measurement measurement.Measurement `json:"measurement" example:"1"`
+	Material    material.Material       `json:"material" example:"1"`
+	IsExist     bool                    `json:"isexist" example:"false"`
+	IsOptional  bool                    `json:"isoptional" example:"true"`
 }

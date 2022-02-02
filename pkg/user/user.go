@@ -27,11 +27,11 @@ type User struct {
 
 func (u *User) ArrayToJson(arr []uint) (string, error) {
 
-	terrainString, err := json.Marshal(arr)
+	userString, err := json.Marshal(arr)
 	if err != nil {
 		return "", err
 	}
-	return string(terrainString), nil
+	return string(userString), nil
 }
 
 func (u *User) JsonToArray(arr string) ([]uint, error) {
