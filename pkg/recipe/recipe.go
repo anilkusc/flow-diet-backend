@@ -8,7 +8,7 @@ import (
 )
 
 type Recipe struct {
-	gorm.Model              `json:"-" swaggerignore:"true"`
+	gorm.Model              //`json:"-" swaggerignore:"true"`
 	Name                    string
 	Ingredients             []ingredient.Ingredient `gorm:"-" json:"ingredients" swaggerignore:"true" example:"[{'measurement':{'size':200,'quantity':'gram'},'material':{'type':'fruit','name':'banana','photo_urls':'['s3link1','s3link2']'},'isexist':false,'isoptional':false}]"`
 	Ingredients_String      string                  `gorm:"not null" json:"-" `

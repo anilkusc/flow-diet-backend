@@ -144,6 +144,26 @@ var doc = `{
                 }
             }
         },
+        "/recipes/all": {
+            "get": {
+                "description": "List All Recipes",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipe"
+                ],
+                "summary": "List all recipes",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/user/logout": {
             "post": {
                 "description": "Logout for the user",

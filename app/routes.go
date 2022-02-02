@@ -252,6 +252,28 @@ func (app *App) DeleteCalendarRecipeHandler(w http.ResponseWriter, r *http.Reque
 	return
 }
 
+// GetAllRecipesHandler godoc
+// @Summary List all recipes
+// @Description List All Recipes
+// @Tags recipe
+// @Accept  json
+// @Produce  json
+// @Success 200
+// @Router /recipes/all [get]
+func (app *App) GetAllRecipesHandler(w http.ResponseWriter, r *http.Request) {
+
+	recipes, err := app.ListRecipes()
+	if err != nil {
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Info("recipes are listed: ", recipes)
+	http.Error(w, recipes, http.StatusOK)
+	return
+}
+
 func (app *App) TestHandler(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Hello", http.StatusOK)
 	return

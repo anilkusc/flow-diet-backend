@@ -141,6 +141,19 @@ paths:
       summary: Update Recipe In User Calendar
       tags:
       - calendar
+  /recipes/all:
+    get:
+      consumes:
+      - application/json
+      description: List All Recipes
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: List all recipes
+      tags:
+      - recipe
   /user/logout:
     post:
       consumes:

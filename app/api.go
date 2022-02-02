@@ -16,7 +16,7 @@ func (app *App) InitRoutes() {
 	app.Router.HandleFunc("/calendar/recipes/create", app.Auth(app.CreateCalendarRecipeHandler)).Methods("POST")
 	app.Router.HandleFunc("/calendar/recipes/update", app.Auth(app.UpdateCalendarRecipeHandler)).Methods("POST")
 	app.Router.HandleFunc("/calendar/recipes/delete", app.Auth(app.DeleteCalendarRecipeHandler)).Methods("POST")
-	app.Router.HandleFunc("/recipes/recipes", app.Auth(app.GetCalendarRecipesHandler)).Methods("GET")
+	app.Router.HandleFunc("/recipes/all", app.Auth(app.GetAllRecipesHandler)).Methods("GET")
 	if os.Getenv("ENV") != "prod" {
 		app.Router.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)
 	}
