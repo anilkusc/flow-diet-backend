@@ -332,6 +332,66 @@ func (app *App) GetRecipeHandler(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+// UpdateRecipeHandler godoc
+// @Summary Update Recipe
+// @Description Update Recipe
+// @Tags recipe
+// @Accept  json
+// @Produce  json
+// @Param recipe body recipe.Recipe true "Update a Recipe"
+// @Success 200
+// @Router /recipes/update [post]
+func (app *App) UpdateRecipeHandler(w http.ResponseWriter, r *http.Request) {
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Error("cannot read body: ", err)
+		http.Error(w, "wrong calendar object", http.StatusBadRequest)
+		return
+	}
+
+	err = app.UpdateRecipe(string(body))
+	if err != nil {
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Info("updated recipe : ", string(body))
+	http.Error(w, "OK", http.StatusOK)
+	return
+}
+
+// DeleteRecipeHandler godoc
+// @Summary Delete Recipe
+// @Description Delete Recipe
+// @Tags recipe
+// @Accept  json
+// @Produce  json
+// @Param recipe body recipe.Recipe true "Delete a Recipe"
+// @Success 200
+// @Router /recipes/delete [post]
+func (app *App) DeleteRecipeHandler(w http.ResponseWriter, r *http.Request) {
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Error("cannot read body: ", err)
+		http.Error(w, "wrong calendar object", http.StatusBadRequest)
+		return
+	}
+
+	err = app.DeleteRecipe(string(body))
+	if err != nil {
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Info("deleted recipe : ", string(body))
+	http.Error(w, "OK", http.StatusOK)
+	return
+}
+
 func (app *App) TestHandler(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Hello", http.StatusOK)
 	return

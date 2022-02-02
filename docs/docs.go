@@ -195,6 +195,37 @@ var doc = `{
                 }
             }
         },
+        "/recipes/delete": {
+            "post": {
+                "description": "Delete Recipe",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipe"
+                ],
+                "summary": "Delete Recipe",
+                "parameters": [
+                    {
+                        "description": "Delete a Recipe",
+                        "name": "recipe",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/recipe.Recipe"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/recipes/get": {
             "post": {
                 "description": "Get a recipe",
@@ -211,6 +242,37 @@ var doc = `{
                 "parameters": [
                     {
                         "description": "Get Recipe",
+                        "name": "recipe",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/recipe.Recipe"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/recipes/update": {
+            "post": {
+                "description": "Update Recipe",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipe"
+                ],
+                "summary": "Update Recipe",
+                "parameters": [
+                    {
+                        "description": "Update a Recipe",
                         "name": "recipe",
                         "in": "body",
                         "required": true,

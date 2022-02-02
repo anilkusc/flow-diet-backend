@@ -56,3 +56,38 @@ func (app *App) GetRecipe(recipeJson string) (string, error) {
 	}
 	return string(recipeStr), nil
 }
+
+func (app *App) UpdateRecipe(recipeJson string) error {
+
+	var recipe recipe.Recipe
+	err := json.Unmarshal([]byte(recipeJson), &recipe)
+	if err != nil {
+		return err
+	}
+
+	recipe.Update(app.DB)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (app *App) DeleteRecipe(recipeJson string) error {
+
+	var recipe recipe.Recipe
+	err := json.Unmarshal([]byte(recipeJson), &recipe)
+	if err != nil {
+		return err
+	}
+	err = recipe.Read(app.DB)
+	if err != nil {
+		return err
+	}
+	recipe.Delete(app.DB)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

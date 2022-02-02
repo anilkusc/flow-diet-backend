@@ -243,6 +243,26 @@ paths:
       summary: Create a new recipe
       tags:
       - recipe
+  /recipes/delete:
+    post:
+      consumes:
+      - application/json
+      description: Delete Recipe
+      parameters:
+      - description: Delete a Recipe
+        in: body
+        name: recipe
+        required: true
+        schema:
+          $ref: '#/definitions/recipe.Recipe'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Delete Recipe
+      tags:
+      - recipe
   /recipes/get:
     post:
       consumes:
@@ -261,6 +281,26 @@ paths:
         "200":
           description: ""
       summary: Get a recipe
+      tags:
+      - recipe
+  /recipes/update:
+    post:
+      consumes:
+      - application/json
+      description: Update Recipe
+      parameters:
+      - description: Update a Recipe
+        in: body
+        name: recipe
+        required: true
+        schema:
+          $ref: '#/definitions/recipe.Recipe'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Update Recipe
       tags:
       - recipe
   /user/logout:

@@ -74,3 +74,48 @@ func TestGetRecipe(t *testing.T) {
 	}
 	Destruct(app)
 }
+
+func TestDeleteRecipe(t *testing.T) {
+	app, _, _, rcp := Construct()
+	rcp.Create(app.DB)
+	rcp.ID = 1
+	recipeJson, _ := json.Marshal(rcp)
+	tests := []struct {
+		input string
+		err   error
+	}{
+		{
+			input: string(recipeJson),
+			err:   nil},
+	}
+	for _, test := range tests {
+		err := app.DeleteRecipe(test.input)
+		if err != nil {
+			t.Errorf("Error is: %v . Expected: %v", err, test.err)
+		}
+	}
+	Destruct(app)
+}
+
+func TestUpdateRecipe(t *testing.T) {
+	app, _, _, rcp := Construct()
+	rcp.Create(app.DB)
+	rcp.ID = 1
+	rcp.Calori = 100
+	recipeJson, _ := json.Marshal(rcp)
+	tests := []struct {
+		input string
+		err   error
+	}{
+		{
+			input: string(recipeJson),
+			err:   nil},
+	}
+	for _, test := range tests {
+		err := app.UpdateRecipe(test.input)
+		if err != nil {
+			t.Errorf("Error is: %v . Expected: %v", err, test.err)
+		}
+	}
+	Destruct(app)
+}
