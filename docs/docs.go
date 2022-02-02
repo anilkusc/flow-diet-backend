@@ -164,6 +164,37 @@ var doc = `{
                 }
             }
         },
+        "/recipes/create": {
+            "post": {
+                "description": "Create A New Recipe",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipe"
+                ],
+                "summary": "Create a new recipe",
+                "parameters": [
+                    {
+                        "description": "Create New Recipe",
+                        "name": "calendar",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/recipe.Recipe"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/user/logout": {
             "post": {
                 "description": "Logout for the user",
@@ -262,6 +293,100 @@ var doc = `{
                 "user_id": {
                     "type": "integer",
                     "example": 1
+                }
+            }
+        },
+        "ingredient.Ingredient": {
+            "type": "object",
+            "properties": {
+                "isexist": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "isoptional": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "material": {
+                    "$ref": "#/definitions/material.Material"
+                },
+                "measurement": {
+                    "description": "gorm.Model  ` + "`" + `json:\"-\" swaggerignore:\"true\"` + "`" + `\nSize        float32",
+                    "$ref": "#/definitions/measurement.Measurement"
+                }
+            }
+        },
+        "material.Material": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "banana"
+                },
+                "photo_urls": {
+                    "type": "string",
+                    "example": "[{'url':'exampleS3URL'}]"
+                },
+                "type": {
+                    "description": "gorm.Model ` + "`" + `json:\"-\" swaggerignore:\"true\"` + "`" + `",
+                    "type": "string",
+                    "example": "fruit"
+                }
+            }
+        },
+        "measurement.Measurement": {
+            "type": "object",
+            "properties": {
+                "quantity": {
+                    "type": "string",
+                    "example": "gram"
+                },
+                "size": {
+                    "description": "gorm.Model ` + "`" + `json:\"-\" swaggerignore:\"true\"` + "`" + `",
+                    "type": "number",
+                    "example": 2
+                }
+            }
+        },
+        "recipe.Recipe": {
+            "type": "object",
+            "properties": {
+                "calori": {
+                    "type": "integer",
+                    "example": 252
+                },
+                "cooking_time_minute": {
+                    "type": "integer",
+                    "example": 10
+                },
+                "for_how_many_people": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "ingredients": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ingredient.Ingredient"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "photo_urls": {
+                    "type": "string",
+                    "example": "['S3URL']"
+                },
+                "preperation": {
+                    "type": "string",
+                    "example": "bla bla bla"
+                },
+                "preperation_time": {
+                    "type": "integer",
+                    "example": 15
+                },
+                "video_urls": {
+                    "type": "string",
+                    "example": "['S3URL']"
                 }
             }
         },

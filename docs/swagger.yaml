@@ -12,6 +12,75 @@ definitions:
         example: 1
         type: integer
     type: object
+  ingredient.Ingredient:
+    properties:
+      isexist:
+        example: false
+        type: boolean
+      isoptional:
+        example: true
+        type: boolean
+      material:
+        $ref: '#/definitions/material.Material'
+      measurement:
+        $ref: '#/definitions/measurement.Measurement'
+        description: |-
+          gorm.Model  `json:"-" swaggerignore:"true"`
+          Size        float32
+    type: object
+  material.Material:
+    properties:
+      name:
+        example: banana
+        type: string
+      photo_urls:
+        example: '[{''url'':''exampleS3URL''}]'
+        type: string
+      type:
+        description: gorm.Model `json:"-" swaggerignore:"true"`
+        example: fruit
+        type: string
+    type: object
+  measurement.Measurement:
+    properties:
+      quantity:
+        example: gram
+        type: string
+      size:
+        description: gorm.Model `json:"-" swaggerignore:"true"`
+        example: 2
+        type: number
+    type: object
+  recipe.Recipe:
+    properties:
+      calori:
+        example: 252
+        type: integer
+      cooking_time_minute:
+        example: 10
+        type: integer
+      for_how_many_people:
+        example: 2
+        type: integer
+      ingredients:
+        items:
+          $ref: '#/definitions/ingredient.Ingredient'
+        type: array
+      name:
+        type: string
+      photo_urls:
+        example: '[''S3URL'']'
+        type: string
+      preperation:
+        example: bla bla bla
+        type: string
+      preperation_time:
+        example: 15
+        type: integer
+      video_urls:
+        example: '[''S3URL'']'
+        type: string
+    type: object
   user.User:
     properties:
       address:
@@ -152,6 +221,26 @@ paths:
         "200":
           description: ""
       summary: List all recipes
+      tags:
+      - recipe
+  /recipes/create:
+    post:
+      consumes:
+      - application/json
+      description: Create A New Recipe
+      parameters:
+      - description: Create New Recipe
+        in: body
+        name: calendar
+        required: true
+        schema:
+          $ref: '#/definitions/recipe.Recipe'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Create a new recipe
       tags:
       - recipe
   /user/logout:

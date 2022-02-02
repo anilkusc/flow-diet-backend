@@ -84,7 +84,7 @@ func TestIsAuth(t *testing.T) {
 	db, user := Construct()
 	user.Signup(db)
 	user2 := user
-	user2.Username = "wrongpass"
+	user2.Password = "wrongpass"
 	tests := []struct {
 		input  User
 		output bool

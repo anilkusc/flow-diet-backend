@@ -5,3 +5,5 @@
 * User
 	- mail or phone based authentication
 	- role based access
+	- user role control function in user object
+	- phone uniqueness control

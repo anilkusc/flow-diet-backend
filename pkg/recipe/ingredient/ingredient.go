@@ -8,8 +8,8 @@ import (
 type Ingredient struct {
 	//gorm.Model  `json:"-" swaggerignore:"true"`
 	//Size        float32
-	Measurement measurement.Measurement `json:"measurement" example:"1"`
-	Material    material.Material       `json:"material" example:"1"`
+	Measurement measurement.Measurement `json:"measurement"`
+	Material    material.Material       `json:"material"`
 	IsExist     bool                    `json:"isexist" example:"false"`
 	IsOptional  bool                    `json:"isoptional" example:"true"`
 }

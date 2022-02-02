@@ -21,3 +21,18 @@ func (app *App) ListRecipes() (string, error) {
 	}
 	return string(recipesList), nil
 }
+
+func (app *App) CreateRecipe(recipeJson string) error {
+	var recipe recipe.Recipe
+	var err error
+	err = json.Unmarshal([]byte(recipeJson), &recipe)
+	if err != nil {
+		return err
+	}
+
+	err = recipe.Create(app.DB)
+	if err != nil {
+		return err
+	}
+	return nil
+}

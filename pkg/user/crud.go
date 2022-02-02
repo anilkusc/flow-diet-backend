@@ -15,7 +15,13 @@ func (u *User) Create(db *gorm.DB) error {
 }
 func (u *User) Read(db *gorm.DB) error {
 	var err error
-	result := db.First(&u)
+	var result *gorm.DB
+	if u.ID != 0 {
+		result = db.Where("id=?", u.ID).First(&u)
+	} else {
+		result = db.Where("username=?", u.Username).First(&u)
+	}
+
 	u.Favorite_Recipes, err = u.JsonToArray(u.Favorite_Recipes_String)
 	if err != nil {
 		return err

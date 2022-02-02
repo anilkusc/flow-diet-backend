@@ -1,6 +1,7 @@
 package app
 
 import (
+	"encoding/json"
 	"testing"
 )
 
@@ -26,6 +27,25 @@ func TestListRecipes(t *testing.T) {
 				t.Errorf("Result is: %v . Expected: %v", output, test.output)
 			}*/
 
+	}
+	Destruct(app)
+}
+func TestCreateRecipe(t *testing.T) {
+	app, _, _, rcp := Construct()
+	recipeJson, _ := json.Marshal(rcp)
+	tests := []struct {
+		input string
+		err   error
+	}{
+		{
+			input: string(recipeJson),
+			err:   nil},
+	}
+	for _, test := range tests {
+		err := app.CreateRecipe(test.input)
+		if err != nil {
+			t.Errorf("Error is: %v . Expected: %v", err, test.err)
+		}
 	}
 	Destruct(app)
 }
