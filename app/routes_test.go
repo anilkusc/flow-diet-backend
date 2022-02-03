@@ -10,7 +10,7 @@ import (
 )
 
 func TestSignupHandler(t *testing.T) {
-	app, user, _, _ := Construct()
+	app, _, user, _, _ := Construct()
 	userJson, _ := json.Marshal(user)
 	tests := []struct {
 		input  string
@@ -43,7 +43,7 @@ func TestSignupHandler(t *testing.T) {
 	Destruct(app)
 }
 func TestSigninHandler(t *testing.T) {
-	app, user, _, _ := Construct()
+	app, _, user, _, _ := Construct()
 	userJson, _ := json.Marshal(user)
 	app.Signup(string(userJson))
 	user.Password = ""
@@ -79,20 +79,8 @@ func TestSigninHandler(t *testing.T) {
 	Destruct(app)
 }
 func TestLogoutHandler(t *testing.T) {
-	app, user, _, _ := Construct()
+	app, cookie, _, _, _ := Construct()
 
-	userJson, _ := json.Marshal(user)
-	app.Signup(string(userJson))
-	req, _ := http.NewRequest("POST", "/user/signin", strings.NewReader(string(userJson)))
-
-	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(app.SigninHandler)
-
-	handler.ServeHTTP(rr, req)
-	sessionCookie := rr.Header()["Set-Cookie"][0]
-	ck := strings.Split(sessionCookie, " ")
-	ck = strings.Split(ck[0], "session=")
-	cookie := ck[1]
 	tests := []struct {
 		cookie string
 		output string
@@ -125,22 +113,11 @@ func TestLogoutHandler(t *testing.T) {
 }
 
 func TestGetCalendarRecipesHandler(t *testing.T) {
-	app, user, clndr, _ := Construct()
+	app, cookie, _, clndr, _ := Construct()
 	clndr.Create(app.DB)
 	calendar, _ := clndr.List(app.DB)
 	calendarJson, _ := json.Marshal(calendar)
-	userJson, _ := json.Marshal(user)
-	app.Signup(string(userJson))
-	req, _ := http.NewRequest("POST", "/user/signin", strings.NewReader(string(userJson)))
 
-	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(app.SigninHandler)
-
-	handler.ServeHTTP(rr, req)
-	sessionCookie := rr.Header()["Set-Cookie"][0]
-	ck := strings.Split(sessionCookie, " ")
-	ck = strings.Split(ck[0], "session=")
-	cookie := ck[1]
 	tests := []struct {
 		output string
 		status int
@@ -171,20 +148,9 @@ func TestGetCalendarRecipesHandler(t *testing.T) {
 	Destruct(app)
 }
 func TestCreateCalendarRecipeHandler(t *testing.T) {
-	app, user, clndr, _ := Construct()
+	app, cookie, _, clndr, _ := Construct()
 	calendarJson, _ := json.Marshal(clndr)
-	userJson, _ := json.Marshal(user)
-	app.Signup(string(userJson))
-	req, _ := http.NewRequest("POST", "/user/signin", strings.NewReader(string(userJson)))
 
-	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(app.SigninHandler)
-
-	handler.ServeHTTP(rr, req)
-	sessionCookie := rr.Header()["Set-Cookie"][0]
-	ck := strings.Split(sessionCookie, " ")
-	ck = strings.Split(ck[0], "session=")
-	cookie := ck[1]
 	tests := []struct {
 		input  string
 		output string
@@ -217,21 +183,10 @@ func TestCreateCalendarRecipeHandler(t *testing.T) {
 }
 
 func TestUpdateCalendarRecipeHandler(t *testing.T) {
-	app, user, clndr, _ := Construct()
+	app, cookie, _, clndr, _ := Construct()
 	clndr.Create(app.DB)
 	calendarJson, _ := json.Marshal(clndr)
-	userJson, _ := json.Marshal(user)
-	app.Signup(string(userJson))
-	req, _ := http.NewRequest("POST", "/user/signin", strings.NewReader(string(userJson)))
 
-	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(app.SigninHandler)
-
-	handler.ServeHTTP(rr, req)
-	sessionCookie := rr.Header()["Set-Cookie"][0]
-	ck := strings.Split(sessionCookie, " ")
-	ck = strings.Split(ck[0], "session=")
-	cookie := ck[1]
 	tests := []struct {
 		input  string
 		output string
@@ -264,21 +219,10 @@ func TestUpdateCalendarRecipeHandler(t *testing.T) {
 }
 
 func TestDeleteCalendarRecipeHandler(t *testing.T) {
-	app, user, clndr, _ := Construct()
+	app, cookie, _, clndr, _ := Construct()
 	clndr.Create(app.DB)
 	calendarJson, _ := json.Marshal(clndr)
-	userJson, _ := json.Marshal(user)
-	app.Signup(string(userJson))
-	req, _ := http.NewRequest("POST", "/user/signin", strings.NewReader(string(userJson)))
 
-	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(app.SigninHandler)
-
-	handler.ServeHTTP(rr, req)
-	sessionCookie := rr.Header()["Set-Cookie"][0]
-	ck := strings.Split(sessionCookie, " ")
-	ck = strings.Split(ck[0], "session=")
-	cookie := ck[1]
 	tests := []struct {
 		input  string
 		output string
@@ -310,20 +254,9 @@ func TestDeleteCalendarRecipeHandler(t *testing.T) {
 	Destruct(app)
 }
 func TestGetAllRecipesHandler(t *testing.T) {
-	app, user, _, rcp := Construct()
+	app, cookie, _, _, rcp := Construct()
 	rcp.Create(app.DB)
-	userJson, _ := json.Marshal(user)
-	app.Signup(string(userJson))
-	req, _ := http.NewRequest("POST", "/user/signin", strings.NewReader(string(userJson)))
 
-	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(app.SigninHandler)
-
-	handler.ServeHTTP(rr, req)
-	sessionCookie := rr.Header()["Set-Cookie"][0]
-	ck := strings.Split(sessionCookie, " ")
-	ck = strings.Split(ck[0], "session=")
-	cookie := ck[1]
 	tests := []struct {
 		//output string
 		status int
@@ -360,20 +293,9 @@ func TestGetAllRecipesHandler(t *testing.T) {
 }
 
 func TestCreateRecipeHandler(t *testing.T) {
-	app, user, _, rcp := Construct()
+	app, cookie, _, _, rcp := Construct()
 	recipeJson, _ := json.Marshal(rcp)
-	userJson, _ := json.Marshal(user)
-	app.Signup(string(userJson))
-	req, _ := http.NewRequest("POST", "/user/signin", strings.NewReader(string(userJson)))
 
-	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(app.SigninHandler)
-
-	handler.ServeHTTP(rr, req)
-	sessionCookie := rr.Header()["Set-Cookie"][0]
-	ck := strings.Split(sessionCookie, " ")
-	ck = strings.Split(ck[0], "session=")
-	cookie := ck[1]
 	tests := []struct {
 		input  string
 		output string
@@ -404,21 +326,10 @@ func TestCreateRecipeHandler(t *testing.T) {
 	Destruct(app)
 }
 func TestGetRecipeHandler(t *testing.T) {
-	app, user, _, rcp := Construct()
+	app, cookie, _, _, rcp := Construct()
 	rcp.Create(app.DB)
 	recipeJson, _ := json.Marshal(rcp)
-	userJson, _ := json.Marshal(user)
-	app.Signup(string(userJson))
-	req, _ := http.NewRequest("POST", "/user/signin", strings.NewReader(string(userJson)))
 
-	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(app.SigninHandler)
-
-	handler.ServeHTTP(rr, req)
-	sessionCookie := rr.Header()["Set-Cookie"][0]
-	ck := strings.Split(sessionCookie, " ")
-	ck = strings.Split(ck[0], "session=")
-	cookie := ck[1]
 	tests := []struct {
 		input  string
 		output string
@@ -450,7 +361,7 @@ func TestGetRecipeHandler(t *testing.T) {
 }
 
 func TestUpdateRecipeHandler(t *testing.T) {
-	app, user, _, rcp := Construct()
+	app, _, user, _, rcp := Construct()
 	rcp.Create(app.DB)
 	rcp.ID = 1
 	rcp.Calori = 10
@@ -500,7 +411,7 @@ func TestUpdateRecipeHandler(t *testing.T) {
 	Destruct(app)
 }
 func TestDeleteRecipeHandler(t *testing.T) {
-	app, user, _, rcp := Construct()
+	app, _, user, _, rcp := Construct()
 	rcp.Create(app.DB)
 	rcp.ID = 1
 	recipeJson, _ := json.Marshal(rcp)

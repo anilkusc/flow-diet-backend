@@ -10,7 +10,7 @@ import (
 )
 
 func TestIdControl(t *testing.T) {
-	app, user, _, _ := Construct()
+	app, _, user, _, _ := Construct()
 	userJson, _ := json.Marshal(user)
 	tests := []struct {
 		input  string
@@ -43,20 +43,8 @@ func TestIdControl(t *testing.T) {
 	Destruct(app)
 }
 func TestAuth(t *testing.T) {
-	app, user, _, _ := Construct()
+	app, cookie, _, _, _ := Construct()
 
-	userJson, _ := json.Marshal(user)
-	app.Signup(string(userJson))
-	req, _ := http.NewRequest("POST", "/user/signin", strings.NewReader(string(userJson)))
-
-	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(app.SigninHandler)
-
-	handler.ServeHTTP(rr, req)
-	sessionCookie := rr.Header()["Set-Cookie"][0]
-	ck := strings.Split(sessionCookie, " ")
-	ck = strings.Split(ck[0], "session=")
-	cookie := ck[1]
 	tests := []struct {
 		cookie string
 		output string
@@ -89,20 +77,9 @@ func TestAuth(t *testing.T) {
 }
 
 func TestAuthz(t *testing.T) {
-	app, user, _, _ := Construct()
-	user.Role = "admin"
-	userJson, _ := json.Marshal(user)
-	app.Signup(string(userJson))
-	req, _ := http.NewRequest("POST", "/user/signin", strings.NewReader(string(userJson)))
+	app, cookie, user, _, _ := Construct()
+	user.Create(app.DB)
 
-	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(app.SigninHandler)
-
-	handler.ServeHTTP(rr, req)
-	sessionCookie := rr.Header()["Set-Cookie"][0]
-	ck := strings.Split(sessionCookie, " ")
-	ck = strings.Split(ck[0], "session=")
-	cookie := ck[1]
 	tests := []struct {
 		cookie string
 		output string

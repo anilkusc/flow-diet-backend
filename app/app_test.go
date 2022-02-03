@@ -1,6 +1,10 @@
 package app
 
 import (
+	"encoding/json"
+	"net/http"
+	"net/http/httptest"
+	"strings"
 	"time"
 
 	"github.com/anilkusc/flow-diet-backend/pkg/calendar"
@@ -13,11 +17,11 @@ import (
 	"gorm.io/gorm"
 )
 
-func Construct() (App, user.User, calendar.Calendar, recipe.Recipe) {
+func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe) {
 	godotenv.Load("../.env")
 	app := App{}
 	app.Init()
-	user := user.User{
+	usr := user.User{
 		Model: gorm.Model{
 			//ID:        1,
 			UpdatedAt: time.Time{}, CreatedAt: time.Time{}, DeletedAt: gorm.DeletedAt{Time: time.Time{}, Valid: false},
@@ -32,8 +36,24 @@ func Construct() (App, user.User, calendar.Calendar, recipe.Recipe) {
 		Favorite_Recipes:        []uint{1, 2, 3},
 		Favorite_Recipes_String: "[1,2,3]",
 		Address:                 "",
-		Role:                    "user",
+		Role:                    "admin", //"user"
 	}
+	userJson, _ := json.Marshal(usr)
+	app.Signup(string(userJson))
+
+	req, _ := http.NewRequest("POST", "/user/signin", strings.NewReader(string(userJson)))
+
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(app.SigninHandler)
+
+	handler.ServeHTTP(rr, req)
+	sessionCookie := rr.Header()["Set-Cookie"][0]
+	ck := strings.Split(sessionCookie, " ")
+	ck = strings.Split(ck[0], "session=")
+	cookie := ck[1]
+	signInCookie := cookie[:len(cookie)-1]
+	app.DB.Exec("DROP TABLE users")
+	app.DB.AutoMigrate(&user.User{})
 	var calendar = calendar.Calendar{
 		Model: gorm.Model{
 			//ID:        1,
@@ -73,7 +93,7 @@ func Construct() (App, user.User, calendar.Calendar, recipe.Recipe) {
 		Video_Urls:              "['S3URL1','S3URL2']",
 		For_How_Many_People:     2,
 	}
-	return app, user, calendar, recipe
+	return app, signInCookie, usr, calendar, recipe
 }
 func Destruct(app App) {
 	app.DB.Exec("DROP TABLE users")

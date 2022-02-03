@@ -101,5 +101,9 @@ func (u *User) IsCredentialsExist(db *gorm.DB) error {
 	if result != 0 {
 		return errors.New("email is already exist")
 	}
+	db.Raw("SELECT COUNT(phone) FROM users WHERE phone = ?;", u.Phone).Scan(&result)
+	if result != 0 {
+		return errors.New("phone number is already exist")
+	}
 	return nil
 }
