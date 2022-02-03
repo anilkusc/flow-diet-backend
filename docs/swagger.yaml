@@ -81,6 +81,22 @@ definitions:
         example: '[''S3URL'']'
         type: string
     type: object
+  shopping.Shopping:
+    properties:
+      end_date:
+        example: "1643743448"
+        type: string
+      ingredients:
+        items:
+          $ref: '#/definitions/ingredient.Ingredient'
+        type: array
+      start_date:
+        example: "1643743444"
+        type: string
+      user_id:
+        example: 1
+        type: integer
+    type: object
   user.User:
     properties:
       address:
@@ -303,6 +319,99 @@ paths:
       summary: Update Recipe
       tags:
       - recipe
+  /shopping/all:
+    get:
+      consumes:
+      - application/json
+      description: List All Shopping Lists
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Get shopping lists
+      tags:
+      - shopping
+  /shopping/create:
+    post:
+      consumes:
+      - application/json
+      description: Create A New Shopping List
+      parameters:
+      - description: Create New shopping List
+        in: body
+        name: shopping
+        required: true
+        schema:
+          $ref: '#/definitions/shopping.Shopping'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Create a new shopping list
+      tags:
+      - shopping
+  /shopping/delete:
+    post:
+      consumes:
+      - application/json
+      description: Delete Shopping List
+      parameters:
+      - description: Delete Shopping List
+        in: body
+        name: shopping
+        required: true
+        schema:
+          $ref: '#/definitions/shopping.Shopping'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Delete Shopping List
+      tags:
+      - shopping
+  /shopping/get:
+    post:
+      consumes:
+      - application/json
+      description: Get a shopping list
+      parameters:
+      - description: Get Shopping List
+        in: body
+        name: shopping
+        required: true
+        schema:
+          $ref: '#/definitions/shopping.Shopping'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Get a shopping list
+      tags:
+      - shopping
+  /shopping/update:
+    post:
+      consumes:
+      - application/json
+      description: Update Shopping List
+      parameters:
+      - description: Update Shopping List
+        in: body
+        name: shopping
+        required: true
+        schema:
+          $ref: '#/definitions/shopping.Shopping'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Update Shopping List
+      tags:
+      - shopping
   /user/logout:
     post:
       consumes:

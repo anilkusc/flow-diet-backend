@@ -5,19 +5,17 @@ import (
 	"testing"
 )
 
-func TestListRecipes(t *testing.T) {
-	app, _, _, _, rcp, _ := Construct()
-	rcp.Create(app.DB)
+func TestListShoppings(t *testing.T) {
+	app, _, _, _, _, shp := Construct()
+	shp.Create(app.DB)
 	tests := []struct {
-		//output []recipe.Recipe
-		err error
+		userid uint
+		err    error
 	}{
-		{
-			//output: []recipe.Recipe{rcp},
-			err: nil},
+		{userid: 1, err: nil},
 	}
 	for _, test := range tests {
-		_, err := app.ListRecipes()
+		_, err := app.ListShoppings(test.userid)
 		if err != nil {
 			t.Errorf("Error is: %v . Expected: %v", err, test.err)
 		}
@@ -30,19 +28,19 @@ func TestListRecipes(t *testing.T) {
 	}
 	Destruct(app)
 }
-func TestCreateRecipe(t *testing.T) {
-	app, _, _, _, rcp, _ := Construct()
-	recipeJson, _ := json.Marshal(rcp)
+func TestCreateShopping(t *testing.T) {
+	app, _, _, _, _, shp := Construct()
+	shoppingJson, _ := json.Marshal(shp)
 	tests := []struct {
 		input string
 		err   error
 	}{
 		{
-			input: string(recipeJson),
+			input: string(shoppingJson),
 			err:   nil},
 	}
 	for _, test := range tests {
-		err := app.CreateRecipe(test.input)
+		err := app.CreateShopping(test.input)
 		if err != nil {
 			t.Errorf("Error is: %v . Expected: %v", err, test.err)
 		}
@@ -50,9 +48,9 @@ func TestCreateRecipe(t *testing.T) {
 	Destruct(app)
 }
 
-func TestGetRecipe(t *testing.T) {
-	app, _, _, _, rcp, _ := Construct()
-	rcp.Create(app.DB)
+func TestGetShopping(t *testing.T) {
+	app, _, _, _, _, shp := Construct()
+	shp.Create(app.DB)
 	tests := []struct {
 		input  string
 		output string
@@ -64,7 +62,7 @@ func TestGetRecipe(t *testing.T) {
 			err: nil},
 	}
 	for _, test := range tests {
-		_, err := app.GetRecipe(test.input)
+		_, err := app.GetShopping(test.input)
 		if err != nil {
 			t.Errorf("Error is: %v . Expected: %v", err, test.err)
 		} /*
@@ -75,21 +73,21 @@ func TestGetRecipe(t *testing.T) {
 	Destruct(app)
 }
 
-func TestDeleteRecipe(t *testing.T) {
-	app, _, _, _, rcp, _ := Construct()
-	rcp.Create(app.DB)
-	rcp.ID = 1
-	recipeJson, _ := json.Marshal(rcp)
+func TestDeleteShopping(t *testing.T) {
+	app, _, _, _, _, shp := Construct()
+	shp.Create(app.DB)
+	shp.ID = 1
+	shoppingJson, _ := json.Marshal(shp)
 	tests := []struct {
 		input string
 		err   error
 	}{
 		{
-			input: string(recipeJson),
+			input: string(shoppingJson),
 			err:   nil},
 	}
 	for _, test := range tests {
-		err := app.DeleteRecipe(test.input)
+		err := app.DeleteShopping(test.input)
 		if err != nil {
 			t.Errorf("Error is: %v . Expected: %v", err, test.err)
 		}
@@ -97,22 +95,22 @@ func TestDeleteRecipe(t *testing.T) {
 	Destruct(app)
 }
 
-func TestUpdateRecipe(t *testing.T) {
-	app, _, _, _, rcp, _ := Construct()
-	rcp.Create(app.DB)
-	rcp.ID = 1
-	rcp.Calori = 100
-	recipeJson, _ := json.Marshal(rcp)
+func TestUpdateShopping(t *testing.T) {
+	app, _, _, _, _, shp := Construct()
+	shp.Create(app.DB)
+	shp.ID = 1
+	shp.Start_Date = "100"
+	shoppingJson, _ := json.Marshal(shp)
 	tests := []struct {
 		input string
 		err   error
 	}{
 		{
-			input: string(recipeJson),
+			input: string(shoppingJson),
 			err:   nil},
 	}
 	for _, test := range tests {
-		err := app.UpdateRecipe(test.input)
+		err := app.UpdateShopping(test.input)
 		if err != nil {
 			t.Errorf("Error is: %v . Expected: %v", err, test.err)
 		}

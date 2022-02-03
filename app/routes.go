@@ -392,6 +392,153 @@ func (app *App) DeleteRecipeHandler(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+////////////////////////////////////////////
+
+// GetAllShoppingsHandler godoc
+// @Summary Get shopping lists
+// @Description List All Shopping Lists
+// @Tags shopping
+// @Accept  json
+// @Produce  json
+// @Success 200
+// @Router /shopping/all [get]
+func (app *App) GetAllShoppingsHandler(w http.ResponseWriter, r *http.Request) {
+	session, err := app.SessionStore.Get(r, "session")
+	if err != nil {
+		log.Error("cannot get session store : ", err)
+		http.Error(w, "cannot get session store", http.StatusInternalServerError)
+		return
+	}
+	recipes, err := app.ListShoppings(session.Values["id"].(uint))
+	if err != nil {
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Info("shopping lists are listed: ", recipes)
+	http.Error(w, recipes, http.StatusOK)
+	return
+}
+
+// CreateShoppingHandler godoc
+// @Summary Create a new shopping list
+// @Description Create A New Shopping List
+// @Tags shopping
+// @Accept  json
+// @Produce  json
+// @Param shopping body shopping.Shopping true "Create New shopping List"
+// @Success 200
+// @Router /shopping/create [post]
+func (app *App) CreateShoppingHandler(w http.ResponseWriter, r *http.Request) {
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Error("cannot read body: ", err)
+		http.Error(w, "wrong shopping list object", http.StatusBadRequest)
+		return
+	}
+
+	err = app.CreateShopping(string(body))
+	if err != nil {
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Info("shopping list is created: ", string(body))
+	http.Error(w, "OK", http.StatusOK)
+	return
+}
+
+// GetShoppingHandler godoc
+// @Summary Get a shopping list
+// @Description  Get a shopping list
+// @Tags shopping
+// @Accept  json
+// @Produce  json
+// @Param shopping body shopping.Shopping true "Get Shopping List"
+// @Success 200
+// @Router /shopping/get [post]
+func (app *App) GetShoppingHandler(w http.ResponseWriter, r *http.Request) {
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Error("cannot read body: ", err)
+		http.Error(w, "wrong shopping list object", http.StatusBadRequest)
+		return
+	}
+	recipe, err := app.GetShopping(string(body))
+	if err != nil {
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Info("shopping list is obtained: ", recipe)
+	http.Error(w, recipe, http.StatusOK)
+	return
+}
+
+// UpdateShoppingHandler godoc
+// @Summary Update Shopping List
+// @Description Update Shopping List
+// @Tags shopping
+// @Accept  json
+// @Produce  json
+// @Param shopping body shopping.Shopping true "Update Shopping List"
+// @Success 200
+// @Router /shopping/update [post]
+func (app *App) UpdateShoppingHandler(w http.ResponseWriter, r *http.Request) {
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Error("cannot read body: ", err)
+		http.Error(w, "wrong calendar object", http.StatusBadRequest)
+		return
+	}
+
+	err = app.UpdateShopping(string(body))
+	if err != nil {
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Info("updated recipe : ", string(body))
+	http.Error(w, "OK", http.StatusOK)
+	return
+}
+
+// DeleteShoppingHandler godoc
+// @Summary Delete Shopping List
+// @Description Delete Shopping List
+// @Tags shopping
+// @Accept  json
+// @Produce  json
+// @Param shopping body shopping.Shopping true "Delete Shopping List"
+// @Success 200
+// @Router /shopping/delete [post]
+func (app *App) DeleteShoppingHandler(w http.ResponseWriter, r *http.Request) {
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Error("cannot read body: ", err)
+		http.Error(w, "wrong calendar object", http.StatusBadRequest)
+		return
+	}
+
+	err = app.DeleteShopping(string(body))
+	if err != nil {
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Info("deleted recipe : ", string(body))
+	http.Error(w, "OK", http.StatusOK)
+	return
+}
+
 func (app *App) TestHandler(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Hello", http.StatusOK)
 	return

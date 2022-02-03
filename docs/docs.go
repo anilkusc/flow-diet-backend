@@ -288,6 +288,150 @@ var doc = `{
                 }
             }
         },
+        "/shopping/all": {
+            "get": {
+                "description": "List All Shopping Lists",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "shopping"
+                ],
+                "summary": "Get shopping lists",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/shopping/create": {
+            "post": {
+                "description": "Create A New Shopping List",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "shopping"
+                ],
+                "summary": "Create a new shopping list",
+                "parameters": [
+                    {
+                        "description": "Create New shopping List",
+                        "name": "shopping",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/shopping.Shopping"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/shopping/delete": {
+            "post": {
+                "description": "Delete Shopping List",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "shopping"
+                ],
+                "summary": "Delete Shopping List",
+                "parameters": [
+                    {
+                        "description": "Delete Shopping List",
+                        "name": "shopping",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/shopping.Shopping"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/shopping/get": {
+            "post": {
+                "description": "Get a shopping list",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "shopping"
+                ],
+                "summary": "Get a shopping list",
+                "parameters": [
+                    {
+                        "description": "Get Shopping List",
+                        "name": "shopping",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/shopping.Shopping"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/shopping/update": {
+            "post": {
+                "description": "Update Shopping List",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "shopping"
+                ],
+                "summary": "Update Shopping List",
+                "parameters": [
+                    {
+                        "description": "Update Shopping List",
+                        "name": "shopping",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/shopping.Shopping"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/user/logout": {
             "post": {
                 "description": "Logout for the user",
@@ -480,6 +624,29 @@ var doc = `{
                 "video_urls": {
                     "type": "string",
                     "example": "['S3URL']"
+                }
+            }
+        },
+        "shopping.Shopping": {
+            "type": "object",
+            "properties": {
+                "end_date": {
+                    "type": "string",
+                    "example": "1643743448"
+                },
+                "ingredients": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ingredient.Ingredient"
+                    }
+                },
+                "start_date": {
+                    "type": "string",
+                    "example": "1643743444"
+                },
+                "user_id": {
+                    "type": "integer",
+                    "example": 1
                 }
             }
         },

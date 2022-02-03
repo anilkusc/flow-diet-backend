@@ -12,12 +12,13 @@ import (
 	"github.com/anilkusc/flow-diet-backend/pkg/recipe/ingredient"
 	"github.com/anilkusc/flow-diet-backend/pkg/recipe/material"
 	"github.com/anilkusc/flow-diet-backend/pkg/recipe/measurement"
+	"github.com/anilkusc/flow-diet-backend/pkg/shopping"
 	user "github.com/anilkusc/flow-diet-backend/pkg/user"
 	"github.com/joho/godotenv"
 	"gorm.io/gorm"
 )
 
-func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe) {
+func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shopping.Shopping) {
 	godotenv.Load("../.env")
 	app := App{}
 	app.Init()
@@ -93,10 +94,36 @@ func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe) {
 		Video_Urls:              "['S3URL1','S3URL2']",
 		For_How_Many_People:     2,
 	}
-	return app, signInCookie, usr, calendar, recipe
+	var shopping = shopping.Shopping{
+		Model: gorm.Model{
+			//ID:        1,
+			UpdatedAt: time.Time{}, CreatedAt: time.Time{}, DeletedAt: gorm.DeletedAt{Time: time.Time{}, Valid: false},
+		},
+		Ingredients: []ingredient.Ingredient{
+			{
+				Measurement: measurement.Measurement{
+					Size:     200,
+					Quantity: "gram",
+				},
+				Material: material.Material{
+					Type:       "fruit",
+					Name:       "banana",
+					Photo_Urls: "['s3link1','s3link2']",
+				},
+				IsExist:    false,
+				IsOptional: false,
+			},
+		},
+		Ingredients_String: `[{"measurement":{"size":200,"quantity":"gram"},"material":{"type":"fruit","name":"banana","photo_urls":"['s3link1','s3link2']"},"isexist":false,"isoptional":false}]`,
+		Start_Date:         "1643743444",
+		End_Date:           "1643743448",
+		User_Id:            1,
+	}
+	return app, signInCookie, usr, calendar, recipe, shopping
 }
 func Destruct(app App) {
 	app.DB.Exec("DROP TABLE users")
 	app.DB.Exec("DROP TABLE calendars")
 	app.DB.Exec("DROP TABLE recipes")
+	app.DB.Exec("DROP TABLE shoppings")
 }
