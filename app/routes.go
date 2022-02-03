@@ -50,7 +50,7 @@ func (app *App) SignupHandler(w http.ResponseWriter, r *http.Request) {
 func (app *App) SigninHandler(w http.ResponseWriter, r *http.Request) {
 	//this sleep is for preventing brute force
 	time.Sleep(1 * time.Second)
-	var user user.User
+	var usr user.User
 	var isauth bool
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -58,7 +58,7 @@ func (app *App) SigninHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid user", http.StatusBadRequest)
 		return
 	}
-	user, isauth, err = app.Signin(string(body))
+	usr, isauth, err = app.Signin(string(body))
 	if err != nil {
 		log.Error("cannot signin : ", err)
 		http.Error(w, "cannot signin", http.StatusInternalServerError)
@@ -69,7 +69,7 @@ func (app *App) SigninHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid credentials", http.StatusForbidden)
 		return
 	}
-	userJson, err := json.Marshal(user)
+	userJson, err := json.Marshal(usr)
 	if err != nil {
 		log.Error("cannot marshall calendars json: ", err)
 		http.Error(w, "cannot signin", http.StatusInternalServerError)
@@ -81,12 +81,11 @@ func (app *App) SigninHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "cannot get session store", http.StatusInternalServerError)
 		return
 	}
-	user.Read(app.DB)
+
 	log.Info("updating session")
 	session.Values["authenticated"] = "true"
-	session.Values["role"] = user.Role
-	//session.Values["id"] = strconv.FormatUint(uint64(user.ID), 10)
-	session.Values["id"] = user.ID
+	session.Values["role"] = usr.Role
+	session.Values["id"] = usr.ID
 	session.Save(r, w)
 	log.Info("session updated")
 	log.Info("user has been logged in: ", string(userJson))
@@ -536,6 +535,36 @@ func (app *App) DeleteShoppingHandler(w http.ResponseWriter, r *http.Request) {
 
 	log.Info("deleted recipe : ", string(body))
 	http.Error(w, "OK", http.StatusOK)
+	return
+}
+
+// SearchRecipesHandler godoc
+// @Summary Search Recipes
+// @Description Search Recipes by Title
+// @Tags search
+// @Accept  json
+// @Produce  json
+// @Param search body string true "Please write search word directly"
+// @Success 200
+// @Router /search/recipes [post]
+func (app *App) SearchRecipesHandler(w http.ResponseWriter, r *http.Request) {
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Error("cannot read body: ", err)
+		http.Error(w, "wrong search object", http.StatusBadRequest)
+		return
+	}
+
+	recipes, err := app.SearchRecipes(string(body))
+	if err != nil {
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Info("searched for "+string(body)+" and got this recipes : ", string(body))
+	http.Error(w, recipes, http.StatusOK)
 	return
 }
 

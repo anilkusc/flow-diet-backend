@@ -288,6 +288,37 @@ var doc = `{
                 }
             }
         },
+        "/search/recipes": {
+            "post": {
+                "description": "Search Recipes by Title",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "search"
+                ],
+                "summary": "Search Recipes",
+                "parameters": [
+                    {
+                        "description": "Please write search word directly",
+                        "name": "search",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/shopping/all": {
             "get": {
                 "description": "List All Shopping Lists",

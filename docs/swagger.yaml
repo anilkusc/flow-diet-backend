@@ -319,6 +319,26 @@ paths:
       summary: Update Recipe
       tags:
       - recipe
+  /search/recipes:
+    post:
+      consumes:
+      - application/json
+      description: Search Recipes by Title
+      parameters:
+      - description: Please write search word directly
+        in: body
+        name: search
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Search Recipes
+      tags:
+      - search
   /shopping/all:
     get:
       consumes:

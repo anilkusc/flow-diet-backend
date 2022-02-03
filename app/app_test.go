@@ -12,13 +12,14 @@ import (
 	"github.com/anilkusc/flow-diet-backend/pkg/recipe/ingredient"
 	"github.com/anilkusc/flow-diet-backend/pkg/recipe/material"
 	"github.com/anilkusc/flow-diet-backend/pkg/recipe/measurement"
+	"github.com/anilkusc/flow-diet-backend/pkg/search"
 	"github.com/anilkusc/flow-diet-backend/pkg/shopping"
 	user "github.com/anilkusc/flow-diet-backend/pkg/user"
 	"github.com/joho/godotenv"
 	"gorm.io/gorm"
 )
 
-func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shopping.Shopping) {
+func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shopping.Shopping, search.Search) {
 	godotenv.Load("../.env")
 	app := App{}
 	app.Init()
@@ -119,7 +120,8 @@ func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shop
 		End_Date:           "1643743448",
 		User_Id:            1,
 	}
-	return app, signInCookie, usr, calendar, recipe, shopping
+	search := search.Search{Word: "some"}
+	return app, signInCookie, usr, calendar, recipe, shopping, search
 }
 func Destruct(app App) {
 	app.DB.Exec("DROP TABLE users")

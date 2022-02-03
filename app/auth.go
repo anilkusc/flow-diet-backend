@@ -33,6 +33,10 @@ func (app *App) Signin(userJson string) (user.User, bool, error) {
 	if err != nil {
 		return user, false, err
 	}
+	err = user.Read(app.DB)
+	if err != nil {
+		return user, false, err
+	}
 	user.Password = ""
 	return user, isauth, nil
 }
