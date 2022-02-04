@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"reflect"
 	"testing"
+	"time"
 
 	user "github.com/anilkusc/flow-diet-backend/pkg/user"
 )
@@ -27,7 +28,7 @@ func TestSignup(t *testing.T) {
 }
 func TestSignin(t *testing.T) {
 	app, _, usr, _, _, _, _ := Construct()
-
+	usr.ID = 1
 	userJson, _ := json.Marshal(usr)
 	app.Signup(string(userJson))
 	usr.Password = ""
@@ -49,6 +50,7 @@ func TestSignin(t *testing.T) {
 			t.Errorf("Result isAuth is: %v . Expected: %v", isAuth, test.isAuth)
 		}
 		output.Favorite_Recipes_String, _ = output.ArrayToJson(output.Favorite_Recipes)
+		output.Model.CreatedAt, output.Model.UpdatedAt = time.Time{}, time.Time{}
 		if !reflect.DeepEqual(output, test.output) {
 			t.Errorf("Result is: %v . Expected: %v", output, test.output)
 		}

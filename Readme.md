@@ -10,4 +10,6 @@
 	- user role control function in user object
 * Shopping
 	- Add list shoppinglist by date interval
-	
+* Recommendation
+	- Add prepared diet recommendations
+	- Add balance based diet(sufficent and balanced diet)

@@ -18,6 +18,7 @@ type User struct {
 	Weight                  uint8  `json:"weight" example:"70"`
 	Height                  uint8  `json:"height" example:"170"`
 	Age                     uint8  `json:"age" example:"25"`
+	Gender                  string `json:"gender" example:"male"`  // male,female,other
 	Diet                    string `json:"diet" example:"omnivor"` //vegaterian , vegan , omnivor , carnivor
 	Favorite_Recipes        []uint `json:"favorite_recipes" gorm:"-"`
 	Favorite_Recipes_String string `json:"-" swaggerignore:"true"`
