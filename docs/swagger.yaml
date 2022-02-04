@@ -30,11 +30,15 @@ definitions:
     type: object
   material.Material:
     properties:
+      material_photo_urls:
+        example:
+        - S3URL1
+        - S3URL2
+        items:
+          type: string
+        type: array
       name:
         example: banana
-        type: string
-      photo_urls:
-        example: '[{''url'':''exampleS3URL''}]'
         type: string
       type:
         description: gorm.Model `json:"-" swaggerignore:"true"`
@@ -53,6 +57,14 @@ definitions:
     type: object
   recipe.Recipe:
     properties:
+      appropriate_meals:
+        description: Breakfast, Snack , Noon , AfterNoon , Evening , Night
+        example:
+        - breakfast
+        - snack
+        items:
+          type: string
+        type: array
       calori:
         example: 252
         type: integer
@@ -66,20 +78,29 @@ definitions:
         items:
           $ref: '#/definitions/ingredient.Ingredient'
         type: array
-      name:
-        type: string
       photo_urls:
-        example: '[''S3URL'']'
-        type: string
+        example:
+        - S3URL1
+        - S3URL2
+        items:
+          type: string
+        type: array
       preperation:
         example: bla bla bla
         type: string
       preperation_time:
         example: 15
         type: integer
-      video_urls:
-        example: '[''S3URL'']'
+      title:
+        example: Sushi With Wassabi
         type: string
+      video_urls:
+        example:
+        - S3URL1
+        - S3URL2
+        items:
+          type: string
+        type: array
     type: object
   shopping.Shopping:
     properties:
@@ -109,6 +130,12 @@ definitions:
         description: vegaterian , vegan , omnivor , carnivor
         example: omnivor
         type: string
+      dislikes:
+        example:
+        - onion
+        items:
+          type: string
+        type: array
       email:
         example: test@test.com
         type: string
@@ -116,9 +143,20 @@ definitions:
         items:
           type: integer
         type: array
+      gender:
+        description: male,female,other
+        example: male
+        type: string
       height:
         example: 170
         type: integer
+      likes:
+        example:
+        - kebap
+        - pizza
+        items:
+          type: string
+        type: array
       name:
         example: test user
         type: string
@@ -128,12 +166,28 @@ definitions:
       phone:
         example: "+905355353535"
         type: string
+      preferred_meals:
+        example:
+        - breakfast
+        items:
+          type: string
+        type: array
+      prohibits:
+        example:
+        - sugar
+        items:
+          type: string
+        type: array
       role:
         description: root,admin,editor,user,anonymous
         example: user
         type: string
       username:
         example: testuser
+        type: string
+      wants:
+        description: gain , lost , protect // (weights)
+        example: gain
         type: string
       weight:
         example: 70

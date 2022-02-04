@@ -40,8 +40,17 @@ func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shop
 		Diet:                    "omnivor",
 		Favorite_Recipes:        []uint{1, 2, 3},
 		Favorite_Recipes_String: "[1,2,3]",
-		Address:                 "",
+		Address:                 "my address 123",
 		Role:                    "admin", //"user"
+		Preferred_Meals:         []string{"breakfast"},
+		Preferred_Meals_String:  `["breakfast"]`,
+		Likes:                   []string{"kebap"},
+		Likes_String:            `["kebap"]`,
+		Dislikes:                []string{"onion"},
+		Dislikes_String:         `["onion"]`,
+		Prohibits:               []string{"sugar"},
+		Prohibits_String:        `["sugar"]`,
+		Wants:                   `gain`,
 	}
 	userJson, _ := json.Marshal(usr)
 	app.Signup(string(userJson))
@@ -73,7 +82,7 @@ func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shop
 			//ID:        1,
 			UpdatedAt: time.Time{}, CreatedAt: time.Time{}, DeletedAt: gorm.DeletedAt{Time: time.Time{}, Valid: false},
 		},
-		Name: "Test Recipe",
+		Title: "Test Recipe",
 		Ingredients: []ingredient.Ingredient{
 			{
 				Measurement: measurement.Measurement{
@@ -81,21 +90,23 @@ func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shop
 					Quantity: "gram",
 				},
 				Material: material.Material{
-					Type:       "fruit",
-					Name:       "banana",
-					Photo_Urls: "['s3link1','s3link2']",
+					Type:                "fruit",
+					Name:                "banana",
+					Material_Photo_Urls: []string{"S3URL1", "S3URL2"},
 				},
 				IsExist:    false,
 				IsOptional: false,
 			},
 		},
-		Ingredients_String:      `[{"measurement":{"size":200,"quantity":"gram"},"material":{"type":"fruit","name":"banana","photo_urls":"['s3link1','s3link2']"},"isexist":false,"isoptional":false}]`,
+		Ingredients_String:      `[{"measurement":{"size":200,"quantity":"gram"},"material":{"type":"fruit","name":"banana","material_photo_urls":["S3URL1","S3URL2"]},"isexist":false,"isoptional":false}]`,
 		Preperation:             "Cook the chickens!",
 		Preperation_Time_minute: 15,
 		Cooking_Time_Minute:     15,
 		Calori:                  255,
-		Photo_Urls:              "['S3URL1','S3URL2']",
-		Video_Urls:              "['S3URL1','S3URL2']",
+		Photo_Urls:              []string{"S3URL1", "S3URL2"},
+		Video_Urls:              []string{"S3URL1", "S3URL2"},
+		Photo_Urls_String:       `["S3URL1", "S3URL2"]`,
+		Video_Urls_String:       `["S3URL1", "S3URL2"]`,
 		For_How_Many_People:     2,
 	}
 	var shopping = shopping.Shopping{
@@ -110,15 +121,15 @@ func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shop
 					Quantity: "gram",
 				},
 				Material: material.Material{
-					Type:       "fruit",
-					Name:       "banana",
-					Photo_Urls: "['s3link1','s3link2']",
+					Type:                "fruit",
+					Name:                "banana",
+					Material_Photo_Urls: []string{"S3URL1", "S3URL2"},
 				},
 				IsExist:    false,
 				IsOptional: false,
 			},
 		},
-		Ingredients_String: `[{"measurement":{"size":200,"quantity":"gram"},"material":{"type":"fruit","name":"banana","photo_urls":"['s3link1','s3link2']"},"isexist":false,"isoptional":false}]`,
+		Ingredients_String: `[{"measurement":{"size":200,"quantity":"gram"},"material":{"type":"fruit","name":"banana","material_photo_urls":["S3URL1","S3URL2"]},"isexist":false,"isoptional":false}]`,
 		Start_Date:         "1643743444",
 		End_Date:           "1643743448",
 		User_Id:            1,

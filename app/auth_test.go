@@ -49,7 +49,8 @@ func TestSignin(t *testing.T) {
 		if isAuth != test.isAuth {
 			t.Errorf("Result isAuth is: %v . Expected: %v", isAuth, test.isAuth)
 		}
-		output.Favorite_Recipes_String, _ = output.ArrayToJson(output.Favorite_Recipes)
+		output.Favorite_Recipes_String, _ = output.UintArrayToJson(output.Favorite_Recipes)
+		output.Preferred_Meals_String, _ = output.ArrayToJson(output.Preferred_Meals)
 		output.Model.CreatedAt, output.Model.UpdatedAt = time.Time{}, time.Time{}
 		if !reflect.DeepEqual(output, test.output) {
 			t.Errorf("Result is: %v . Expected: %v", output, test.output)

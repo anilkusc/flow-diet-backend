@@ -587,13 +587,19 @@ var doc = `{
         "material.Material": {
             "type": "object",
             "properties": {
+                "material_photo_urls": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "S3URL1",
+                        "S3URL2"
+                    ]
+                },
                 "name": {
                     "type": "string",
                     "example": "banana"
-                },
-                "photo_urls": {
-                    "type": "string",
-                    "example": "[{'url':'exampleS3URL'}]"
                 },
                 "type": {
                     "description": "gorm.Model ` + "`" + `json:\"-\" swaggerignore:\"true\"` + "`" + `",
@@ -619,6 +625,17 @@ var doc = `{
         "recipe.Recipe": {
             "type": "object",
             "properties": {
+                "appropriate_meals": {
+                    "description": "Breakfast, Snack , Noon , AfterNoon , Evening , Night",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "breakfast",
+                        "snack"
+                    ]
+                },
                 "calori": {
                     "type": "integer",
                     "example": 252
@@ -637,12 +654,15 @@ var doc = `{
                         "$ref": "#/definitions/ingredient.Ingredient"
                     }
                 },
-                "name": {
-                    "type": "string"
-                },
                 "photo_urls": {
-                    "type": "string",
-                    "example": "['S3URL']"
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "S3URL1",
+                        "S3URL2"
+                    ]
                 },
                 "preperation": {
                     "type": "string",
@@ -652,9 +672,19 @@ var doc = `{
                     "type": "integer",
                     "example": 15
                 },
-                "video_urls": {
+                "title": {
                     "type": "string",
-                    "example": "['S3URL']"
+                    "example": "Sushi With Wassabi"
+                },
+                "video_urls": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "S3URL1",
+                        "S3URL2"
+                    ]
                 }
             }
         },
@@ -697,6 +727,15 @@ var doc = `{
                     "type": "string",
                     "example": "omnivor"
                 },
+                "dislikes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "onion"
+                    ]
+                },
                 "email": {
                     "type": "string",
                     "example": "test@test.com"
@@ -707,9 +746,24 @@ var doc = `{
                         "type": "integer"
                     }
                 },
+                "gender": {
+                    "description": "male,female,other",
+                    "type": "string",
+                    "example": "male"
+                },
                 "height": {
                     "type": "integer",
                     "example": 170
+                },
+                "likes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "kebap",
+                        "pizza"
+                    ]
                 },
                 "name": {
                     "type": "string",
@@ -723,6 +777,24 @@ var doc = `{
                     "type": "string",
                     "example": "+905355353535"
                 },
+                "preferred_meals": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "breakfast"
+                    ]
+                },
+                "prohibits": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "sugar"
+                    ]
+                },
                 "role": {
                     "description": "root,admin,editor,user,anonymous",
                     "type": "string",
@@ -731,6 +803,11 @@ var doc = `{
                 "username": {
                     "type": "string",
                     "example": "testuser"
+                },
+                "wants": {
+                    "description": "gain , lost , protect // (weights)",
+                    "type": "string",
+                    "example": "gain"
                 },
                 "weight": {
                     "type": "integer",

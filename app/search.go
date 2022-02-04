@@ -18,7 +18,7 @@ func (app *App) SearchRecipes(word string) (string, error) {
 		return "", err
 	}
 	for _, rcp := range recipes {
-		filteredRecipes[rcp.ID] = rcp.Name
+		filteredRecipes[rcp.ID] = rcp.Title
 	}
 
 	resultRecipes, err := search.FindRecipesByName(filteredRecipes)

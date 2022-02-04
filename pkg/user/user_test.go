@@ -31,6 +31,15 @@ func Construct() (*gorm.DB, User) {
 		Favorite_Recipes_String: "[1,2,3]",
 		Address:                 "",
 		Role:                    "user",
+		Preferred_Meals:         []string{"breakfast"},
+		Preferred_Meals_String:  `["breakfast"]`,
+		Likes:                   []string{"kebap"},
+		Likes_String:            `["kebap"]`,
+		Dislikes:                []string{"onion"},
+		Dislikes_String:         `["onion"]`,
+		Prohibits:               []string{"sugar"},
+		Prohibits_String:        `["sugar"]`,
+		Wants:                   `gain`,
 	}
 	db, _ := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
 	db.AutoMigrate(&User{})
@@ -50,11 +59,11 @@ func TestArrayToJson(t *testing.T) {
 		{input: user, output: user, err: nil},
 	}
 	for _, test := range tests {
-		res, err := test.input.ArrayToJson(test.input.Favorite_Recipes)
+		res, err := test.input.ArrayToJson(test.input.Preferred_Meals)
 		if test.err != err {
 			t.Errorf("Error is: %v . Expected: %v", err, test.err)
 		}
-		if test.output.Favorite_Recipes_String != res {
+		if test.output.Preferred_Meals_String != res {
 			t.Errorf("Result is: %v . Expected: %v", res, test.output.Favorite_Recipes_String)
 		}
 	}
@@ -71,7 +80,50 @@ func TestJsonToArray(t *testing.T) {
 		{input: user, output: user, err: nil},
 	}
 	for _, test := range tests {
-		res, err := test.input.JsonToArray(test.input.Favorite_Recipes_String)
+		res, err := test.input.JsonToArray(test.input.Preferred_Meals_String)
+		if test.err != err {
+			t.Errorf("Error is: %v . Expected: %v", err, test.err)
+		}
+		if !reflect.DeepEqual(test.output.Preferred_Meals, res) {
+			t.Errorf("Result is: %v . Expected: %v", res, test.output.Favorite_Recipes)
+		}
+	}
+	Destruct(db)
+}
+
+func TestUintArrayToJson(t *testing.T) {
+	db, user := Construct()
+
+	tests := []struct {
+		input  User
+		output User
+		err    error
+	}{
+		{input: user, output: user, err: nil},
+	}
+	for _, test := range tests {
+		res, err := test.input.UintArrayToJson(test.input.Favorite_Recipes)
+		if test.err != err {
+			t.Errorf("Error is: %v . Expected: %v", err, test.err)
+		}
+		if test.output.Favorite_Recipes_String != res {
+			t.Errorf("Result is: %v . Expected: %v", res, test.output.Favorite_Recipes_String)
+		}
+	}
+	Destruct(db)
+}
+func TestJsonToUintArray(t *testing.T) {
+	db, user := Construct()
+
+	tests := []struct {
+		input  User
+		output User
+		err    error
+	}{
+		{input: user, output: user, err: nil},
+	}
+	for _, test := range tests {
+		res, err := test.input.JsonToUintArray(test.input.Favorite_Recipes_String)
 		if test.err != err {
 			t.Errorf("Error is: %v . Expected: %v", err, test.err)
 		}

@@ -6,7 +6,23 @@ import (
 
 func (u *User) Create(db *gorm.DB) error {
 	var err error
-	u.Favorite_Recipes_String, err = u.ArrayToJson(u.Favorite_Recipes)
+	u.Favorite_Recipes_String, err = u.UintArrayToJson(u.Favorite_Recipes)
+	if err != nil {
+		return err
+	}
+	u.Preferred_Meals_String, err = u.ArrayToJson(u.Preferred_Meals)
+	if err != nil {
+		return err
+	}
+	u.Likes_String, err = u.ArrayToJson(u.Likes)
+	if err != nil {
+		return err
+	}
+	u.Dislikes_String, err = u.ArrayToJson(u.Dislikes)
+	if err != nil {
+		return err
+	}
+	u.Prohibits_String, err = u.ArrayToJson(u.Prohibits)
 	if err != nil {
 		return err
 	}
@@ -22,7 +38,23 @@ func (u *User) Read(db *gorm.DB) error {
 		result = db.Where("username=?", u.Username).First(&u)
 	}
 
-	u.Favorite_Recipes, err = u.JsonToArray(u.Favorite_Recipes_String)
+	u.Favorite_Recipes, err = u.JsonToUintArray(u.Favorite_Recipes_String)
+	if err != nil {
+		return err
+	}
+	u.Preferred_Meals, err = u.JsonToArray(u.Preferred_Meals_String)
+	if err != nil {
+		return err
+	}
+	u.Likes, err = u.JsonToArray(u.Likes_String)
+	if err != nil {
+		return err
+	}
+	u.Dislikes, err = u.JsonToArray(u.Dislikes_String)
+	if err != nil {
+		return err
+	}
+	u.Prohibits, err = u.JsonToArray(u.Prohibits_String)
 	if err != nil {
 		return err
 	}
@@ -31,7 +63,23 @@ func (u *User) Read(db *gorm.DB) error {
 }
 func (u *User) Update(db *gorm.DB) error {
 	var err error
-	u.Favorite_Recipes_String, err = u.ArrayToJson(u.Favorite_Recipes)
+	u.Favorite_Recipes_String, err = u.UintArrayToJson(u.Favorite_Recipes)
+	if err != nil {
+		return err
+	}
+	u.Preferred_Meals_String, err = u.ArrayToJson(u.Preferred_Meals)
+	if err != nil {
+		return err
+	}
+	u.Likes_String, err = u.ArrayToJson(u.Likes)
+	if err != nil {
+		return err
+	}
+	u.Dislikes_String, err = u.ArrayToJson(u.Dislikes)
+	if err != nil {
+		return err
+	}
+	u.Prohibits_String, err = u.ArrayToJson(u.Prohibits)
 	if err != nil {
 		return err
 	}
@@ -52,10 +100,25 @@ func (u *User) List(db *gorm.DB) ([]User, error) {
 	var err error
 	var users []User
 
-	//result := db.Where("game_id = ? ", u.ID).Find(&users)
 	result := db.Find(&users)
 	for i := range users {
-		users[i].Favorite_Recipes, err = users[i].JsonToArray(users[i].Favorite_Recipes_String)
+		users[i].Favorite_Recipes, err = users[i].JsonToUintArray(users[i].Favorite_Recipes_String)
+		if err != nil {
+			return users, err
+		}
+		users[i].Preferred_Meals, err = users[i].JsonToArray(users[i].Preferred_Meals_String)
+		if err != nil {
+			return users, err
+		}
+		users[i].Likes, err = users[i].JsonToArray(users[i].Likes_String)
+		if err != nil {
+			return users, err
+		}
+		users[i].Dislikes, err = users[i].JsonToArray(users[i].Dislikes_String)
+		if err != nil {
+			return users, err
+		}
+		users[i].Prohibits, err = users[i].JsonToArray(users[i].Prohibits_String)
 		if err != nil {
 			return users, err
 		}
