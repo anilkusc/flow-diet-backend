@@ -601,10 +601,15 @@ var doc = `{
                     "type": "string",
                     "example": "banana"
                 },
-                "type": {
-                    "description": "gorm.Model ` + "`" + `json:\"-\" swaggerignore:\"true\"` + "`" + `",
-                    "type": "string",
-                    "example": "fruit"
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "vegan",
+                        "fruit"
+                    ]
                 }
             }
         },

@@ -40,10 +40,13 @@ definitions:
       name:
         example: banana
         type: string
-      type:
-        description: gorm.Model `json:"-" swaggerignore:"true"`
-        example: fruit
-        type: string
+      tags:
+        example:
+        - vegan
+        - fruit
+        items:
+          type: string
+        type: array
     type: object
   measurement.Measurement:
     properties:
