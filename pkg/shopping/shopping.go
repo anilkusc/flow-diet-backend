@@ -12,8 +12,8 @@ type Shopping struct {
 	Ingredients        []ingredient.Ingredient `gorm:"-" json:"ingredients"`
 	Ingredients_String string                  `json:"-" swaggerignore:"true"`
 	User_Id            uint                    `gorm:"not null" json:"user_id" example:"1"`
-	Start_Date         string                  `gorm:"not null" json:"start_date" example:"1643743444"`
-	End_Date           string                  `gorm:"not null" json:"end_date" example:"1643743448"`
+	Start_Date         uint                    `gorm:"not null" json:"start_date" example:"1643743444"`
+	End_Date           uint                    `gorm:"not null" json:"end_date" example:"1643743448"`
 }
 
 func (s *Shopping) ArrayToJson(arr []ingredient.Ingredient) (string, error) {

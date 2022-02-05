@@ -339,26 +339,6 @@ var doc = `{
                 }
             }
         },
-        "/shopping/all": {
-            "get": {
-                "description": "List All Shopping Lists",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "shopping"
-                ],
-                "summary": "Get shopping lists",
-                "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                }
-            }
-        },
         "/shopping/create": {
             "post": {
                 "description": "Create A New Shopping List",
@@ -437,6 +417,37 @@ var doc = `{
                 "parameters": [
                     {
                         "description": "Get Shopping List",
+                        "name": "shopping",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/shopping.Shopping"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/shopping/list": {
+            "post": {
+                "description": "List All Shopping Lists",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "shopping"
+                ],
+                "summary": "Get shopping lists",
+                "parameters": [
+                    {
+                        "description": "Get shopping lists by date",
                         "name": "shopping",
                         "in": "body",
                         "required": true,
@@ -721,8 +732,8 @@ var doc = `{
             "type": "object",
             "properties": {
                 "end_date": {
-                    "type": "string",
-                    "example": "1643743448"
+                    "type": "integer",
+                    "example": 1643743448
                 },
                 "ingredients": {
                     "type": "array",
@@ -731,8 +742,8 @@ var doc = `{
                     }
                 },
                 "start_date": {
-                    "type": "string",
-                    "example": "1643743444"
+                    "type": "integer",
+                    "example": 1643743444
                 },
                 "user_id": {
                     "type": "integer",

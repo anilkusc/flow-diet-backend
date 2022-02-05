@@ -1,6 +1,5 @@
 # TODOS
 * General
-	- Add Dont read from database if object soft deleted feature
 	- Convert array to json functions for working for pointer so they will not take parameter and return value they just change object within.
 	- Add cousines like italian, mexican etc.
 	- Add prepared diets like katot , mediterrian , etc.
@@ -12,7 +11,6 @@
 	- role based access
 	- user role control function in user object
 * Shopping
-	- Add list shoppinglist by date interval
 * Recommendation
 	- Add prepared diet recommendations
 	- Add balance based diet(sufficent and balanced diet)

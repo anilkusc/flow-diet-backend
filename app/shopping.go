@@ -2,6 +2,8 @@ package app
 
 import (
 	"encoding/json"
+	"errors"
+	"time"
 
 	"github.com/anilkusc/flow-diet-backend/pkg/shopping"
 )
@@ -20,6 +22,40 @@ func (app *App) ListShoppings(userid uint) (string, error) {
 		return "", err
 	}
 	return string(shoppingsList), nil
+}
+func (app *App) ListShoppingsWithDateInterval(userid uint, shoppingJson string) (string, error) {
+
+	//TODO: Do not list older than 3 months
+
+	var shoppings []shopping.Shopping
+	var shopping shopping.Shopping
+	var err error
+
+	err = json.Unmarshal([]byte(shoppingJson), &shopping)
+	if err != nil {
+		return "", err
+	}
+	// 5000000 approximately 3 months
+	if (time.Now().Unix()-int64(shopping.Start_Date)) > 5000000 || (time.Now().Unix()-int64(shopping.Start_Date)) < 0 {
+		return "", errors.New("cannot be queried for more than 3 months")
+	}
+	// 600000 approximately 1 week
+	if (shopping.End_Date - shopping.Start_Date) > 600000 {
+		return "", errors.New("time interval cannot be more than 1 week")
+	}
+
+	shopping.User_Id = userid
+	shoppings, err = shopping.ListByDateInterval(app.DB)
+	if err != nil {
+		return "", err
+	}
+
+	shoppingsList, err := json.Marshal(shoppings)
+	if err != nil {
+		return "", err
+	}
+	return string(shoppingsList), nil
+
 }
 
 func (app *App) CreateShopping(shoppingJson string) error {

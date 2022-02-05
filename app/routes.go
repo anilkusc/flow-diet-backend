@@ -397,8 +397,9 @@ func (app *App) DeleteRecipeHandler(w http.ResponseWriter, r *http.Request) {
 // @Tags shopping
 // @Accept  json
 // @Produce  json
+// @Param shopping body shopping.Shopping true "Get shopping lists by date"
 // @Success 200
-// @Router /shopping/all [get]
+// @Router /shopping/list [post]
 func (app *App) GetAllShoppingsHandler(w http.ResponseWriter, r *http.Request) {
 	session, err := app.SessionStore.Get(r, "session")
 	if err != nil {
@@ -406,15 +407,22 @@ func (app *App) GetAllShoppingsHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "cannot get session store", http.StatusInternalServerError)
 		return
 	}
-	recipes, err := app.ListShoppings(session.Values["id"].(uint))
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Error("cannot read body: ", err)
+		http.Error(w, "wrong calendar object", http.StatusBadRequest)
+		return
+	}
+
+	shoppingList, err := app.ListShoppingsWithDateInterval(session.Values["id"].(uint), string(body))
 	if err != nil {
 		log.Error(err)
 		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
 		return
 	}
 
-	log.Info("shopping lists are listed: ", recipes)
-	http.Error(w, recipes, http.StatusOK)
+	log.Info("shopping lists are listed: ", shoppingList)
+	http.Error(w, shoppingList, http.StatusOK)
 	return
 }
 

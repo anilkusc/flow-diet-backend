@@ -67,3 +67,16 @@ func (s *Shopping) List(db *gorm.DB) ([]Shopping, error) {
 	}
 	return recipes, result.Error
 }
+
+func (s *Shopping) ListByDateInterval(db *gorm.DB) ([]Shopping, error) {
+	var err error
+	var recipes []Shopping
+	result := db.Where("user_id = ? AND start_date > ? AND end_date < ?", s.User_Id, s.Start_Date, s.End_Date).Find(&recipes)
+	for i := range recipes {
+		recipes[i].Ingredients, err = recipes[i].JsonToArray(recipes[i].Ingredients_String)
+		if err != nil {
+			return recipes, err
+		}
+	}
+	return recipes, result.Error
+}

@@ -114,15 +114,15 @@ definitions:
   shopping.Shopping:
     properties:
       end_date:
-        example: "1643743448"
-        type: string
+        example: 1643743448
+        type: integer
       ingredients:
         items:
           $ref: '#/definitions/ingredient.Ingredient'
         type: array
       start_date:
-        example: "1643743444"
-        type: string
+        example: 1643743444
+        type: integer
       user_id:
         example: 1
         type: integer
@@ -415,19 +415,6 @@ paths:
       summary: Search Recipes
       tags:
       - search
-  /shopping/all:
-    get:
-      consumes:
-      - application/json
-      description: List All Shopping Lists
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: ""
-      summary: Get shopping lists
-      tags:
-      - shopping
   /shopping/create:
     post:
       consumes:
@@ -486,6 +473,26 @@ paths:
         "200":
           description: ""
       summary: Get a shopping list
+      tags:
+      - shopping
+  /shopping/list:
+    post:
+      consumes:
+      - application/json
+      description: List All Shopping Lists
+      parameters:
+      - description: Get shopping lists by date
+        in: body
+        name: shopping
+        required: true
+        schema:
+          $ref: '#/definitions/shopping.Shopping'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Get shopping lists
       tags:
       - shopping
   /shopping/update:

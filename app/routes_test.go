@@ -435,17 +435,18 @@ func TestDeleteRecipeHandler(t *testing.T) {
 
 func TestGetAllShoppingsHandler(t *testing.T) {
 	app, cookie, _, _, _, shp, _, _ := Construct()
+	shp.Start_Date = 1643937031
+	shp.End_Date = 1644016231
 	shp.Create(app.DB)
-
 	tests := []struct {
-		status int
-		err    error
+		status       int
+		shoppingJson string
+		err          error
 	}{
-		{
-			status: 200, err: nil},
+		{shoppingJson: `{"start_date":1643850631 ,"end_date":1644109831}`, status: 200, err: nil},
 	}
 	for _, test := range tests {
-		req, err := http.NewRequest("GET", "/shopping/all", strings.NewReader(""))
+		req, err := http.NewRequest("POST", "/shopping/all", strings.NewReader(test.shoppingJson))
 		if err != nil {
 			t.Errorf("Error is: %v . Expected: %v", err, test.err)
 		}
@@ -535,7 +536,7 @@ func TestUpdateShoppingHandler(t *testing.T) {
 	app, cookie, user, _, _, shp, _, _ := Construct()
 	shp.Create(app.DB)
 	shp.ID = 1
-	shp.Start_Date = "10"
+	shp.Start_Date = 10
 	user.Role = "admin"
 	shoppingJson, _ := json.Marshal(shp)
 

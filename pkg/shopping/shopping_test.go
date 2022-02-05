@@ -35,8 +35,8 @@ func Construct() (*gorm.DB, Shopping) {
 			},
 		},
 		Ingredients_String: `[{"measurement":{"size":200,"quantity":"gram"},"material":{"name":"banana","material_photo_urls":["S3URL1","S3URL2"]},"isexist":false,"isoptional":false}]`,
-		Start_Date:         "1643743444",
-		End_Date:           "1643743448",
+		Start_Date:         1643743444,
+		End_Date:           1643743448,
 		User_Id:            1,
 	}
 	db, _ := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})

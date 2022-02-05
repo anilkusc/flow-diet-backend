@@ -133,8 +133,8 @@ func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shop
 			},
 		},
 		Ingredients_String: `[{"measurement":{"size":200,"quantity":"gram"},"material":{"name":"banana","material_photo_urls":["S3URL1","S3URL2"]},"isexist":false,"isoptional":false}]`,
-		Start_Date:         "1643743444",
-		End_Date:           "1643743448",
+		Start_Date:         1643743444,
+		End_Date:           1643743448,
 		User_Id:            1,
 	}
 	search := search.Search{Word: "some"}
