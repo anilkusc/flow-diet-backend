@@ -13,3 +13,7 @@
 * Recommendation
 	- Add prepared diet recommendations
 	- Add balance based diet(sufficent and balanced diet)
+	- User pointer in funcitons for getting uint array
+* Recipe
+	- Tag collector from materials(Map creator from recipe lists.)
+	- Set Diet Level for Ingrediens to make recommendation.It will take a look at materials and set a diet level .(1:Vegan,2Vegaterian ...)

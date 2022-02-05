@@ -36,7 +36,7 @@ func Construct() (*gorm.DB, Recipe) {
 				IsOptional: false,
 			},
 		},
-		Ingredients_String:       `[{"measurement":{"size":200,"quantity":"gram"},"material":{"name":"banana","tags":["vegan","fruit"],"material_photo_urls":["S3URL1","S3URL2"]},"isexist":false,"isoptional":false}]`,
+		Ingredients_String:       `[{"measurement":{"size":200,"quantity":"gram"},"material":{"name":"banana","tags":["vegan","fruit"],"material_diet_level":0,"material_photo_urls":["S3URL1","S3URL2"]},"isexist":false,"isoptional":false}]`,
 		Preperation:              "Cook the chickens!",
 		Preperation_Time_minute:  15,
 		Cooking_Time_Minute:      15,

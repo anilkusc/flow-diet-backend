@@ -26,7 +26,7 @@ func Construct() (*gorm.DB, User) {
 		Height:                  173,
 		Age:                     25,
 		Gender:                  "male",
-		Diet:                    "omnivor",
+		Diet_Level:              1,
 		Favorite_Recipes:        []uint{1, 2, 3},
 		Favorite_Recipes_String: "[1,2,3]",
 		Address:                 "",

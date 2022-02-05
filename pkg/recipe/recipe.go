@@ -21,7 +21,7 @@ type Recipe struct {
 	Photo_Urls_String        string                  `json:"-" swaggerignore:"true"`
 	Video_Urls_String        string                  `json:"-" swaggerignore:"true"`
 	For_How_Many_People      uint8                   `gorm:"not null" json:"for_how_many_people" example:"2"`
-	Appropriate_Meals        []string                `gorm:"-" json:"appropriate_meals" example:"breakfast,snack"` // Breakfast, Snack , Noon , AfterNoon , Evening , Night
+	Appropriate_Meals        []string                `gorm:"-" json:"appropriate_meals" example:"breakfast,snack"` // Breakfast, Snack , Noon , AfterNoon , Evening , Night // It should be added by appropriate wieght sort.
 	Appropriate_Meals_String string                  `json:"-" swaggerignore:"true"`
 }
 
