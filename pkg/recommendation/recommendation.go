@@ -7,10 +7,26 @@ type Recommendation struct {
 	Users_Prohibits       []string
 	Users_Diet_Level      uint
 
-	Recipe_IDsTags        map[uint][]string
-	Recipe_IDsDietlevel   map[uint]uint
-	All_Recipes_IDs       []uint
-	Recommendated_Recipes []uint // it is sorted by recommended points.
+	Recipe_IDsTags             map[uint][]string
+	Recipe_IDsAppropriateMeals map[uint][]string
+	Recipe_IDsDietlevel        map[uint]uint
+	Recipe_IDsPoints           map[uint]uint
+	All_Recipes_IDs            []uint
+
+	Meal_Factor    uint // this is factor importance weight of Meals while point the recipe. It will be multiple with point.
+	Like_Factor    uint
+	Dislike_Factor uint
+
+	Recommended_Recipes []uint // it is sorted by recommended points.
+}
+
+func (r *Recommendation) MakeRecipeRecommendation() {
+	r.DefinitelyRemoveProhibits()
+	r.DefinitelyRemoveHigherDietLevels()
+	r.PointByMeals()
+	r.PointByLikes()
+	r.PointByDislikes()
+	r.Recommended_Recipes = r.ReverseSortRecipeIdsByPoint()
 }
 
 func (r *Recommendation) DefinitelyRemoveProhibits() {
@@ -43,7 +59,7 @@ func (r *Recommendation) RemoveFromAllRecipesIDs(element uint) {
 	r.All_Recipes_IDs = append(r.All_Recipes_IDs[:index], r.All_Recipes_IDs[index+1:]...)
 }
 
-func (r *Recommendation) DefinitelyRemoveDietLevels() {
+func (r *Recommendation) DefinitelyRemoveHigherDietLevels() {
 
 	for recipeID, recipeDietlevel := range r.Recipe_IDsDietlevel {
 		if recipeDietlevel > r.Users_Diet_Level {
@@ -52,41 +68,45 @@ func (r *Recommendation) DefinitelyRemoveDietLevels() {
 	}
 }
 
-/*
+func (r *Recommendation) PointByMeals() {
 
-func (r *Recommendation) PointByMeals(recipeIDsAppropriateMeals map[uint][]string) map[uint]int {
-	recipeIDsPoint := map[uint]uint{}
-
-	for recipeID, AppropriateMeals := range recipeIDsAppropriateMeals {
-		point := 1
-		for _, Users_Preferred_Meal := range r.Users_Preferred_Meals {
-			for _, meal := range AppropriateMeals {
-				if meal == Users_Preferred_Meal {
-					point = point * 2
+	for recipeID, AppropriateMeals := range r.Recipe_IDsAppropriateMeals {
+		for _, AppropriateMeal := range AppropriateMeals {
+			for _, Users_Preferred_Meal := range r.Users_Preferred_Meals {
+				r.Recipe_IDsPoints[recipeID] = r.Recipe_IDsPoints[recipeID] + 1
+				if Users_Preferred_Meal == AppropriateMeal {
+					r.Recipe_IDsPoints[recipeID] = r.Recipe_IDsPoints[recipeID] * r.Meal_Factor
 				}
 			}
-
 		}
-		recipeIDsPoint[recipeID] = uint(point)
+
 	}
-	return recipeIDsPoint
 }
+func (r *Recommendation) PointByLikes() {
 
-func (r *Recommendation) PointByLikes(recipeIDsLikes map[uint][]string) map[uint]int {
-	recipeIDsPoint := map[uint]uint{}
-
-	for recipeID, likes := range recipeIDsLikes {
-		point := 1
-		for _, Users_Preferred_Meal := range r.Users_Preferred_Meals {
-			for _, meal := range AppropriateMeals {
-				if meal == Users_Preferred_Meal {
-					point = point * 3
+	for recipeID, tags := range r.Recipe_IDsTags {
+		for _, tag := range tags {
+			for _, Users_Like := range r.Users_Likes {
+				r.Recipe_IDsPoints[recipeID] = r.Recipe_IDsPoints[recipeID] + 1
+				if Users_Like == tag {
+					r.Recipe_IDsPoints[recipeID] = r.Recipe_IDsPoints[recipeID] * r.Like_Factor
 				}
 			}
-
 		}
-		recipeIDsPoint[recipeID] = uint(point)
+
 	}
-	return recipeIDsPoint
 }
-*/
+func (r *Recommendation) PointByDislikes() {
+
+	for recipeID, tags := range r.Recipe_IDsTags {
+		for _, tag := range tags {
+			for _, Users_Like := range r.Users_Likes {
+				r.Recipe_IDsPoints[recipeID] = r.Recipe_IDsPoints[recipeID] + 1
+				if Users_Like == tag {
+					r.Recipe_IDsPoints[recipeID] = r.Recipe_IDsPoints[recipeID] / r.Dislike_Factor
+				}
+			}
+		}
+
+	}
+}

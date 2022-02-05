@@ -27,6 +27,7 @@ func (app *App) InitRoutes() {
 	app.Router.HandleFunc("/shopping/update", app.Auth(app.UpdateShoppingHandler)).Methods("POST")
 	app.Router.HandleFunc("/shopping/delete", app.Auth(app.DeleteShoppingHandler)).Methods("POST")
 	app.Router.HandleFunc("/search/recipes", app.Auth(app.SearchRecipesHandler)).Methods("POST")
+	app.Router.HandleFunc("/recommendation/getrecipes", app.Auth(app.GetRecommendationsHandler)).Methods("GET")
 	if os.Getenv("ENV") != "prod" {
 		app.Router.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)
 	}

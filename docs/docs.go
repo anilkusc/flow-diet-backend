@@ -288,6 +288,26 @@ var doc = `{
                 }
             }
         },
+        "/recommendation/getrecipes": {
+            "get": {
+                "description": "Get Recommendations",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recommendation"
+                ],
+                "summary": "Get Recommendations",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/search/recipes": {
             "post": {
                 "description": "Search Recipes by Title",
@@ -588,6 +608,7 @@ var doc = `{
             "type": "object",
             "properties": {
                 "material_photo_urls": {
+                    "description": "Tags []string ` + "`" + `json:\"tags\" example:\"vegan,fruit\"` + "`" + `\nMaterial_Diet_Level uint     ` + "`" + `json:\"material_diet_level\" example:\"1\"` + "`" + `",
                     "type": "array",
                     "items": {
                         "type": "string"
@@ -600,16 +621,6 @@ var doc = `{
                 "name": {
                     "type": "string",
                     "example": "banana"
-                },
-                "tags": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "example": [
-                        "vegan",
-                        "fruit"
-                    ]
                 }
             }
         },
@@ -631,7 +642,7 @@ var doc = `{
             "type": "object",
             "properties": {
                 "appropriate_meals": {
-                    "description": "Breakfast, Snack , Noon , AfterNoon , Evening , Night",
+                    "description": "Breakfast, Snack , Noon , AfterNoon , Evening , Night // It should be added by appropriate wieght sort.",
                     "type": "array",
                     "items": {
                         "type": "string"
@@ -676,6 +687,19 @@ var doc = `{
                 "preperation_time": {
                     "type": "integer",
                     "example": 15
+                },
+                "recipe_diet_level": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "vegan"
+                    ]
                 },
                 "title": {
                     "type": "string",
@@ -727,10 +751,10 @@ var doc = `{
                     "type": "integer",
                     "example": 25
                 },
-                "diet": {
-                    "description": "vegaterian , vegan , omnivor , carnivor",
-                    "type": "string",
-                    "example": "omnivor"
+                "diet_level": {
+                    "description": "1: vegan ,2:vegaterian,3: omnivor ,4: carnivor",
+                    "type": "integer",
+                    "example": 1
                 },
                 "dislikes": {
                     "type": "array",

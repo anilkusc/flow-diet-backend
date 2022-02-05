@@ -31,6 +31,9 @@ definitions:
   material.Material:
     properties:
       material_photo_urls:
+        description: |-
+          Tags []string `json:"tags" example:"vegan,fruit"`
+          Material_Diet_Level uint     `json:"material_diet_level" example:"1"`
         example:
         - S3URL1
         - S3URL2
@@ -40,13 +43,6 @@ definitions:
       name:
         example: banana
         type: string
-      tags:
-        example:
-        - vegan
-        - fruit
-        items:
-          type: string
-        type: array
     type: object
   measurement.Measurement:
     properties:
@@ -61,7 +57,8 @@ definitions:
   recipe.Recipe:
     properties:
       appropriate_meals:
-        description: Breakfast, Snack , Noon , AfterNoon , Evening , Night
+        description: Breakfast, Snack , Noon , AfterNoon , Evening , Night // It should
+          be added by appropriate wieght sort.
         example:
         - breakfast
         - snack
@@ -94,6 +91,15 @@ definitions:
       preperation_time:
         example: 15
         type: integer
+      recipe_diet_level:
+        example: 1
+        type: integer
+      tags:
+        example:
+        - vegan
+        items:
+          type: string
+        type: array
       title:
         example: Sushi With Wassabi
         type: string
@@ -129,10 +135,10 @@ definitions:
       age:
         example: 25
         type: integer
-      diet:
-        description: vegaterian , vegan , omnivor , carnivor
-        example: omnivor
-        type: string
+      diet_level:
+        description: '1: vegan ,2:vegaterian,3: omnivor ,4: carnivor'
+        example: 1
+        type: integer
       dislikes:
         example:
         - onion
@@ -376,6 +382,19 @@ paths:
       summary: Update Recipe
       tags:
       - recipe
+  /recommendation/getrecipes:
+    get:
+      consumes:
+      - application/json
+      description: Get Recommendations
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Get Recommendations
+      tags:
+      - recommendation
   /search/recipes:
     post:
       consumes:

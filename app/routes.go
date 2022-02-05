@@ -391,8 +391,6 @@ func (app *App) DeleteRecipeHandler(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-////////////////////////////////////////////
-
 // GetAllShoppingsHandler godoc
 // @Summary Get shopping lists
 // @Description List All Shopping Lists
@@ -564,6 +562,33 @@ func (app *App) SearchRecipesHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	log.Info("searched for "+string(body)+" and got this recipes : ", string(body))
+	http.Error(w, recipes, http.StatusOK)
+	return
+}
+
+// GetRecommendationsHandler godoc
+// @Summary Get Recommendations
+// @Description Get Recommendations
+// @Tags recommendation
+// @Accept  json
+// @Produce  json
+// @Success 200
+// @Router /recommendation/getrecipes [get]
+func (app *App) GetRecommendationsHandler(w http.ResponseWriter, r *http.Request) {
+	session, err := app.SessionStore.Get(r, "session")
+	if err != nil {
+		log.Error("cannot get session store : ", err)
+		http.Error(w, "cannot get session store", http.StatusInternalServerError)
+		return
+	}
+	recipes, err := app.RecommendRecipes(session.Values["id"].(uint))
+	if err != nil {
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Info("shopping lists are listed: ", recipes)
 	http.Error(w, recipes, http.StatusOK)
 	return
 }

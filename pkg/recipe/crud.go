@@ -24,6 +24,10 @@ func (r *Recipe) Create(db *gorm.DB) error {
 	if err != nil {
 		return err
 	}
+	r.Tags_String, err = r.ArrayToJson(r.Tags)
+	if err != nil {
+		return err
+	}
 
 	result := db.Create(r)
 	return result.Error
@@ -54,6 +58,10 @@ func (r *Recipe) Read(db *gorm.DB) error {
 	if err != nil {
 		return err
 	}
+	r.Tags, err = r.JsonToArray(r.Tags_String)
+	if err != nil {
+		return err
+	}
 
 	return result.Error
 }
@@ -72,6 +80,10 @@ func (r *Recipe) Update(db *gorm.DB) error {
 		return err
 	}
 	r.Photo_Urls_String, err = r.ArrayToJson(r.Photo_Urls)
+	if err != nil {
+		return err
+	}
+	r.Tags_String, err = r.ArrayToJson(r.Tags)
 	if err != nil {
 		return err
 	}
@@ -108,6 +120,10 @@ func (r *Recipe) List(db *gorm.DB) ([]Recipe, error) {
 			return recipes, err
 		}
 		recipes[i].Video_Urls, err = recipes[i].JsonToArray(recipes[i].Video_Urls_String)
+		if err != nil {
+			return recipes, err
+		}
+		recipes[i].Tags, err = recipes[i].JsonToArray(recipes[i].Tags_String)
 		if err != nil {
 			return recipes, err
 		}

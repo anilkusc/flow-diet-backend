@@ -5,7 +5,7 @@ import (
 )
 
 func TestSearchRecipes(t *testing.T) {
-	app, _, _, _, rcp, _, _ := Construct()
+	app, _, _, _, rcp, _, _, _ := Construct()
 	rcp.Create(app.DB)
 	tests := []struct {
 		input string

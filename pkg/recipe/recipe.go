@@ -10,6 +10,9 @@ import (
 type Recipe struct {
 	gorm.Model               `swaggerignore:"true"`
 	Title                    string                  `gorm:"not null" json:"title" example:"Sushi With Wassabi"`
+	Recipe_Diet_Level        uint                    `gorm:"not null" json:"recipe_diet_level" example:"1"`
+	Tags                     []string                `gorm:"-" json:"tags" example:"vegan"`
+	Tags_String              string                  `gorm:"not null" json:"-" swaggerignore:"true"`
 	Ingredients              []ingredient.Ingredient `gorm:"-" json:"ingredients" `
 	Ingredients_String       string                  `gorm:"not null" json:"-" swaggerignore:"true" `
 	Preperation              string                  `gorm:"not null" json:"preperation" example:"bla bla bla"`

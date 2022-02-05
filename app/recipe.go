@@ -45,7 +45,6 @@ func (app *App) GetRecipe(recipeJson string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-
 	recipe.Read(app.DB)
 	if err != nil {
 		return "", err
