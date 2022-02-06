@@ -49,10 +49,13 @@ func (app *App) RecommendRecipes(userid uint, datesJson string) (string, error) 
 		Needed_Recipe_Count: 0,
 		Recommended_Recipes: []uint{},
 	}
-
+	err = recommendation.CalculateRecommendationCount()
+	if err != nil {
+		return "", err
+	}
 	var recommendedRecipes []recipe.Recipe
 	recipe := recipe.Recipe{}
-	recipes, err := recipe.List(app.DB)
+	recipes, err := recipe.ListWithLimit(app.DB, recommendation.Needed_Recipe_Count)
 	if err != nil {
 		return "", err
 	}
@@ -65,10 +68,7 @@ func (app *App) RecommendRecipes(userid uint, datesJson string) (string, error) 
 		recommendation.All_Recipes_IDs = append(recommendation.All_Recipes_IDs, rcp.ID)
 	}
 
-	err = recommendation.MakeRecipeRecommendation()
-	if err != nil {
-		return "", err
-	}
+	recommendation.MakeRecipeRecommendation()
 
 	for _, recommendedRecipeID := range recommendation.Recommended_Recipes {
 		for _, r := range recipes {

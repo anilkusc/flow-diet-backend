@@ -147,3 +147,37 @@ func (r *Recipe) List(db *gorm.DB) ([]Recipe, error) {
 	}
 	return recipes, result.Error
 }
+
+func (r *Recipe) ListWithLimit(db *gorm.DB, limit int) ([]Recipe, error) {
+	var err error
+	var recipes []Recipe
+	result := db.Limit(limit).Find(&recipes)
+	for i := range recipes {
+		recipes[i].Ingredients, err = recipes[i].JsonToIngredient(recipes[i].Ingredients_String)
+		if err != nil {
+			return recipes, err
+		}
+		recipes[i].Appropriate_Meals, err = recipes[i].JsonToArray(recipes[i].Appropriate_Meals_String)
+		if err != nil {
+			return recipes, err
+		}
+		recipes[i].Photo_Urls, err = recipes[i].JsonToArray(recipes[i].Photo_Urls_String)
+		if err != nil {
+			return recipes, err
+		}
+		recipes[i].Video_Urls, err = recipes[i].JsonToArray(recipes[i].Video_Urls_String)
+		if err != nil {
+			return recipes, err
+		}
+		recipes[i].Tags, err = recipes[i].JsonToArray(recipes[i].Tags_String)
+		if err != nil {
+			return recipes, err
+		}
+		recipes[i].Cousines, err = recipes[i].JsonToArray(recipes[i].Cousines_String)
+		if err != nil {
+			return recipes, err
+		}
+
+	}
+	return recipes, result.Error
+}

@@ -49,6 +49,8 @@ func Construct() (*gorm.DB, Recipe) {
 		Tags_String:              `["vegan", "kebap", "cola"]`,
 		Appropriate_Meals:        []string{"breakfast", "afternoon"},
 		Appropriate_Meals_String: `["breakfast","afternoon"]`,
+		Cousines:                 []string{"italian"},
+		Cousines_String:          `["italian"]`,
 	}
 	db, _ := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
 	db.AutoMigrate(&Recipe{})

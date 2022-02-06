@@ -147,3 +147,39 @@ func TestList(t *testing.T) {
 	}
 	Destruct(db)
 }
+func TestListWithLimit(t *testing.T) {
+	db, recipe := Construct()
+	recipe.Create(db)
+	recipe2 := Recipe{}
+	recipe2 = recipe
+	recipe2.ID = 2
+	recipe2.Create(db)
+	recipe3 := Recipe{}
+	recipe3 = recipe
+	recipe3.ID = 3
+	recipe3.Create(db)
+	recipe4 := Recipe{}
+	recipe4 = recipe
+	recipe4.ID = 4
+	recipe4.Create(db)
+
+	tests := []struct {
+		limit int
+		err   error
+	}{
+		{limit: 2, err: nil},
+	}
+
+	for _, test := range tests {
+
+		res, err := recipe.ListWithLimit(db, test.limit)
+		if test.err != err {
+			t.Errorf("Error is: %v . Expected: %v", err, test.err)
+		}
+		if len(res) > test.limit {
+			t.Errorf("Length is: %v . Expected: %v", len(res), test.limit)
+		}
+
+	}
+	Destruct(db)
+}

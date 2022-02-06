@@ -32,11 +32,7 @@ type Recommendation struct {
 	Recommended_Recipes []uint // it is sorted by recommended points.
 }
 
-func (r *Recommendation) MakeRecipeRecommendation() error {
-	err := r.CalculateRecommendationCount()
-	if err != nil {
-		return err
-	}
+func (r *Recommendation) MakeRecipeRecommendation() {
 	r.DefinitelyRemoveProhibits()
 	r.DefinitelyRemoveHigherDietLevels()
 	r.PointByMeals()
@@ -44,7 +40,6 @@ func (r *Recommendation) MakeRecipeRecommendation() error {
 	r.PointByDislikes()
 	r.PointByCousine()
 	r.FilterRecipes()
-	return nil
 }
 
 func (r *Recommendation) DefinitelyRemoveProhibits() {
@@ -178,7 +173,7 @@ func (r *Recommendation) FilterRecipes() {
 		counter := 0
 		for counter < missing {
 			counter++
-			r.Recommended_Recipes = append(r.Recommended_Recipes, r.Recommended_Recipes[counter])
+			r.Recommended_Recipes = append(r.Recommended_Recipes, r.Recommended_Recipes[counter-1])
 		}
 	}
 }

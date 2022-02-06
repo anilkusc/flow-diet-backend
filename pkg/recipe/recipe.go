@@ -18,7 +18,7 @@ type Recipe struct {
 	Preperation              string                  `gorm:"not null" json:"preperation" example:"bla bla bla"`
 	Preperation_Time_minute  uint16                  `gorm:"not null" json:"preperation_time" example:"15"`
 	Cooking_Time_Minute      uint16                  `gorm:"not null" json:"cooking_time_minute" example:"10"`
-	Calori                   uint16                  ` json:"calori" example:"252"`
+	Calori                   uint16                  `json:"calori" example:"252"`
 	Photo_Urls               []string                `gorm:"-" json:"photo_urls" example:"S3URL1,S3URL2"`
 	Video_Urls               []string                `gorm:"-" json:"video_urls" example:"S3URL1,S3URL2"`
 	Photo_Urls_String        string                  `json:"-" swaggerignore:"true"`

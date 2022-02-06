@@ -639,20 +639,20 @@ func TestSearchRecipesHandler(t *testing.T) {
 	}
 	Destruct(app)
 }
+
 func TestGetRecommendationsHandler(t *testing.T) {
 	app, cookie, user, _, rcp, _, _, _ := Construct()
 	user.Signup(app.DB)
 	rcp.Create(app.DB)
-	//recommendationJson, _ := json.Marshal(recom)
 	tests := []struct {
-		//output string
+		input  string
 		status int
 		err    error
 	}{
-		{ /*output: string(recommendationJson),*/ status: 200, err: nil},
+		{input: `{"start_date":1643914403 ,"end_date":1644173603 }`, status: 200, err: nil},
 	}
 	for _, test := range tests {
-		req, err := http.NewRequest("GET", "/recommendation/getrecipes", strings.NewReader(""))
+		req, err := http.NewRequest("POST", "/recommendation/getrecipes", strings.NewReader(test.input))
 		if err != nil {
 			t.Errorf("Error is: %v . Expected: %v", err, test.err)
 		}
@@ -665,11 +665,6 @@ func TestGetRecommendationsHandler(t *testing.T) {
 		if rr.Result().StatusCode != test.status {
 			t.Errorf("Response status is: %v . Expected: %v", rr.Result().StatusCode, test.status)
 		}
-		/*
-			body, _ := ioutil.ReadAll(rr.Body)
-			if string(body) != string(test.output) {
-				t.Errorf("Response is: %v . Expected: %v", string(body), test.output)
-			}*/
 
 	}
 	Destruct(app)
