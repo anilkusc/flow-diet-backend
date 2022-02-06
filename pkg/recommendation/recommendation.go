@@ -1,13 +1,16 @@
 package recommendation
 
 type Recommendation struct {
-	Users_Dislikes             []string
-	Users_Likes                []string
-	Users_Preferred_Meals      []string
-	Users_Prohibits            []string
+	Users_Dislikes        []string
+	Users_Likes           []string
+	Users_Preferred_Meals []string
+	Users_Prohibits       []string
+	Users_Cousines        []string
+
 	Users_Diet_Level           uint
 	Users_Want                 string
 	Recipe_IDsTags             map[uint][]string
+	Recipe_IDsCousines         map[uint][]string
 	Recipe_IDsAppropriateMeals map[uint][]string
 	Recipe_IDsDietlevel        map[uint]uint
 	Recipe_IDsPoints           map[uint]uint
@@ -16,6 +19,7 @@ type Recommendation struct {
 	Meal_Factor    uint // this is factor importance weight of Meals while point the recipe. It will be multiple with point.
 	Like_Factor    uint
 	Dislike_Factor uint
+	Cousine_Factor uint
 
 	Recommended_Recipes []uint // it is sorted by recommended points.
 }
@@ -26,6 +30,7 @@ func (r *Recommendation) MakeRecipeRecommendation() {
 	r.PointByMeals()
 	r.PointByLikes()
 	r.PointByDislikes()
+	r.PointByCousine()
 	r.Recommended_Recipes = r.ReverseSortRecipeIdsByPoint()
 }
 
@@ -73,6 +78,7 @@ func (r *Recommendation) PointByMeals() {
 	for recipeID, AppropriateMeals := range r.Recipe_IDsAppropriateMeals {
 		for _, AppropriateMeal := range AppropriateMeals {
 			for _, Users_Preferred_Meal := range r.Users_Preferred_Meals {
+				//TODO add +1 only if it is zero .
 				r.Recipe_IDsPoints[recipeID] = r.Recipe_IDsPoints[recipeID] + 1
 				if Users_Preferred_Meal == AppropriateMeal {
 					r.Recipe_IDsPoints[recipeID] = r.Recipe_IDsPoints[recipeID] * r.Meal_Factor
@@ -96,6 +102,7 @@ func (r *Recommendation) PointByLikes() {
 
 	}
 }
+
 func (r *Recommendation) PointByDislikes() {
 
 	for recipeID, tags := range r.Recipe_IDsTags {
@@ -104,6 +111,21 @@ func (r *Recommendation) PointByDislikes() {
 				r.Recipe_IDsPoints[recipeID] = r.Recipe_IDsPoints[recipeID] + 1
 				if Users_Like == tag {
 					r.Recipe_IDsPoints[recipeID] = r.Recipe_IDsPoints[recipeID] / r.Dislike_Factor
+				}
+			}
+		}
+
+	}
+}
+
+func (r *Recommendation) PointByCousine() {
+
+	for recipeID, cousines := range r.Recipe_IDsCousines {
+		for _, cousine := range cousines {
+			for _, Users_Cousine := range r.Users_Cousines {
+				r.Recipe_IDsPoints[recipeID] = r.Recipe_IDsPoints[recipeID] + 1
+				if Users_Cousine == cousine {
+					r.Recipe_IDsPoints[recipeID] = r.Recipe_IDsPoints[recipeID] * r.Cousine_Factor
 				}
 			}
 		}

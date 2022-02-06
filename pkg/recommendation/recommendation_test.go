@@ -16,9 +16,11 @@ func Construct() Recommendation {
 		Users_Diet_Level:      1,
 		Users_Dislikes:        []string{"onion", "tomato"},
 		Users_Likes:           []string{"chicken", "fish"},
+		Users_Cousines:        []string{"mediterrian", "american"},
 
 		Recipe_IDsAppropriateMeals: map[uint][]string{1: {"breakfast", "night"}, 2: {"noon"}, 3: {"snack"}},
 		Recipe_IDsTags:             map[uint][]string{1: {"sugar", "tea"}, 2: {"fish", "chips"}, 3: {"rice", "sushi"}, 4: {"vegaterian", "egg"}},
+		Recipe_IDsCousines:         map[uint][]string{1: {"italian", "mediterrian"}, 2: {"american"}, 3: {"mexico"}, 4: {"mediterrian", "syria"}},
 		Recipe_IDsDietlevel:        map[uint]uint{1: 1, 2: 2, 3: 2, 4: 1},
 		All_Recipes_IDs:            []uint{1, 2, 3, 4},
 		Recipe_IDsPoints:           map[uint]uint{},
@@ -26,6 +28,7 @@ func Construct() Recommendation {
 		Meal_Factor:         2,
 		Like_Factor:         3,
 		Dislike_Factor:      2,
+		Cousine_Factor:      2,
 		Recommended_Recipes: []uint{}, // it is sorted by recommended points.
 	}
 	return recommendation
@@ -157,6 +160,22 @@ func TestReverseSortRecipeIdsByPoint(t *testing.T) {
 
 		if !reflect.DeepEqual(test.output, res) {
 			t.Errorf("Result is: %v . Expected: %v", res, test.output)
+		}
+	}
+	Destruct()
+}
+func TestPointByCousine(t *testing.T) {
+	recommendation := Construct()
+	tests := []struct {
+		output map[uint]uint
+	}{
+		{output: map[uint]uint{1: 7, 2: 4, 3: 2, 4: 5}},
+	}
+	for _, test := range tests {
+		recommendation.PointByCousine()
+
+		if !reflect.DeepEqual(test.output, recommendation.Recipe_IDsPoints) {
+			t.Errorf("Result is: %v . Expected: %v", recommendation.Recipe_IDsPoints, test.output)
 		}
 	}
 	Destruct()

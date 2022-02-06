@@ -52,8 +52,8 @@ func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shop
 		Prohibits:                []string{"sugar"},
 		Prohibits_String:         `["sugar"]`,
 		Wants:                    `gain`,
-		Favorite_Cousines:        []string{"itaian"},
-		Favorite_Cousines_String: `["itaian"]`,
+		Favorite_Cousines:        []string{"italian"},
+		Favorite_Cousines_String: `["italian"]`,
 	}
 	userJson, _ := json.Marshal(usr)
 	app.Signup(string(userJson))
@@ -114,6 +114,8 @@ func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shop
 		Tags_String:              `["vegan", "kebap", "cola"]`,
 		Appropriate_Meals:        []string{"breakfast", "afternoon"},
 		Appropriate_Meals_String: `["breakfast","afternoon"]`,
+		Cousines:                 []string{"italian"},
+		Cousines_String:          `["italian"]`,
 	}
 	var shopping = shopping.Shopping{
 		Model: gorm.Model{
@@ -147,9 +149,11 @@ func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shop
 		Users_Diet_Level:      1,
 		Users_Dislikes:        []string{"onion", "tomato"},
 		Users_Likes:           []string{"chicken", "fish"},
+		Users_Cousines:        []string{"italian", "mediterrian"},
 
 		Recipe_IDsAppropriateMeals: map[uint][]string{1: {"breakfast", "night"}, 2: {"noon"}, 3: {"snack"}},
 		Recipe_IDsTags:             map[uint][]string{1: {"sugar", "tea"}, 2: {"fish", "chips"}, 3: {"rice", "sushi"}, 4: {"vegaterian", "egg"}},
+		Recipe_IDsCousines:         map[uint][]string{1: {"mediterrian", "russia"}, 2: {"china", "japan"}, 3: {"italian", "spanish"}, 4: {"ireland"}},
 		Recipe_IDsDietlevel:        map[uint]uint{1: 1, 2: 2, 3: 2, 4: 1},
 		All_Recipes_IDs:            []uint{1, 2, 3, 4},
 		Recipe_IDsPoints:           map[uint]uint{},
@@ -157,6 +161,7 @@ func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shop
 		Meal_Factor:         2,
 		Like_Factor:         3,
 		Dislike_Factor:      2,
+		Cousine_Factor:      2,
 		Recommended_Recipes: []uint{}, // it is sorted by recommended points.
 	}
 
