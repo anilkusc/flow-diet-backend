@@ -28,8 +28,10 @@ func (app *App) RecommendRecipes(userid uint) (string, error) {
 		Users_Diet_Level:           user.Diet_Level,
 		Users_Dislikes:             user.Dislikes,
 		Users_Likes:                user.Likes,
+		Users_Cousines:             user.Favorite_Cousines,
 		Recipe_IDsPoints:           map[uint]uint{},
 		Recipe_IDsAppropriateMeals: map[uint][]string{},
+		Recipe_IDsCousines:         map[uint][]string{},
 		Recipe_IDsTags:             map[uint][]string{},
 		Recipe_IDsDietlevel:        map[uint]uint{},
 		Meal_Factor:                2,
@@ -42,6 +44,7 @@ func (app *App) RecommendRecipes(userid uint) (string, error) {
 		recommendation.Recipe_IDsAppropriateMeals[rcp.ID] = rcp.Appropriate_Meals
 		recommendation.Recipe_IDsTags[rcp.ID] = rcp.Tags
 		recommendation.Recipe_IDsDietlevel[rcp.ID] = rcp.Recipe_Diet_Level
+		recommendation.Recipe_IDsCousines[rcp.ID] = rcp.Cousines
 		recommendation.All_Recipes_IDs = append(recommendation.All_Recipes_IDs, rcp.ID)
 	}
 

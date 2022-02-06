@@ -9,6 +9,9 @@
 	- Add language option to all of the returned backend object
 	- Add random recpie feature. It will be give random recipe which users mostly like.
 * Api
+* Search
+	- Add upparcase and lowercase letter searching. For now it is is case sensitive. It should be case insensitive.
+	- Add tag searching if editor wants to add or user search
 * User
 	- mail or phone based authentication
 	- role based access
@@ -20,7 +23,6 @@
 	- Add balance based diet(sufficent and balanced diet)
 	- Handle blank tags etc. situations. 
 	- Add Calori Based Pointing to recommendation.
-	- Add Cousine Based Pointing in Recommendation
 	- Add Favorite Based Recommendation. It will be recommend favorite based recipes
 	- Enable query recommendation for date. Take recommendations only for specified time interval.It can be maxium 1 week.
 	- Add  date based recommendations feature. It means look at the season and give recommendation for season.
@@ -31,7 +33,6 @@
 	- Add  date based recommendations feature. It means look at the season and give recommendation for season.
 * Calendar
 	- Add meals for recipes beside of the date.
-	
 * Observability
 	- pprof
 	- health probes
