@@ -1,12 +1,12 @@
 package recommendation
 
 type Recommendation struct {
-	Users_Dislikes        []string
-	Users_Likes           []string
-	Users_Preferred_Meals []string
-	Users_Prohibits       []string
-	Users_Diet_Level      uint
-
+	Users_Dislikes             []string
+	Users_Likes                []string
+	Users_Preferred_Meals      []string
+	Users_Prohibits            []string
+	Users_Diet_Level           uint
+	Users_Want                 string
 	Recipe_IDsTags             map[uint][]string
 	Recipe_IDsAppropriateMeals map[uint][]string
 	Recipe_IDsDietlevel        map[uint]uint

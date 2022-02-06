@@ -9,30 +9,32 @@ import (
 )
 
 type User struct {
-	gorm.Model              `json:"-" swaggerignore:"true"`
-	Username                string   `gorm:"unique;not null" json:"username" example:"testuser"`
-	Name                    string   `json:"name" example:"test user"`
-	Email                   string   `gorm:"unique" json:"email" example:"test@test.com"`
-	Phone                   string   `gorm:"unique" json:"phone" example:"+905355353535"`
-	Password                string   `json:"password" example:"testpass"`
-	Weight                  uint8    `json:"weight" example:"70"`
-	Height                  uint8    `json:"height" example:"170"`
-	Age                     uint8    `json:"age" example:"25"`
-	Gender                  string   `json:"gender" example:"male"`  // male,female,other
-	Diet_Level              uint     `json:"diet_level" example:"1"` //1: vegan ,2:vegaterian,3: omnivor ,4: carnivor
-	Favorite_Recipes        []uint   `json:"favorite_recipes" gorm:"-"`
-	Favorite_Recipes_String string   `json:"-" swaggerignore:"true"`
-	Preferred_Meals         []string `json:"preferred_meals" gorm:"-" example:"breakfast"`
-	Likes                   []string `json:"likes" gorm:"-" example:"kebap,pizza"`
-	Likes_String            string   `json:"-" swaggerignore:"true"`
-	Dislikes                []string `json:"dislikes" gorm:"-" example:"onion"`
-	Dislikes_String         string   `json:"-" swaggerignore:"true"`
-	Prohibits               []string `json:"prohibits" gorm:"-" example:"sugar"`
-	Prohibits_String        string   `json:"-" swaggerignore:"true"`
-	Preferred_Meals_String  string   `json:"-" swaggerignore:"true"`
-	Address                 string   `json:"address" example:"myadress 123121"`
-	Role                    string   `json:"role" example:"user"`  // root,admin,editor,user,anonymous
-	Wants                   string   `json:"wants" example:"gain"` // gain , lost , protect // (weights)
+	gorm.Model               `json:"-" swaggerignore:"true"`
+	Username                 string   `gorm:"unique;not null" json:"username" example:"testuser"`
+	Name                     string   `json:"name" example:"test user"`
+	Email                    string   `gorm:"unique" json:"email" example:"test@test.com"`
+	Phone                    string   `gorm:"unique" json:"phone" example:"+905355353535"`
+	Password                 string   `json:"password" example:"testpass"`
+	Weight                   uint8    `json:"weight" example:"70"`
+	Height                   uint8    `json:"height" example:"170"`
+	Age                      uint8    `json:"age" example:"25"`
+	Gender                   string   `json:"gender" example:"male"`  // male,female,other
+	Diet_Level               uint     `json:"diet_level" example:"1"` //1: vegan ,2:vegaterian,3: omnivor ,4: carnivor
+	Favorite_Recipes         []uint   `json:"favorite_recipes" gorm:"-"`
+	Favorite_Recipes_String  string   `json:"-" swaggerignore:"true"`
+	Preferred_Meals          []string `json:"preferred_meals" gorm:"-" example:"breakfast"`
+	Likes                    []string `json:"likes" gorm:"-" example:"kebap,pizza"`
+	Likes_String             string   `json:"-" swaggerignore:"true"`
+	Dislikes                 []string `json:"dislikes" gorm:"-" example:"onion"`
+	Dislikes_String          string   `json:"-" swaggerignore:"true"`
+	Prohibits                []string `json:"prohibits" gorm:"-" example:"sugar"`
+	Prohibits_String         string   `json:"-" swaggerignore:"true"`
+	Preferred_Meals_String   string   `json:"-" swaggerignore:"true"`
+	Address                  string   `json:"address" example:"myadress 123121"`
+	Role                     string   `json:"role" example:"user"`  // root,admin,editor,user,anonymous
+	Wants                    string   `json:"wants" example:"gain"` // gain , lost , protect // (weights)
+	Favorite_Cousines        []string `json:"favorite_cousines" gorm:"-" example:"italian"`
+	Favorite_Cousines_String string   `json:"-" swaggerignore:"true"`
 }
 
 func (u *User) UintArrayToJson(arr []uint) (string, error) {

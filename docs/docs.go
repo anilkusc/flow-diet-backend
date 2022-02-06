@@ -671,6 +671,15 @@ var doc = `{
                     "type": "integer",
                     "example": 10
                 },
+                "cousines": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "italian"
+                    ]
+                },
                 "for_how_many_people": {
                     "type": "integer",
                     "example": 2
@@ -779,6 +788,15 @@ var doc = `{
                 "email": {
                     "type": "string",
                     "example": "test@test.com"
+                },
+                "favorite_cousines": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "italian"
+                    ]
                 },
                 "favorite_recipes": {
                     "type": "array",

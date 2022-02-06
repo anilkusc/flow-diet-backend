@@ -35,6 +35,7 @@ func TestFindRecipesByName(t *testing.T) {
 		if test.err != err {
 			t.Errorf("Error is: %v . Expected: %v", err, test.err)
 		}
+		//TODO add sort here
 		if !reflect.DeepEqual(test.output, res) {
 			t.Errorf("Result is: %v . Expected: %v", res, test.output)
 		}

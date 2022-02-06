@@ -26,6 +26,10 @@ func (u *User) Create(db *gorm.DB) error {
 	if err != nil {
 		return err
 	}
+	u.Favorite_Cousines_String, err = u.ArrayToJson(u.Favorite_Cousines)
+	if err != nil {
+		return err
+	}
 	result := db.Create(u)
 	return result.Error
 }
@@ -58,6 +62,10 @@ func (u *User) Read(db *gorm.DB) error {
 	if err != nil {
 		return err
 	}
+	u.Favorite_Cousines, err = u.JsonToArray(u.Favorite_Cousines_String)
+	if err != nil {
+		return err
+	}
 
 	return result.Error
 }
@@ -80,6 +88,10 @@ func (u *User) Update(db *gorm.DB) error {
 		return err
 	}
 	u.Prohibits_String, err = u.ArrayToJson(u.Prohibits)
+	if err != nil {
+		return err
+	}
+	u.Favorite_Cousines_String, err = u.ArrayToJson(u.Favorite_Cousines)
 	if err != nil {
 		return err
 	}
@@ -119,6 +131,10 @@ func (u *User) List(db *gorm.DB) ([]User, error) {
 			return users, err
 		}
 		users[i].Prohibits, err = users[i].JsonToArray(users[i].Prohibits_String)
+		if err != nil {
+			return users, err
+		}
+		users[i].Favorite_Cousines, err = users[i].JsonToArray(users[i].Favorite_Cousines_String)
 		if err != nil {
 			return users, err
 		}

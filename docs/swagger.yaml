@@ -71,6 +71,12 @@ definitions:
       cooking_time_minute:
         example: 10
         type: integer
+      cousines:
+        example:
+        - italian
+        items:
+          type: string
+        type: array
       for_how_many_people:
         example: 2
         type: integer
@@ -148,6 +154,12 @@ definitions:
       email:
         example: test@test.com
         type: string
+      favorite_cousines:
+        example:
+        - italian
+        items:
+          type: string
+        type: array
       favorite_recipes:
         items:
           type: integer
