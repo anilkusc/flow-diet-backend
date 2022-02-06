@@ -395,10 +395,18 @@ paths:
       tags:
       - recipe
   /recommendation/getrecipes:
-    get:
+    post:
       consumes:
       - application/json
       description: Get Recommendations
+      parameters:
+      - description: 'dates(epoch format) : {''start_date'':1643914403 ,''end_date'':1644173603
+          }'
+        in: body
+        name: recommendation
+        required: true
+        schema:
+          type: string
       produces:
       - application/json
       responses:

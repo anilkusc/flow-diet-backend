@@ -25,10 +25,14 @@ func Construct() Recommendation {
 		All_Recipes_IDs:            []uint{1, 2, 3, 4},
 		Recipe_IDsPoints:           map[uint]uint{},
 
-		Meal_Factor:         2,
-		Like_Factor:         3,
-		Dislike_Factor:      2,
-		Cousine_Factor:      2,
+		Meal_Factor:    2,
+		Like_Factor:    3,
+		Dislike_Factor: 2,
+		Cousine_Factor: 2,
+
+		Start_Date:          1643914403,
+		End_Date:            1644173603,
+		Needed_Recipe_Count: 12,
 		Recommended_Recipes: []uint{}, // it is sorted by recommended points.
 	}
 	return recommendation
@@ -176,6 +180,42 @@ func TestPointByCousine(t *testing.T) {
 
 		if !reflect.DeepEqual(test.output, recommendation.Recipe_IDsPoints) {
 			t.Errorf("Result is: %v . Expected: %v", recommendation.Recipe_IDsPoints, test.output)
+		}
+	}
+	Destruct()
+}
+func TestCalculateRecommendationCount(t *testing.T) {
+	recommendation := Construct()
+	tests := []struct {
+		output int
+		err    error
+	}{
+		{output: 12, err: nil},
+	}
+	for _, test := range tests {
+		err := recommendation.CalculateRecommendationCount()
+		if test.err != err {
+			t.Errorf("Error is: %v . Expected: %v", err, test.err)
+		}
+		if test.output != recommendation.Needed_Recipe_Count {
+			t.Errorf("Result is: %v . Expected: %v", recommendation.Needed_Recipe_Count, test.output)
+		}
+	}
+	Destruct()
+}
+func TestFilterRecipes(t *testing.T) {
+	recommendation := Construct()
+	recommendation.Recipe_IDsPoints = map[uint]uint{1: 10, 2: 20, 3: 12, 4: 5, 5: 12}
+	tests := []struct {
+		output int
+		err    error
+	}{
+		{output: 12, err: nil},
+	}
+	for _, test := range tests {
+		recommendation.FilterRecipes()
+		if test.output != len(recommendation.Recommended_Recipes) {
+			t.Errorf("Result is: %v . Expected: %v", recommendation.Recommended_Recipes, test.output)
 		}
 	}
 	Destruct()

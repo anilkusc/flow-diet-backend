@@ -10,13 +10,14 @@ func TestRecommendRecipes(t *testing.T) {
 	rcp.Create(app.DB)
 
 	tests := []struct {
-		input uint
-		err   error
+		userid       uint
+		timeinterval string
+		err          error
 	}{
-		{input: 1, err: nil},
+		{userid: 1, timeinterval: `{"start_date":1643914403,"end_date":1644173603}`, err: nil},
 	}
 	for _, test := range tests {
-		_, err := app.RecommendRecipes(test.input)
+		_, err := app.RecommendRecipes(test.userid, test.timeinterval)
 		if err != nil {
 			t.Errorf("Error is: %v . Expected: %v", err, test.err)
 		}

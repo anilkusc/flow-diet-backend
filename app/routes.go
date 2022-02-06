@@ -580,8 +580,9 @@ func (app *App) SearchRecipesHandler(w http.ResponseWriter, r *http.Request) {
 // @Tags recommendation
 // @Accept  json
 // @Produce  json
+// @Param recommendation body string true "dates(epoch format) : {'start_date':1643914403 ,'end_date':1644173603 }"
 // @Success 200
-// @Router /recommendation/getrecipes [get]
+// @Router /recommendation/getrecipes [post]
 func (app *App) GetRecommendationsHandler(w http.ResponseWriter, r *http.Request) {
 	session, err := app.SessionStore.Get(r, "session")
 	if err != nil {
@@ -589,7 +590,15 @@ func (app *App) GetRecommendationsHandler(w http.ResponseWriter, r *http.Request
 		http.Error(w, "cannot get session store", http.StatusInternalServerError)
 		return
 	}
-	recipes, err := app.RecommendRecipes(session.Values["id"].(uint))
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Error("cannot read body: ", err)
+		http.Error(w, "wrong search object", http.StatusBadRequest)
+		return
+	}
+
+	recipes, err := app.RecommendRecipes(session.Values["id"].(uint), string(body))
 	if err != nil {
 		log.Error(err)
 		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)

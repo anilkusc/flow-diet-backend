@@ -8,16 +8,21 @@ import (
 	user "github.com/anilkusc/flow-diet-backend/pkg/user"
 )
 
-func (app *App) RecommendRecipes(userid uint) (string, error) {
-	var recommendedRecipes []recipe.Recipe
-	user := user.User{}
-	user.ID = userid
-	err := user.Read(app.DB)
+func (app *App) RecommendRecipes(userid uint, datesJson string) (string, error) {
+
+	type TimeInterval struct {
+		Start_date int64 `json:"start_date"`
+		End_date   int64 `json:"end_date"`
+	}
+	var timeinterval TimeInterval
+	err := json.Unmarshal([]byte(datesJson), &timeinterval)
 	if err != nil {
 		return "", err
 	}
-	recipe := recipe.Recipe{}
-	recipes, err := recipe.List(app.DB)
+
+	user := user.User{}
+	user.ID = userid
+	err = user.Read(app.DB)
 	if err != nil {
 		return "", err
 	}
@@ -37,7 +42,19 @@ func (app *App) RecommendRecipes(userid uint) (string, error) {
 		Meal_Factor:                2,
 		Like_Factor:                3,
 		Dislike_Factor:             2,
-		Recommended_Recipes:        []uint{},
+
+		Start_Date: timeinterval.Start_date,
+		End_Date:   timeinterval.End_date,
+
+		Needed_Recipe_Count: 0,
+		Recommended_Recipes: []uint{},
+	}
+
+	var recommendedRecipes []recipe.Recipe
+	recipe := recipe.Recipe{}
+	recipes, err := recipe.List(app.DB)
+	if err != nil {
+		return "", err
 	}
 
 	for _, rcp := range recipes {
@@ -48,7 +65,11 @@ func (app *App) RecommendRecipes(userid uint) (string, error) {
 		recommendation.All_Recipes_IDs = append(recommendation.All_Recipes_IDs, rcp.ID)
 	}
 
-	recommendation.MakeRecipeRecommendation()
+	err = recommendation.MakeRecipeRecommendation()
+	if err != nil {
+		return "", err
+	}
+
 	for _, recommendedRecipeID := range recommendation.Recommended_Recipes {
 		for _, r := range recipes {
 			if r.ID == recommendedRecipeID {

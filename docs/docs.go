@@ -289,7 +289,7 @@ var doc = `{
             }
         },
         "/recommendation/getrecipes": {
-            "get": {
+            "post": {
                 "description": "Get Recommendations",
                 "consumes": [
                     "application/json"
@@ -301,6 +301,17 @@ var doc = `{
                     "recommendation"
                 ],
                 "summary": "Get Recommendations",
+                "parameters": [
+                    {
+                        "description": "dates(epoch format) : {'start_date':1643914403 ,'end_date':1644173603 }",
+                        "name": "recommendation",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""

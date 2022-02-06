@@ -9,6 +9,7 @@
 	- Add language option to all of the returned backend object
 	- Add random recpie feature. It will be give random recipe which users mostly like.
 * Api
+	- Session should be define and get variables on only middlewares and migrate to the next handler.
 * Search
 	- Add upparcase and lowercase letter searching. For now it is is case sensitive. It should be case insensitive.
 	- Add tag searching if editor wants to add or user search

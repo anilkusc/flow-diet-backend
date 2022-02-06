@@ -1,5 +1,10 @@
 package recommendation
 
+import (
+	"errors"
+	"time"
+)
+
 type Recommendation struct {
 	Users_Dislikes        []string
 	Users_Likes           []string
@@ -21,17 +26,25 @@ type Recommendation struct {
 	Dislike_Factor uint
 	Cousine_Factor uint
 
+	Start_Date          int64
+	End_Date            int64
+	Needed_Recipe_Count int
 	Recommended_Recipes []uint // it is sorted by recommended points.
 }
 
-func (r *Recommendation) MakeRecipeRecommendation() {
+func (r *Recommendation) MakeRecipeRecommendation() error {
+	err := r.CalculateRecommendationCount()
+	if err != nil {
+		return err
+	}
 	r.DefinitelyRemoveProhibits()
 	r.DefinitelyRemoveHigherDietLevels()
 	r.PointByMeals()
 	r.PointByLikes()
 	r.PointByDislikes()
 	r.PointByCousine()
-	r.Recommended_Recipes = r.ReverseSortRecipeIdsByPoint()
+	r.FilterRecipes()
+	return nil
 }
 
 func (r *Recommendation) DefinitelyRemoveProhibits() {
@@ -130,5 +143,42 @@ func (r *Recommendation) PointByCousine() {
 			}
 		}
 
+	}
+}
+
+func (r *Recommendation) CalculateRecommendationCount() error {
+
+	start_date := time.Unix(r.Start_Date, 0)
+	end_date := time.Unix(r.End_Date, 0)
+
+	if end_date.Sub(start_date).Hours() < 1 {
+		return errors.New("start date cannot bigger then end date")
+	}
+
+	now := time.Now()
+	if (now.Sub(start_date).Hours() / 24) > 7 {
+		return errors.New("no recommendations can be made for dates older than 7 days")
+	}
+
+	recommendationDayIntervals := end_date.Sub(start_date).Hours() / 24
+
+	if recommendationDayIntervals > 7 {
+		return errors.New("no recommendations can be made for date intervals older than 7 days")
+	}
+	r.Needed_Recipe_Count = int(recommendationDayIntervals)*len(r.Users_Preferred_Meals) + 3
+	return nil
+}
+
+func (r *Recommendation) FilterRecipes() {
+	r.Recommended_Recipes = r.ReverseSortRecipeIdsByPoint()
+	if len(r.Recommended_Recipes) > r.Needed_Recipe_Count {
+		r.Recommended_Recipes = r.Recommended_Recipes[:r.Needed_Recipe_Count]
+	} else {
+		missing := r.Needed_Recipe_Count - len(r.Recommended_Recipes)
+		counter := 0
+		for counter < missing {
+			counter++
+			r.Recommended_Recipes = append(r.Recommended_Recipes, r.Recommended_Recipes[counter])
+		}
 	}
 }
