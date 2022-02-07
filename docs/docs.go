@@ -596,6 +596,10 @@ var doc = `{
                     "type": "integer",
                     "example": 1643743444
                 },
+                "meal": {
+                    "type": "string",
+                    "example": "breakfast"
+                },
                 "recipe_id": {
                     "type": "integer",
                     "example": 1
@@ -867,7 +871,7 @@ var doc = `{
                 "role": {
                     "description": "root,admin,editor,user,anonymous",
                     "type": "string",
-                    "example": "user"
+                    "example": "admin"
                 },
                 "username": {
                     "type": "string",

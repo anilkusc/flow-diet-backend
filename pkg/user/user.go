@@ -31,7 +31,7 @@ type User struct {
 	Prohibits_String         string   `json:"-" swaggerignore:"true"`
 	Preferred_Meals_String   string   `json:"-" swaggerignore:"true"`
 	Address                  string   `json:"address" example:"myadress 123121"`
-	Role                     string   `json:"role" example:"user"`  // root,admin,editor,user,anonymous
+	Role                     string   `json:"role" example:"admin"` // root,admin,editor,user,anonymous
 	Wants                    string   `json:"wants" example:"gain"` // gain , lost , protect // (weights)
 	Favorite_Cousines        []string `json:"favorite_cousines" gorm:"-" example:"italian"`
 	Favorite_Cousines_String string   `json:"-" swaggerignore:"true"`

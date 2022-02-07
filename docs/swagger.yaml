@@ -5,6 +5,9 @@ definitions:
       date_epoch:
         example: 1643743444
         type: integer
+      meal:
+        example: breakfast
+        type: string
       recipe_id:
         example: 1
         type: integer
@@ -201,7 +204,7 @@ definitions:
         type: array
       role:
         description: root,admin,editor,user,anonymous
-        example: user
+        example: admin
         type: string
       username:
         example: testuser
