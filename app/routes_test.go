@@ -7,6 +7,8 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
+
+	"github.com/anilkusc/flow-diet-backend/pkg/calendar"
 )
 
 func TestSignupHandler(t *testing.T) {
@@ -149,7 +151,9 @@ func TestGetCalendarRecipesHandler(t *testing.T) {
 }
 func TestCreateCalendarRecipeHandler(t *testing.T) {
 	app, cookie, _, clndr, _, _, _, _ := Construct()
-	calendarJson, _ := json.Marshal(clndr)
+	var calendars []calendar.Calendar
+	calendars = append(calendars, clndr)
+	calendarsJson, _ := json.Marshal(calendars)
 
 	tests := []struct {
 		input  string
@@ -157,7 +161,7 @@ func TestCreateCalendarRecipeHandler(t *testing.T) {
 		status int
 		err    error
 	}{
-		{input: string(calendarJson), output: "OK\n", status: 200, err: nil},
+		{input: string(calendarsJson), output: "OK\n", status: 200, err: nil},
 	}
 	for _, test := range tests {
 		req, err := http.NewRequest("POST", "/calendar/recipes/create", strings.NewReader(test.input))

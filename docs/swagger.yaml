@@ -249,18 +249,20 @@ paths:
       - application/json
       description: User creates a recipe in the calendar
       parameters:
-      - description: Create Recipe In Calendar
+      - description: Create Recipes In Calendar
         in: body
         name: calendar
         required: true
         schema:
-          $ref: '#/definitions/calendar.Calendar'
+          items:
+            $ref: '#/definitions/calendar.Calendar'
+          type: array
       produces:
       - application/json
       responses:
         "200":
           description: ""
-      summary: Create Recipe In User Calendar
+      summary: Create Recipes In User Calendar
       tags:
       - calendar
   /calendar/recipes/delete:

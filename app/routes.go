@@ -71,7 +71,7 @@ func (app *App) SigninHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	userJson, err := json.Marshal(usr)
 	if err != nil {
-		log.Error("cannot marshall calendars json: ", err)
+		log.Error("cannot marshall user json: ", err)
 		http.Error(w, "cannot signin", http.StatusInternalServerError)
 		return
 	}
@@ -147,12 +147,12 @@ func (app *App) GetCalendarRecipesHandler(w http.ResponseWriter, r *http.Request
 }
 
 // CreateCalendarRecipeHandler godoc
-// @Summary Create Recipe In User Calendar
+// @Summary Create Recipes In User Calendar
 // @Description User creates a recipe in the calendar
 // @Tags calendar
 // @Accept  json
 // @Produce  json
-// @Param calendar body calendar.Calendar true "Create Recipe In Calendar"
+// @Param calendar body []calendar.Calendar true "Create Recipes In Calendar"
 // @Success 200
 // @Router /calendar/recipes/create [post]
 func (app *App) CreateCalendarRecipeHandler(w http.ResponseWriter, r *http.Request) {

@@ -14,6 +14,7 @@ import (
 )
 
 func Construct() (*gorm.DB, Shopping) {
+
 	godotenv.Load("../../.env")
 	var shopping = Shopping{
 		Model: gorm.Model{

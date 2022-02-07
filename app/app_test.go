@@ -21,6 +21,7 @@ import (
 )
 
 func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shopping.Shopping, search.Search, recommendation.Recommendation) {
+
 	godotenv.Load("../.env")
 	app := App{}
 	app.Init()
@@ -78,7 +79,9 @@ func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shop
 		},
 		Recipe_Id:  1,
 		User_Id:    1,
+		Meal:       "breakfast",
 		Date_Epoch: 1643743444,
+		Prepared:   false,
 	}
 	var recipe = recipe.Recipe{
 		Model: gorm.Model{

@@ -8,6 +8,7 @@ import (
 )
 
 func Construct() Search {
+
 	godotenv.Load("../../.env")
 	var search = Search{
 		Word: "",

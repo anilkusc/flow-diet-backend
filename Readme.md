@@ -7,6 +7,7 @@
 	- Control for sent json objects
 	- Add language option to all of the returned backend object
 	- Add random recpie feature. It will be give random recipe which users mostly like.
+	- Do not return user id
 * Api
 	- Session should be define and get variables on only middlewares and migrate to the next handler.
 * Search
@@ -30,7 +31,7 @@
 	- Set Diet Level for Ingrediens to make recommendation.It will take a look at materials and set a diet level .(1:Vegan,2Vegaterian ...)
 	- Recipe should understand recipes diet level from materials. For now it will be done manually. Same about tags. Tags will be add to materials instead of recipe
 * Calendar
-	- Add meals for recipes beside of the date.
 * Observability
 	- pprof
 	- health probes
+	- add egress rule for security. If egress body is bigger than 50 Mb return error

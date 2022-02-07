@@ -9,6 +9,7 @@ import (
 )
 
 func Construct() Recommendation {
+
 	godotenv.Load("../../.env")
 	var recommendation = Recommendation{
 		Users_Preferred_Meals: []string{"breakfast", "noon", "night"},

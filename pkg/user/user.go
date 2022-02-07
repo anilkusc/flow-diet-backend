@@ -35,6 +35,8 @@ type User struct {
 	Wants                    string   `json:"wants" example:"gain"` // gain , lost , protect // (weights)
 	Favorite_Cousines        []string `json:"favorite_cousines" gorm:"-" example:"italian"`
 	Favorite_Cousines_String string   `json:"-" swaggerignore:"true"`
+	Blood_Group              string   `json:"blood_group" example:"A+"`   // A+,A- etc.
+	Activity_Level           uint8    `json:"activity_level" example:"1"` //1,2,3,4,5
 }
 
 func (u *User) UintArrayToJson(arr []uint) (string, error) {

@@ -5,6 +5,8 @@ import (
 	"errors"
 
 	"github.com/anilkusc/flow-diet-backend/pkg/calendar"
+	"github.com/anilkusc/flow-diet-backend/pkg/recipe"
+	"github.com/anilkusc/flow-diet-backend/pkg/shopping"
 )
 
 func (app *App) GetMyCalendar(userid uint) ([]calendar.Calendar, error) {
@@ -20,18 +22,54 @@ func (app *App) GetMyCalendar(userid uint) ([]calendar.Calendar, error) {
 	return calendars, nil
 }
 
-func (app *App) CreateCalendar(calendarJson string, userid uint) error {
-
-	var calendar calendar.Calendar
-	err := json.Unmarshal([]byte(calendarJson), &calendar)
+func (app *App) CreateCalendar(calendarsJson string, userid uint) error {
+	clndr := calendar.Calendar{}
+	var calendars []calendar.Calendar
+	var recipe recipe.Recipe
+	err := json.Unmarshal([]byte(calendarsJson), &calendars)
 	if err != nil {
 		return err
 	}
-	calendar.User_Id = userid
-	err = calendar.Create(app.DB)
+	// TODO this type of controls should be migrated to middlewares.
+	if len(calendars) < 1 && len(calendars) > 50 {
+		return errors.New("object length must not be bigger than 50 and smaller than 1")
+	}
 
-	return err
+	shoppingList := shopping.Shopping{User_Id: userid}
+	minDate := calendars[0].Date_Epoch
+	maxDate := calendars[0].Date_Epoch
+
+	for i := range calendars {
+		if calendars[i].Date_Epoch < minDate {
+			minDate = calendars[i].Date_Epoch
+		}
+		if calendars[i].Date_Epoch > maxDate {
+			maxDate = calendars[i].Date_Epoch
+		}
+
+		recipe.ID = calendars[i].Recipe_Id
+		recipe.Read(app.DB)
+		for j := range recipe.Ingredients {
+			shoppingList.Ingredients = append(shoppingList.Ingredients, recipe.Ingredients[j])
+		}
+		calendars[i].User_Id = userid
+	}
+
+	shoppingList.Start_Date = uint(minDate)
+	shoppingList.End_Date = uint(maxDate)
+	err = shoppingList.Create(app.DB)
+	if err != nil {
+		return err
+	}
+
+	err = clndr.CreateBulk(app.DB, calendars)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
+
 func (app *App) UpdateCalendar(calendarJson string, userid uint) error {
 
 	var calendar calendar.Calendar

@@ -11,6 +11,7 @@ import (
 )
 
 func Construct() (*gorm.DB, User) {
+
 	godotenv.Load("../../.env")
 	var user = User{
 		Model: gorm.Model{

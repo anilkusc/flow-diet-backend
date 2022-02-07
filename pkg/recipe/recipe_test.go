@@ -14,6 +14,7 @@ import (
 )
 
 func Construct() (*gorm.DB, Recipe) {
+
 	godotenv.Load("../../.env")
 	var recipe = Recipe{
 		Model: gorm.Model{

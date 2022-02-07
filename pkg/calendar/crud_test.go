@@ -146,3 +146,28 @@ func TestList(t *testing.T) {
 	}
 	Destruct(db)
 }
+
+func TestCreateBulk(t *testing.T) {
+	db, calendar := Construct()
+	calendar2 := Calendar{
+		Recipe_Id:  2,
+		User_Id:    1,
+		Meal:       "night",
+		Date_Epoch: 1643743444,
+	}
+	tests := []struct {
+		input []Calendar
+		err   error
+	}{
+		{input: []Calendar{calendar, calendar2}, err: nil},
+	}
+	for _, test := range tests {
+
+		err := calendar.CreateBulk(db, test.input)
+		if test.err != err {
+			t.Errorf("Error is: %v . Expected: %v", err, test.err)
+		}
+
+	}
+	Destruct(db)
+}

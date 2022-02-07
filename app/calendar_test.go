@@ -39,13 +39,14 @@ func TestGetMyCalendar(t *testing.T) {
 }
 func TestCreateCalendar(t *testing.T) {
 	app, _, _, clndr, _, _, _, _ := Construct()
-	calendarJson, _ := json.Marshal(clndr)
+	clndrs := []calendar.Calendar{clndr}
+	calendarsJson, _ := json.Marshal(clndrs)
 	tests := []struct {
 		userid uint
 		input  string
 		err    error
 	}{
-		{userid: 1, input: string(calendarJson), err: nil},
+		{userid: 1, input: string(calendarsJson), err: nil},
 	}
 	for _, test := range tests {
 		err := app.CreateCalendar(test.input, test.userid)

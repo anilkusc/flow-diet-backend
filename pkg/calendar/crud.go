@@ -6,6 +6,12 @@ func (c *Calendar) Create(db *gorm.DB) error {
 	result := db.Create(c)
 	return result.Error
 }
+
+func (c *Calendar) CreateBulk(db *gorm.DB, calendars []Calendar) error {
+	result := db.Create(&calendars)
+	return result.Error
+}
+
 func (c *Calendar) Read(db *gorm.DB) error {
 	result := db.First(&c)
 

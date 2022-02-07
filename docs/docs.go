@@ -63,15 +63,18 @@ var doc = `{
                 "tags": [
                     "calendar"
                 ],
-                "summary": "Create Recipe In User Calendar",
+                "summary": "Create Recipes In User Calendar",
                 "parameters": [
                     {
-                        "description": "Create Recipe In Calendar",
+                        "description": "Create Recipes In Calendar",
                         "name": "calendar",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/calendar.Calendar"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/calendar.Calendar"
+                            }
                         }
                     }
                 ],

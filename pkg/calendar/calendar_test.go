@@ -9,6 +9,7 @@ import (
 )
 
 func Construct() (*gorm.DB, Calendar) {
+
 	godotenv.Load("../../.env")
 	var calendar = Calendar{
 		Model: gorm.Model{
@@ -17,7 +18,9 @@ func Construct() (*gorm.DB, Calendar) {
 		},
 		Recipe_Id:  1,
 		User_Id:    1,
+		Meal:       "breakfast",
 		Date_Epoch: 1643743444,
+		Prepared:   false,
 	}
 	db, _ := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
 	db.AutoMigrate(&Calendar{})
