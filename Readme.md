@@ -8,6 +8,10 @@
 	- Add language option to all of the returned backend object
 	- Add random recpie feature. It will be give random recipe which users mostly like.
 	- Do not return user id
+	- Seperate ingredients package
+	- paths are rehandled
+	- PUT,PATCH,DELETE methods will be implemented
+	- Return id after create 
 * Api
 	- Session should be define and get variables on only middlewares and migrate to the next handler.
 * Search
@@ -17,8 +21,10 @@
 	- mail or phone based authentication
 	- role based access
 	- user role control function in user object
+	- Signin and signup models will be seperated from user.
+	- User update will be implemented on the api
+	- Json ignore for user password
 * Shopping
-	- Create Automatic Shopping lists from weekly recipes.
 * Recommendation
 	- Add prepared diet recommendations
 	- Add balance based diet(sufficent and balanced diet)
