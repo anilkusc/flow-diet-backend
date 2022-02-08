@@ -8,6 +8,9 @@ definitions:
       meal:
         example: breakfast
         type: string
+      prepared:
+        example: false
+        type: boolean
       recipe_id:
         example: 1
         type: integer
@@ -138,12 +141,20 @@ definitions:
     type: object
   user.User:
     properties:
+      activity_level:
+        description: 1,2,3,4,5
+        example: 1
+        type: integer
       address:
         example: myadress 123121
         type: string
       age:
         example: 25
         type: integer
+      blood_group:
+        description: A+,A- etc.
+        example: A+
+        type: string
       diet_level:
         description: '1: vegan ,2:vegaterian,3: omnivor ,4: carnivor'
         example: 1
@@ -266,7 +277,7 @@ paths:
       tags:
       - calendar
   /calendar/recipes/delete:
-    post:
+    delete:
       consumes:
       - application/json
       description: Delete Recipe In User Calendar
@@ -287,7 +298,7 @@ paths:
       tags:
       - calendar
   /calendar/recipes/update:
-    post:
+    patch:
       consumes:
       - application/json
       description: Update Recipe In User Calendar
@@ -340,7 +351,7 @@ paths:
       tags:
       - recipe
   /recipes/delete:
-    post:
+    delete:
       consumes:
       - application/json
       description: Delete Recipe
@@ -380,7 +391,7 @@ paths:
       tags:
       - recipe
   /recipes/update:
-    post:
+    patch:
       consumes:
       - application/json
       description: Update Recipe
@@ -461,7 +472,7 @@ paths:
       tags:
       - shopping
   /shopping/delete:
-    post:
+    delete:
       consumes:
       - application/json
       description: Delete Shopping List
@@ -521,7 +532,7 @@ paths:
       tags:
       - shopping
   /shopping/update:
-    post:
+    patch:
       consumes:
       - application/json
       description: Update Shopping List

@@ -189,7 +189,7 @@ func (app *App) CreateCalendarRecipeHandler(w http.ResponseWriter, r *http.Reque
 // @Produce  json
 // @Param calendar body calendar.Calendar true "Update Recipe In Calendar"
 // @Success 200
-// @Router /calendar/recipes/update [post]
+// @Router /calendar/recipes/update [patch]
 func (app *App) UpdateCalendarRecipeHandler(w http.ResponseWriter, r *http.Request) {
 
 	body, err := ioutil.ReadAll(r.Body)
@@ -224,7 +224,7 @@ func (app *App) UpdateCalendarRecipeHandler(w http.ResponseWriter, r *http.Reque
 // @Produce  json
 // @Param calendar body calendar.Calendar true "Delete Recipe In Calendar. Please Use thisfor send request: {'ID':1}"
 // @Success 200
-// @Router /calendar/recipes/delete [post]
+// @Router /calendar/recipes/delete [delete]
 func (app *App) DeleteCalendarRecipeHandler(w http.ResponseWriter, r *http.Request) {
 
 	body, err := ioutil.ReadAll(r.Body)
@@ -339,7 +339,7 @@ func (app *App) GetRecipeHandler(w http.ResponseWriter, r *http.Request) {
 // @Produce  json
 // @Param recipe body recipe.Recipe true "Update a Recipe"
 // @Success 200
-// @Router /recipes/update [post]
+// @Router /recipes/update [patch]
 func (app *App) UpdateRecipeHandler(w http.ResponseWriter, r *http.Request) {
 
 	body, err := ioutil.ReadAll(r.Body)
@@ -369,7 +369,7 @@ func (app *App) UpdateRecipeHandler(w http.ResponseWriter, r *http.Request) {
 // @Produce  json
 // @Param recipe body recipe.Recipe true "Delete a Recipe"
 // @Success 200
-// @Router /recipes/delete [post]
+// @Router /recipes/delete [delete]
 func (app *App) DeleteRecipeHandler(w http.ResponseWriter, r *http.Request) {
 
 	body, err := ioutil.ReadAll(r.Body)
@@ -492,7 +492,7 @@ func (app *App) GetShoppingHandler(w http.ResponseWriter, r *http.Request) {
 // @Produce  json
 // @Param shopping body shopping.Shopping true "Update Shopping List"
 // @Success 200
-// @Router /shopping/update [post]
+// @Router /shopping/update [patch]
 func (app *App) UpdateShoppingHandler(w http.ResponseWriter, r *http.Request) {
 
 	body, err := ioutil.ReadAll(r.Body)
@@ -522,7 +522,7 @@ func (app *App) UpdateShoppingHandler(w http.ResponseWriter, r *http.Request) {
 // @Produce  json
 // @Param shopping body shopping.Shopping true "Delete Shopping List"
 // @Success 200
-// @Router /shopping/delete [post]
+// @Router /shopping/delete [delete]
 func (app *App) DeleteShoppingHandler(w http.ResponseWriter, r *http.Request) {
 
 	body, err := ioutil.ReadAll(r.Body)

@@ -72,7 +72,7 @@
             }
         },
         "/calendar/recipes/delete": {
-            "post": {
+            "delete": {
                 "description": "Delete Recipe In User Calendar",
                 "consumes": [
                     "application/json"
@@ -103,7 +103,7 @@
             }
         },
         "/calendar/recipes/update": {
-            "post": {
+            "patch": {
                 "description": "Update Recipe In User Calendar",
                 "consumes": [
                     "application/json"
@@ -185,7 +185,7 @@
             }
         },
         "/recipes/delete": {
-            "post": {
+            "delete": {
                 "description": "Delete Recipe",
                 "consumes": [
                     "application/json"
@@ -247,7 +247,7 @@
             }
         },
         "/recipes/update": {
-            "post": {
+            "patch": {
                 "description": "Update Recipe",
                 "consumes": [
                     "application/json"
@@ -371,7 +371,7 @@
             }
         },
         "/shopping/delete": {
-            "post": {
+            "delete": {
                 "description": "Delete Shopping List",
                 "consumes": [
                     "application/json"
@@ -464,7 +464,7 @@
             }
         },
         "/shopping/update": {
-            "post": {
+            "patch": {
                 "description": "Update Shopping List",
                 "consumes": [
                     "application/json"
@@ -588,6 +588,10 @@
                 "meal": {
                     "type": "string",
                     "example": "breakfast"
+                },
+                "prepared": {
+                    "type": "boolean",
+                    "example": false
                 },
                 "recipe_id": {
                     "type": "integer",
@@ -767,6 +771,11 @@
         "user.User": {
             "type": "object",
             "properties": {
+                "activity_level": {
+                    "description": "1,2,3,4,5",
+                    "type": "integer",
+                    "example": 1
+                },
                 "address": {
                     "type": "string",
                     "example": "myadress 123121"
@@ -774,6 +783,11 @@
                 "age": {
                     "type": "integer",
                     "example": 25
+                },
+                "blood_group": {
+                    "description": "A+,A- etc.",
+                    "type": "string",
+                    "example": "A+"
                 },
                 "diet_level": {
                     "description": "1: vegan ,2:vegaterian,3: omnivor ,4: carnivor",

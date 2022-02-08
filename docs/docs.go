@@ -86,7 +86,7 @@ var doc = `{
             }
         },
         "/calendar/recipes/delete": {
-            "post": {
+            "delete": {
                 "description": "Delete Recipe In User Calendar",
                 "consumes": [
                     "application/json"
@@ -117,7 +117,7 @@ var doc = `{
             }
         },
         "/calendar/recipes/update": {
-            "post": {
+            "patch": {
                 "description": "Update Recipe In User Calendar",
                 "consumes": [
                     "application/json"
@@ -199,7 +199,7 @@ var doc = `{
             }
         },
         "/recipes/delete": {
-            "post": {
+            "delete": {
                 "description": "Delete Recipe",
                 "consumes": [
                     "application/json"
@@ -261,7 +261,7 @@ var doc = `{
             }
         },
         "/recipes/update": {
-            "post": {
+            "patch": {
                 "description": "Update Recipe",
                 "consumes": [
                     "application/json"
@@ -385,7 +385,7 @@ var doc = `{
             }
         },
         "/shopping/delete": {
-            "post": {
+            "delete": {
                 "description": "Delete Shopping List",
                 "consumes": [
                     "application/json"
@@ -478,7 +478,7 @@ var doc = `{
             }
         },
         "/shopping/update": {
-            "post": {
+            "patch": {
                 "description": "Update Shopping List",
                 "consumes": [
                     "application/json"
@@ -602,6 +602,10 @@ var doc = `{
                 "meal": {
                     "type": "string",
                     "example": "breakfast"
+                },
+                "prepared": {
+                    "type": "boolean",
+                    "example": false
                 },
                 "recipe_id": {
                     "type": "integer",
@@ -781,6 +785,11 @@ var doc = `{
         "user.User": {
             "type": "object",
             "properties": {
+                "activity_level": {
+                    "description": "1,2,3,4,5",
+                    "type": "integer",
+                    "example": 1
+                },
                 "address": {
                     "type": "string",
                     "example": "myadress 123121"
@@ -788,6 +797,11 @@ var doc = `{
                 "age": {
                     "type": "integer",
                     "example": 25
+                },
+                "blood_group": {
+                    "description": "A+,A- etc.",
+                    "type": "string",
+                    "example": "A+"
                 },
                 "diet_level": {
                     "description": "1: vegan ,2:vegaterian,3: omnivor ,4: carnivor",
