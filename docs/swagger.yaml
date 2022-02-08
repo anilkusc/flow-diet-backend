@@ -18,48 +18,6 @@ definitions:
         example: 1
         type: integer
     type: object
-  ingredient.Ingredient:
-    properties:
-      isexist:
-        example: false
-        type: boolean
-      isoptional:
-        example: true
-        type: boolean
-      material:
-        $ref: '#/definitions/material.Material'
-      measurement:
-        $ref: '#/definitions/measurement.Measurement'
-        description: |-
-          gorm.Model  `json:"-" swaggerignore:"true"`
-          Size        float32
-    type: object
-  material.Material:
-    properties:
-      material_photo_urls:
-        description: |-
-          Tags []string `json:"tags" example:"vegan,fruit"`
-          Material_Diet_Level uint     `json:"material_diet_level" example:"1"`
-        example:
-        - S3URL1
-        - S3URL2
-        items:
-          type: string
-        type: array
-      name:
-        example: banana
-        type: string
-    type: object
-  measurement.Measurement:
-    properties:
-      quantity:
-        example: gram
-        type: string
-      size:
-        description: gorm.Model `json:"-" swaggerignore:"true"`
-        example: 2
-        type: number
-    type: object
   recipe.Recipe:
     properties:
       appropriate_meals:
@@ -87,8 +45,11 @@ definitions:
         example: 2
         type: integer
       ingredients:
+        example:
+        - 1
+        - 2
         items:
-          $ref: '#/definitions/ingredient.Ingredient'
+          type: integer
         type: array
       photo_urls:
         example:
@@ -98,8 +59,11 @@ definitions:
           type: string
         type: array
       preperation:
-        example: bla bla bla
-        type: string
+        example:
+        - bla bla bla
+        items:
+          type: string
+        type: array
       preperation_time:
         example: 15
         type: integer
@@ -129,8 +93,13 @@ definitions:
         example: 1643743448
         type: integer
       ingredients:
+        description: Ingredients ID
+        example:
+        - 1
+        - 2
+        - 3
         items:
-          $ref: '#/definitions/ingredient.Ingredient'
+          type: integer
         type: array
       start_date:
         example: 1643743444
@@ -175,6 +144,10 @@ definitions:
           type: string
         type: array
       favorite_recipes:
+        example:
+        - 1
+        - 2
+        - 3
         items:
           type: integer
         type: array

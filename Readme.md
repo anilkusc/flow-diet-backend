@@ -10,7 +10,6 @@
 	- Do not return user id
 	- Seperate ingredients package
 	- paths are rehandled
-	- PUT,PATCH,DELETE methods will be implemented
 	- Return id after create 
 * Api
 	- Session should be define and get variables on only middlewares and migrate to the next handler.

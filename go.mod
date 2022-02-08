@@ -20,6 +20,7 @@ require (
 	github.com/jinzhu/now v1.1.4 // indirect
 	github.com/joho/godotenv v1.4.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
+	github.com/lib/pq v1.10.4 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-sqlite3 v1.14.11 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect

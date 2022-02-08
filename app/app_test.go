@@ -9,9 +9,6 @@ import (
 
 	"github.com/anilkusc/flow-diet-backend/pkg/calendar"
 	"github.com/anilkusc/flow-diet-backend/pkg/recipe"
-	"github.com/anilkusc/flow-diet-backend/pkg/recipe/ingredient"
-	"github.com/anilkusc/flow-diet-backend/pkg/recipe/material"
-	"github.com/anilkusc/flow-diet-backend/pkg/recipe/measurement"
 	"github.com/anilkusc/flow-diet-backend/pkg/recommendation"
 	"github.com/anilkusc/flow-diet-backend/pkg/search"
 	"github.com/anilkusc/flow-diet-backend/pkg/shopping"
@@ -30,31 +27,25 @@ func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shop
 			//ID:        1,
 			UpdatedAt: time.Time{}, CreatedAt: time.Time{}, DeletedAt: gorm.DeletedAt{Time: time.Time{}, Valid: false},
 		},
-		Username:                 "testuser1",
-		Name:                     "test user",
-		Password:                 "testpass",
-		Email:                    "testmail@testail.com",
-		Phone:                    "+905355556789",
-		Weight:                   70,
-		Height:                   173,
-		Age:                      25,
-		Gender:                   "male",
-		Diet_Level:               1,
-		Favorite_Recipes:         []uint{1, 2, 3},
-		Favorite_Recipes_String:  "[1,2,3]",
-		Address:                  "my address 123",
-		Role:                     "admin", //"user"
-		Preferred_Meals:          []string{"breakfast"},
-		Preferred_Meals_String:   `["breakfast"]`,
-		Likes:                    []string{"kebap"},
-		Likes_String:             `["kebap"]`,
-		Dislikes:                 []string{"onion"},
-		Dislikes_String:          `["onion"]`,
-		Prohibits:                []string{"sugar"},
-		Prohibits_String:         `["sugar"]`,
-		Wants:                    `gain`,
-		Favorite_Cousines:        []string{"italian"},
-		Favorite_Cousines_String: `["italian"]`,
+		Username:          "testuser1",
+		Name:              "test user",
+		Email:             "testmail@test.com",
+		Phone:             "+905355353535",
+		Password:          "testpass",
+		Weight:            70,
+		Height:            173,
+		Age:               25,
+		Gender:            "male",
+		Diet_Level:        1,
+		Favorite_Recipes:  []int32{1, 2, 3},
+		Address:           "myadress",
+		Role:              "admin",
+		Preferred_Meals:   []string{"breakfast"},
+		Likes:             []string{"kebap"},
+		Dislikes:          []string{"onion"},
+		Prohibits:         []string{"sugar"},
+		Wants:             `gain`,
+		Favorite_Cuisines: []string{"italian"},
 	}
 	userJson, _ := json.Marshal(usr)
 	app.Signup(string(userJson))
@@ -72,7 +63,7 @@ func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shop
 	signInCookie := cookie[:len(cookie)-1]
 	app.DB.Exec("DROP TABLE users")
 	app.DB.AutoMigrate(&user.User{})
-	var calendar = calendar.Calendar{
+	calendar := calendar.Calendar{
 		Model: gorm.Model{
 			//ID:        1,
 			UpdatedAt: time.Time{}, CreatedAt: time.Time{}, DeletedAt: gorm.DeletedAt{Time: time.Time{}, Valid: false},
@@ -83,66 +74,35 @@ func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shop
 		Date_Epoch: 1643743444,
 		Prepared:   false,
 	}
-	var recipe = recipe.Recipe{
+
+	recipe := recipe.Recipe{
 		Model: gorm.Model{
 			//ID:        1,
 			UpdatedAt: time.Time{}, CreatedAt: time.Time{}, DeletedAt: gorm.DeletedAt{Time: time.Time{}, Valid: false},
 		},
-		Title: "Test Recipe",
-		Ingredients: []ingredient.Ingredient{
-			{
-				Measurement: measurement.Measurement{
-					Size:     200,
-					Quantity: "gram",
-				},
-				Material: material.Material{
-					Name:                "banana",
-					Material_Photo_Urls: []string{"S3URL1", "S3URL2"},
-				},
-				IsExist:    false,
-				IsOptional: false,
-			},
-		},
-		Ingredients_String:       `[{"measurement":{"size":200,"quantity":"gram"},"material":{"name":"banana","material_photo_urls":["S3URL1","S3URL2"]},"isexist":false,"isoptional":false}]`,
-		Preperation:              "Cook the chickens!",
-		Preperation_Time_minute:  15,
-		Cooking_Time_Minute:      15,
-		Calori:                   255,
-		Photo_Urls:               []string{"S3URL1", "S3URL2"},
-		Video_Urls:               []string{"S3URL1", "S3URL2"},
-		Photo_Urls_String:        `["S3URL1", "S3URL2"]`,
-		Video_Urls_String:        `["S3URL1", "S3URL2"]`,
-		For_How_Many_People:      2,
-		Tags:                     []string{"vegan", "kebap", "cola"},
-		Tags_String:              `["vegan", "kebap", "cola"]`,
-		Appropriate_Meals:        []string{"breakfast", "afternoon"},
-		Appropriate_Meals_String: `["breakfast","afternoon"]`,
-		Cousines:                 []string{"italian"},
-		Cousines_String:          `["italian"]`,
+		Title:                   "Test Recipe",
+		Ingredients:             []int32{1, 2},
+		Preperation:             []string{"blalblabla"},
+		Preperation_Time_minute: 15,
+		Cooking_Time_Minute:     15,
+		Calori:                  255,
+		Recipe_Diet_Level:       1,
+		Photo_Urls:              []string{"S3URL1", "S3URL2"},
+		Video_Urls:              []string{"S3URL1", "S3URL2"},
+		For_How_Many_People:     2,
+		Tags:                    []string{"vegan", "kebap", "cola"},
+		Appropriate_Meals:       []string{"breakfast", "afternoon"},
+		Cuisines:                []string{"italian"},
 	}
 	var shopping = shopping.Shopping{
 		Model: gorm.Model{
 			//ID:        1,
 			UpdatedAt: time.Time{}, CreatedAt: time.Time{}, DeletedAt: gorm.DeletedAt{Time: time.Time{}, Valid: false},
 		},
-		Ingredients: []ingredient.Ingredient{
-			{
-				Measurement: measurement.Measurement{
-					Size:     200,
-					Quantity: "gram",
-				},
-				Material: material.Material{
-					Name:                "banana",
-					Material_Photo_Urls: []string{"S3URL1", "S3URL2"},
-				},
-				IsExist:    false,
-				IsOptional: false,
-			},
-		},
-		Ingredients_String: `[{"measurement":{"size":200,"quantity":"gram"},"material":{"name":"banana","material_photo_urls":["S3URL1","S3URL2"]},"isexist":false,"isoptional":false}]`,
-		Start_Date:         1643743444,
-		End_Date:           1643743448,
-		User_Id:            1,
+		Ingredients: []int32{1, 2, 3},
+		Start_Date:  1643743444,
+		End_Date:    1643743448,
+		User_Id:     1,
 	}
 	search := search.Search{Word: "some"}
 

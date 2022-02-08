@@ -617,60 +617,6 @@ var doc = `{
                 }
             }
         },
-        "ingredient.Ingredient": {
-            "type": "object",
-            "properties": {
-                "isexist": {
-                    "type": "boolean",
-                    "example": false
-                },
-                "isoptional": {
-                    "type": "boolean",
-                    "example": true
-                },
-                "material": {
-                    "$ref": "#/definitions/material.Material"
-                },
-                "measurement": {
-                    "description": "gorm.Model  ` + "`" + `json:\"-\" swaggerignore:\"true\"` + "`" + `\nSize        float32",
-                    "$ref": "#/definitions/measurement.Measurement"
-                }
-            }
-        },
-        "material.Material": {
-            "type": "object",
-            "properties": {
-                "material_photo_urls": {
-                    "description": "Tags []string ` + "`" + `json:\"tags\" example:\"vegan,fruit\"` + "`" + `\nMaterial_Diet_Level uint     ` + "`" + `json:\"material_diet_level\" example:\"1\"` + "`" + `",
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "example": [
-                        "S3URL1",
-                        "S3URL2"
-                    ]
-                },
-                "name": {
-                    "type": "string",
-                    "example": "banana"
-                }
-            }
-        },
-        "measurement.Measurement": {
-            "type": "object",
-            "properties": {
-                "quantity": {
-                    "type": "string",
-                    "example": "gram"
-                },
-                "size": {
-                    "description": "gorm.Model ` + "`" + `json:\"-\" swaggerignore:\"true\"` + "`" + `",
-                    "type": "number",
-                    "example": 2
-                }
-            }
-        },
         "recipe.Recipe": {
             "type": "object",
             "properties": {
@@ -709,8 +655,12 @@ var doc = `{
                 "ingredients": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/ingredient.Ingredient"
-                    }
+                        "type": "integer"
+                    },
+                    "example": [
+                        1,
+                        2
+                    ]
                 },
                 "photo_urls": {
                     "type": "array",
@@ -723,8 +673,13 @@ var doc = `{
                     ]
                 },
                 "preperation": {
-                    "type": "string",
-                    "example": "bla bla bla"
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "bla bla bla"
+                    ]
                 },
                 "preperation_time": {
                     "type": "integer",
@@ -767,10 +722,16 @@ var doc = `{
                     "example": 1643743448
                 },
                 "ingredients": {
+                    "description": "Ingredients ID",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/ingredient.Ingredient"
-                    }
+                        "type": "integer"
+                    },
+                    "example": [
+                        1,
+                        2,
+                        3
+                    ]
                 },
                 "start_date": {
                     "type": "integer",
@@ -834,7 +795,12 @@ var doc = `{
                     "type": "array",
                     "items": {
                         "type": "integer"
-                    }
+                    },
+                    "example": [
+                        1,
+                        2,
+                        3
+                    ]
                 },
                 "gender": {
                     "description": "male,female,other",
