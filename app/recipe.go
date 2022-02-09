@@ -79,10 +79,7 @@ func (app *App) DeleteRecipe(recipeJson string) error {
 	if err != nil {
 		return err
 	}
-	err = recipe.Read(app.DB)
-	if err != nil {
-		return err
-	}
+
 	recipe.Delete(app.DB)
 	if err != nil {
 		return err

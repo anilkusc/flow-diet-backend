@@ -25,7 +25,7 @@ func (app *App) ListShoppings(userid uint) (string, error) {
 }
 func (app *App) ListShoppingsWithDateInterval(userid uint, shoppingJson string) (string, error) {
 
-	//TODO: Do not list older than 3 months
+	//TODO: Convert every dates to time.Time format
 
 	var shoppings []shopping.Shopping
 	var shopping shopping.Shopping

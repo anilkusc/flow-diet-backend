@@ -18,6 +18,31 @@ definitions:
         example: 1
         type: integer
     type: object
+  material.Material:
+    properties:
+      material_name:
+        example: bread
+        type: string
+      material_photo_urls:
+        example:
+        - S3URL1
+        - S3URL2
+        items:
+          type: string
+        type: array
+      material_tags:
+        example:
+        - vegan
+        items:
+          type: string
+        type: array
+      measurement_quantity:
+        example: gram
+        type: string
+      measurement_size:
+        example: 200
+        type: number
+    type: object
   recipe.Recipe:
     properties:
       appropriate_meals:
@@ -30,6 +55,8 @@ definitions:
           type: string
         type: array
       calori:
+        description: 'TODO: will be migrated to materials and it will be calculated
+          from'
         example: 252
         type: integer
       cooking_time_minute:
@@ -290,6 +317,86 @@ paths:
       summary: Update Recipe In User Calendar
       tags:
       - calendar
+  /materials/create:
+    post:
+      consumes:
+      - application/json
+      description: Create A New Material
+      parameters:
+      - description: Create New Material
+        in: body
+        name: recipe
+        required: true
+        schema:
+          $ref: '#/definitions/material.Material'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Create a new material
+      tags:
+      - material
+  /materials/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Material
+      parameters:
+      - description: Delete a Material
+        in: body
+        name: material
+        required: true
+        schema:
+          $ref: '#/definitions/material.Material'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Delete Material
+      tags:
+      - material
+  /materials/get:
+    post:
+      consumes:
+      - application/json
+      description: Get a material
+      parameters:
+      - description: Get Material
+        in: body
+        name: material
+        required: true
+        schema:
+          $ref: '#/definitions/material.Material'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Get a material
+      tags:
+      - material
+  /materials/update:
+    patch:
+      consumes:
+      - application/json
+      description: Update Material
+      parameters:
+      - description: Update a Material
+        in: body
+        name: material
+        required: true
+        schema:
+          $ref: '#/definitions/material.Material'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Update Material
+      tags:
+      - material
   /recipes/all:
     get:
       consumes:

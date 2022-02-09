@@ -40,3 +40,5 @@
 	- pprof
 	- health probes
 	- add egress rule for security. If egress body is bigger than 50 Mb return error
+
+	Ingredients and materials api katmanı oluşturulacak.

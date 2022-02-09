@@ -14,7 +14,7 @@ type Recipe struct {
 	Preperation             pq.StringArray `gorm:"type:text[]" json:"preperation" example:"bla bla bla"`
 	Preperation_Time_minute uint16         `gorm:"not null" json:"preperation_time" example:"15"`
 	Cooking_Time_Minute     uint16         `gorm:"not null" json:"cooking_time_minute" example:"10"`
-	Calori                  uint16         `json:"calori" example:"252"`
+	Calori                  uint16         `json:"calori" example:"252"` // TODO: will be migrated to materials and it will be calculated from
 	Photo_Urls              pq.StringArray `gorm:"type:text[]" json:"photo_urls" example:"S3URL1,S3URL2"`
 	Video_Urls              pq.StringArray `gorm:"type:text[]" json:"video_urls" example:"S3URL1,S3URL2"`
 	For_How_Many_People     uint8          `gorm:"not null" json:"for_how_many_people" example:"2"`

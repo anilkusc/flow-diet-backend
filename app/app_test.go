@@ -9,6 +9,7 @@ import (
 
 	"github.com/anilkusc/flow-diet-backend/pkg/calendar"
 	"github.com/anilkusc/flow-diet-backend/pkg/recipe"
+	"github.com/anilkusc/flow-diet-backend/pkg/recipe/ingredient/material"
 	"github.com/anilkusc/flow-diet-backend/pkg/recommendation"
 	"github.com/anilkusc/flow-diet-backend/pkg/search"
 	"github.com/anilkusc/flow-diet-backend/pkg/shopping"
@@ -17,7 +18,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shopping.Shopping, search.Search, recommendation.Recommendation) {
+func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shopping.Shopping, search.Search, recommendation.Recommendation, material.Material) {
 
 	godotenv.Load("../.env")
 	app := App{}
@@ -127,12 +128,23 @@ func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shop
 		Cousine_Factor:      2,
 		Recommended_Recipes: []uint{}, // it is sorted by recommended points.
 	}
-
-	return app, signInCookie, usr, calendar, recipe, shopping, search, recommendation
+	var material = material.Material{
+		Model: gorm.Model{
+			//ID:        1,
+			UpdatedAt: time.Time{}, CreatedAt: time.Time{}, DeletedAt: gorm.DeletedAt{Time: time.Time{}, Valid: false},
+		},
+		Material_Name:       "bread",
+		Material_Photo_Urls: []string{"S3URL1", "S3URL2"},
+		Tags:                []string{"vegan"},
+		Size:                200,
+		Quantity:            "gram",
+	}
+	return app, signInCookie, usr, calendar, recipe, shopping, search, recommendation, material
 }
 func Destruct(app App) {
 	app.DB.Exec("DROP TABLE users")
 	app.DB.Exec("DROP TABLE calendars")
 	app.DB.Exec("DROP TABLE recipes")
 	app.DB.Exec("DROP TABLE shoppings")
+	app.DB.Exec("DROP TABLE materials")
 }

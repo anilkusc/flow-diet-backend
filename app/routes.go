@@ -610,6 +610,124 @@ func (app *App) GetRecommendationsHandler(w http.ResponseWriter, r *http.Request
 	return
 }
 
+// GetMaterialHandler godoc
+// @Summary Get a material
+// @Description  Get a material
+// @Tags material
+// @Accept  json
+// @Produce  json
+// @Param material body material.Material true "Get Material"
+// @Success 200
+// @Router /materials/get [post]
+func (app *App) GetMaterialHandler(w http.ResponseWriter, r *http.Request) {
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Error("cannot read body: ", err)
+		http.Error(w, "wrong material object", http.StatusBadRequest)
+		return
+	}
+	material, err := app.GetMaterial(string(body))
+	if err != nil {
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Info("material is readed: ", material)
+	http.Error(w, material, http.StatusOK)
+	return
+}
+
+// CreateMaterialHandler godoc
+// @Summary Create a new material
+// @Description Create A New Material
+// @Tags material
+// @Accept  json
+// @Produce  json
+// @Param recipe body material.Material true "Create New Material"
+// @Success 200
+// @Router /materials/create [post]
+func (app *App) CreateMaterialHandler(w http.ResponseWriter, r *http.Request) {
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Error("cannot read body: ", err)
+		http.Error(w, "wrong material object", http.StatusBadRequest)
+		return
+	}
+
+	err = app.CreateMaterial(string(body))
+	if err != nil {
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Info("material is created: ", string(body))
+	http.Error(w, "OK", http.StatusOK)
+	return
+}
+
+// UpdateMaterialHandler godoc
+// @Summary Update Material
+// @Description Update Material
+// @Tags material
+// @Accept  json
+// @Produce  json
+// @Param material body material.Material true "Update a Material"
+// @Success 200
+// @Router /materials/update [patch]
+func (app *App) UpdateMaterialHandler(w http.ResponseWriter, r *http.Request) {
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Error("cannot read body: ", err)
+		http.Error(w, "wrong material object", http.StatusBadRequest)
+		return
+	}
+
+	err = app.UpdateMaterial(string(body))
+	if err != nil {
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Info("updated material : ", string(body))
+	http.Error(w, "OK", http.StatusOK)
+	return
+}
+
+// DeleteMaterialHandler godoc
+// @Summary Delete Material
+// @Description Delete Material
+// @Tags material
+// @Accept  json
+// @Produce  json
+// @Param material body material.Material true "Delete a Material"
+// @Success 200
+// @Router /materials/delete [delete]
+func (app *App) DeleteMaterialHandler(w http.ResponseWriter, r *http.Request) {
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Error("cannot read body: ", err)
+		http.Error(w, "wrong calendar object", http.StatusBadRequest)
+		return
+	}
+
+	err = app.DeleteMaterial(string(body))
+	if err != nil {
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Info("deleted material : ", string(body))
+	http.Error(w, "OK", http.StatusOK)
+	return
+}
+
 func (app *App) TestHandler(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Hello", http.StatusOK)
 	return

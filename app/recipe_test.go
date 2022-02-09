@@ -6,7 +6,7 @@ import (
 )
 
 func TestListRecipes(t *testing.T) {
-	app, _, _, _, rcp, _, _, _ := Construct()
+	app, _, _, _, rcp, _, _, _, _ := Construct()
 	rcp.Create(app.DB)
 	tests := []struct {
 		//output []recipe.Recipe
@@ -31,7 +31,7 @@ func TestListRecipes(t *testing.T) {
 	Destruct(app)
 }
 func TestCreateRecipe(t *testing.T) {
-	app, _, _, _, rcp, _, _, _ := Construct()
+	app, _, _, _, rcp, _, _, _, _ := Construct()
 	recipeJson, _ := json.Marshal(rcp)
 	tests := []struct {
 		input string
@@ -51,7 +51,7 @@ func TestCreateRecipe(t *testing.T) {
 }
 
 func TestGetRecipe(t *testing.T) {
-	app, _, _, _, rcp, _, _, _ := Construct()
+	app, _, _, _, rcp, _, _, _, _ := Construct()
 	rcp.Create(app.DB)
 	tests := []struct {
 		input  string
@@ -76,7 +76,7 @@ func TestGetRecipe(t *testing.T) {
 }
 
 func TestDeleteRecipe(t *testing.T) {
-	app, _, _, _, rcp, _, _, _ := Construct()
+	app, _, _, _, rcp, _, _, _, _ := Construct()
 	rcp.Create(app.DB)
 	rcp.ID = 1
 	recipeJson, _ := json.Marshal(rcp)
@@ -98,7 +98,7 @@ func TestDeleteRecipe(t *testing.T) {
 }
 
 func TestUpdateRecipe(t *testing.T) {
-	app, _, _, _, rcp, _, _, _ := Construct()
+	app, _, _, _, rcp, _, _, _, _ := Construct()
 	rcp.Create(app.DB)
 	rcp.ID = 1
 	rcp.Calori = 100

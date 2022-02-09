@@ -147,6 +147,130 @@ var doc = `{
                 }
             }
         },
+        "/materials/create": {
+            "post": {
+                "description": "Create A New Material",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "material"
+                ],
+                "summary": "Create a new material",
+                "parameters": [
+                    {
+                        "description": "Create New Material",
+                        "name": "recipe",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/material.Material"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/materials/delete": {
+            "delete": {
+                "description": "Delete Material",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "material"
+                ],
+                "summary": "Delete Material",
+                "parameters": [
+                    {
+                        "description": "Delete a Material",
+                        "name": "material",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/material.Material"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/materials/get": {
+            "post": {
+                "description": "Get a material",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "material"
+                ],
+                "summary": "Get a material",
+                "parameters": [
+                    {
+                        "description": "Get Material",
+                        "name": "material",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/material.Material"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/materials/update": {
+            "patch": {
+                "description": "Update Material",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "material"
+                ],
+                "summary": "Update Material",
+                "parameters": [
+                    {
+                        "description": "Update a Material",
+                        "name": "material",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/material.Material"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/recipes/all": {
             "get": {
                 "description": "List All Recipes",
@@ -617,6 +741,42 @@ var doc = `{
                 }
             }
         },
+        "material.Material": {
+            "type": "object",
+            "properties": {
+                "material_name": {
+                    "type": "string",
+                    "example": "bread"
+                },
+                "material_photo_urls": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "S3URL1",
+                        "S3URL2"
+                    ]
+                },
+                "material_tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "vegan"
+                    ]
+                },
+                "measurement_quantity": {
+                    "type": "string",
+                    "example": "gram"
+                },
+                "measurement_size": {
+                    "type": "number",
+                    "example": 200
+                }
+            }
+        },
         "recipe.Recipe": {
             "type": "object",
             "properties": {
@@ -632,6 +792,7 @@ var doc = `{
                     ]
                 },
                 "calori": {
+                    "description": "TODO: will be migrated to materials and it will be calculated from",
                     "type": "integer",
                     "example": 252
                 },

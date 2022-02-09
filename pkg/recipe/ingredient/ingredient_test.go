@@ -16,12 +16,8 @@ func Construct() (*gorm.DB, Ingredient) {
 			//ID:        1,
 			UpdatedAt: time.Time{}, CreatedAt: time.Time{}, DeletedAt: gorm.DeletedAt{Time: time.Time{}, Valid: false},
 		},
-		Measurement_Size:     200,
-		Measurement_Quantity: "gram",
-		Material_Photo_Urls:  []string{"S3URL1", "S3URL2"},
-		Material_Name:        "Rice",
-		IsExist:              false,
-		IsOptional:           false,
+		Materials:  []int32{1, 2, 3},
+		IsOptional: false,
 	}
 	db, _ := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
 	db.AutoMigrate(&Ingredient{})

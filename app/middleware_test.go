@@ -10,7 +10,7 @@ import (
 )
 
 func TestIdControl(t *testing.T) {
-	app, _, user, _, _, _, _, _ := Construct()
+	app, _, user, _, _, _, _, _, _ := Construct()
 	userJson, _ := json.Marshal(user)
 	tests := []struct {
 		input  string
@@ -43,7 +43,7 @@ func TestIdControl(t *testing.T) {
 	Destruct(app)
 }
 func TestAuth(t *testing.T) {
-	app, cookie, _, _, _, _, _, _ := Construct()
+	app, cookie, _, _, _, _, _, _, _ := Construct()
 
 	tests := []struct {
 		cookie string
@@ -77,7 +77,7 @@ func TestAuth(t *testing.T) {
 }
 
 func TestAuthz(t *testing.T) {
-	app, cookie, user, _, _, _, _, _ := Construct()
+	app, cookie, user, _, _, _, _, _, _ := Construct()
 	user.Create(app.DB)
 
 	tests := []struct {
