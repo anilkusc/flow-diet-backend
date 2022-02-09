@@ -26,7 +26,10 @@ func (app *App) InitRoutes() {
 	app.Router.HandleFunc("/materials/create", app.Auth(app.Authz(app.CreateMaterialHandler))).Methods("POST")
 	app.Router.HandleFunc("/materials/update", app.Auth(app.Authz(app.UpdateMaterialHandler))).Methods("PATCH")
 	app.Router.HandleFunc("/materials/delete", app.Auth(app.Authz(app.DeleteMaterialHandler))).Methods("DELETE")
-
+	app.Router.HandleFunc("/ingredients/get", app.Auth(app.GetIngredientHandler)).Methods("POST")
+	app.Router.HandleFunc("/ingredients/create", app.Auth(app.Authz(app.CreateIngredientHandler))).Methods("POST")
+	app.Router.HandleFunc("/ingredients/update", app.Auth(app.Authz(app.UpdateIngredientHandler))).Methods("PATCH")
+	app.Router.HandleFunc("/ingredients/delete", app.Auth(app.Authz(app.DeleteIngredientHandler))).Methods("DELETE")
 	app.Router.HandleFunc("/shopping/list", app.Auth(app.GetAllShoppingsHandler)).Methods("POST")
 	app.Router.HandleFunc("/shopping/get", app.Auth(app.GetShoppingHandler)).Methods("POST")
 	app.Router.HandleFunc("/shopping/create", app.Auth(app.CreateShoppingHandler)).Methods("POST")

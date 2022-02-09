@@ -5,19 +5,19 @@ import (
 	"testing"
 )
 
-func TestCreateMaterial(t *testing.T) {
-	app, _, _, _, _, _, _, _, mtr, _ := Construct()
-	materialJson, _ := json.Marshal(mtr)
+func TestCreateIngredient(t *testing.T) {
+	app, _, _, _, _, _, _, _, _, ingr := Construct()
+	ingredientJson, _ := json.Marshal(ingr)
 	tests := []struct {
 		input string
 		err   error
 	}{
 		{
-			input: string(materialJson),
+			input: string(ingredientJson),
 			err:   nil},
 	}
 	for _, test := range tests {
-		err := app.CreateMaterial(test.input)
+		err := app.CreateIngredient(test.input)
 		if err != nil {
 			t.Errorf("Error is: %v . Expected: %v", err, test.err)
 		}
@@ -25,9 +25,9 @@ func TestCreateMaterial(t *testing.T) {
 	Destruct(app)
 }
 
-func TestGetMaterial(t *testing.T) {
-	app, _, _, _, _, _, _, _, mtr, _ := Construct()
-	mtr.Create(app.DB)
+func TestGetIngredient(t *testing.T) {
+	app, _, _, _, _, _, _, _, _, ingr := Construct()
+	ingr.Create(app.DB)
 	tests := []struct {
 		input  string
 		output string
@@ -39,7 +39,7 @@ func TestGetMaterial(t *testing.T) {
 			err: nil},
 	}
 	for _, test := range tests {
-		_, err := app.GetMaterial(test.input)
+		_, err := app.GetIngredient(test.input)
 		if err != nil {
 			t.Errorf("Error is: %v . Expected: %v", err, test.err)
 		} /*
@@ -50,21 +50,21 @@ func TestGetMaterial(t *testing.T) {
 	Destruct(app)
 }
 
-func TestDeleteMaterial(t *testing.T) {
-	app, _, _, _, _, _, _, _, mtr, _ := Construct()
-	mtr.Create(app.DB)
-	mtr.ID = 1
-	materialJson, _ := json.Marshal(mtr)
+func TestDeleteIngredient(t *testing.T) {
+	app, _, _, _, _, _, _, _, _, ingr := Construct()
+	ingr.Create(app.DB)
+	ingr.ID = 1
+	ingredientJson, _ := json.Marshal(ingr)
 	tests := []struct {
 		input string
 		err   error
 	}{
 		{
-			input: string(materialJson),
+			input: string(ingredientJson),
 			err:   nil},
 	}
 	for _, test := range tests {
-		err := app.DeleteMaterial(test.input)
+		err := app.DeleteIngredient(test.input)
 		if err != nil {
 			t.Errorf("Error is: %v . Expected: %v", err, test.err)
 		}
@@ -72,22 +72,22 @@ func TestDeleteMaterial(t *testing.T) {
 	Destruct(app)
 }
 
-func TestUpdateMaterial(t *testing.T) {
-	app, _, _, _, _, _, _, _, mtr, _ := Construct()
-	mtr.Create(app.DB)
-	mtr.ID = 1
-	mtr.Material_Name = "onion"
-	materialJson, _ := json.Marshal(mtr)
+func TestUpdateIngredient(t *testing.T) {
+	app, _, _, _, _, _, _, _, _, ingr := Construct()
+	ingr.Create(app.DB)
+	ingr.ID = 1
+	ingr.IsOptional = true
+	ingredientJson, _ := json.Marshal(ingr)
 	tests := []struct {
 		input string
 		err   error
 	}{
 		{
-			input: string(materialJson),
+			input: string(ingredientJson),
 			err:   nil},
 	}
 	for _, test := range tests {
-		err := app.UpdateMaterial(test.input)
+		err := app.UpdateIngredient(test.input)
 		if err != nil {
 			t.Errorf("Error is: %v . Expected: %v", err, test.err)
 		}

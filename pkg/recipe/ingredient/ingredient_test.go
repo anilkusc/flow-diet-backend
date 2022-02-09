@@ -16,8 +16,8 @@ func Construct() (*gorm.DB, Ingredient) {
 			//ID:        1,
 			UpdatedAt: time.Time{}, CreatedAt: time.Time{}, DeletedAt: gorm.DeletedAt{Time: time.Time{}, Valid: false},
 		},
-		Materials:  []int32{1, 2, 3},
-		IsOptional: false,
+		Material_Id: 1,
+		IsOptional:  false,
 	}
 	db, _ := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
 	db.AutoMigrate(&Ingredient{})

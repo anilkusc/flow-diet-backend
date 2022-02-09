@@ -18,6 +18,15 @@ definitions:
         example: 1
         type: integer
     type: object
+  ingredient.Ingredient:
+    properties:
+      isoptional:
+        example: true
+        type: boolean
+      material_id:
+        example: 1
+        type: integer
+    type: object
   material.Material:
     properties:
       material_name:
@@ -317,6 +326,86 @@ paths:
       summary: Update Recipe In User Calendar
       tags:
       - calendar
+  /ingredients/create:
+    post:
+      consumes:
+      - application/json
+      description: Create A New Ingredient
+      parameters:
+      - description: Create New Ingredient
+        in: body
+        name: ingredient
+        required: true
+        schema:
+          $ref: '#/definitions/ingredient.Ingredient'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Create a new ingredient
+      tags:
+      - ingredient
+  /ingredients/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Ingredient
+      parameters:
+      - description: Delete a Ingredient
+        in: body
+        name: ingredient
+        required: true
+        schema:
+          $ref: '#/definitions/ingredient.Ingredient'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Delete Ingredient
+      tags:
+      - ingredient
+  /ingredients/get:
+    post:
+      consumes:
+      - application/json
+      description: Get a ingredient
+      parameters:
+      - description: Get Ingredient
+        in: body
+        name: ingredient
+        required: true
+        schema:
+          $ref: '#/definitions/ingredient.Ingredient'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Get a ingredient
+      tags:
+      - ingredient
+  /ingredients/update:
+    patch:
+      consumes:
+      - application/json
+      description: Update Ingredient
+      parameters:
+      - description: Update a Ingredient
+        in: body
+        name: ingredient
+        required: true
+        schema:
+          $ref: '#/definitions/ingredient.Ingredient'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Update Ingredient
+      tags:
+      - ingredient
   /materials/create:
     post:
       consumes:

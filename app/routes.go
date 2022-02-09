@@ -728,6 +728,124 @@ func (app *App) DeleteMaterialHandler(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+// GetIngredientHandler godoc
+// @Summary Get a ingredient
+// @Description  Get a ingredient
+// @Tags ingredient
+// @Accept  json
+// @Produce  json
+// @Param ingredient body ingredient.Ingredient true "Get Ingredient"
+// @Success 200
+// @Router /ingredients/get [post]
+func (app *App) GetIngredientHandler(w http.ResponseWriter, r *http.Request) {
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Error("cannot read body: ", err)
+		http.Error(w, "wrong ingredient object", http.StatusBadRequest)
+		return
+	}
+	ingredient, err := app.GetIngredient(string(body))
+	if err != nil {
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Info("ingredient is readed: ", ingredient)
+	http.Error(w, ingredient, http.StatusOK)
+	return
+}
+
+// CreateIngredientHandler godoc
+// @Summary Create a new ingredient
+// @Description Create A New Ingredient
+// @Tags ingredient
+// @Accept  json
+// @Produce  json
+// @Param ingredient body ingredient.Ingredient true "Create New Ingredient"
+// @Success 200
+// @Router /ingredients/create [post]
+func (app *App) CreateIngredientHandler(w http.ResponseWriter, r *http.Request) {
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Error("cannot read body: ", err)
+		http.Error(w, "wrong ingredient object", http.StatusBadRequest)
+		return
+	}
+
+	err = app.CreateIngredient(string(body))
+	if err != nil {
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Info("ingredient is created: ", string(body))
+	http.Error(w, "OK", http.StatusOK)
+	return
+}
+
+// UpdateIngredientHandler godoc
+// @Summary Update Ingredient
+// @Description Update Ingredient
+// @Tags ingredient
+// @Accept  json
+// @Produce  json
+// @Param ingredient body ingredient.Ingredient true "Update a Ingredient"
+// @Success 200
+// @Router /ingredients/update [patch]
+func (app *App) UpdateIngredientHandler(w http.ResponseWriter, r *http.Request) {
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Error("cannot read body: ", err)
+		http.Error(w, "wrong ingredient object", http.StatusBadRequest)
+		return
+	}
+
+	err = app.UpdateIngredient(string(body))
+	if err != nil {
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Info("updated ingredient : ", string(body))
+	http.Error(w, "OK", http.StatusOK)
+	return
+}
+
+// DeleteIngredientHandler godoc
+// @Summary Delete Ingredient
+// @Description Delete Ingredient
+// @Tags ingredient
+// @Accept  json
+// @Produce  json
+// @Param ingredient body ingredient.Ingredient true "Delete a Ingredient"
+// @Success 200
+// @Router /ingredients/delete [delete]
+func (app *App) DeleteIngredientHandler(w http.ResponseWriter, r *http.Request) {
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Error("cannot read body: ", err)
+		http.Error(w, "wrong ingredient object", http.StatusBadRequest)
+		return
+	}
+
+	err = app.DeleteIngredient(string(body))
+	if err != nil {
+		log.Error(err)
+		http.Error(w, fmt.Sprintf("%v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Info("deleted ingredient : ", string(body))
+	http.Error(w, "OK", http.StatusOK)
+	return
+}
+
 func (app *App) TestHandler(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Hello", http.StatusOK)
 	return

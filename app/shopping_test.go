@@ -6,7 +6,7 @@ import (
 )
 
 func TestListShoppings(t *testing.T) {
-	app, _, _, _, _, shp, _, _, _ := Construct()
+	app, _, _, _, _, shp, _, _, _, _ := Construct()
 	shp.Create(app.DB)
 	tests := []struct {
 		userid uint
@@ -29,7 +29,7 @@ func TestListShoppings(t *testing.T) {
 	Destruct(app)
 }
 func TestCreateShopping(t *testing.T) {
-	app, _, _, _, _, shp, _, _, _ := Construct()
+	app, _, _, _, _, shp, _, _, _, _ := Construct()
 	shoppingJson, _ := json.Marshal(shp)
 	tests := []struct {
 		input string
@@ -49,7 +49,7 @@ func TestCreateShopping(t *testing.T) {
 }
 
 func TestGetShopping(t *testing.T) {
-	app, _, _, _, _, shp, _, _, _ := Construct()
+	app, _, _, _, _, shp, _, _, _, _ := Construct()
 	shp.Create(app.DB)
 	tests := []struct {
 		input  string
@@ -74,7 +74,7 @@ func TestGetShopping(t *testing.T) {
 }
 
 func TestDeleteShopping(t *testing.T) {
-	app, _, _, _, _, shp, _, _, _ := Construct()
+	app, _, _, _, _, shp, _, _, _, _ := Construct()
 	shp.Create(app.DB)
 	shp.ID = 1
 	shoppingJson, _ := json.Marshal(shp)
@@ -96,7 +96,7 @@ func TestDeleteShopping(t *testing.T) {
 }
 
 func TestUpdateShopping(t *testing.T) {
-	app, _, _, _, _, shp, _, _, _ := Construct()
+	app, _, _, _, _, shp, _, _, _, _ := Construct()
 	shp.Create(app.DB)
 	shp.ID = 1
 	shp.Start_Date = 100
@@ -119,7 +119,7 @@ func TestUpdateShopping(t *testing.T) {
 }
 
 func TestListShoppingsWithDateInterval(t *testing.T) {
-	app, _, _, _, _, shp, _, _, _ := Construct()
+	app, _, _, _, _, shp, _, _, _, _ := Construct()
 	shp.Start_Date = 1643937031
 	shp.End_Date = 1644016231
 	shp.Create(app.DB)

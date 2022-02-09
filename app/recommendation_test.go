@@ -5,7 +5,7 @@ import (
 )
 
 func TestRecommendRecipes(t *testing.T) {
-	app, _, usr, _, rcp, _, _, _, _ := Construct()
+	app, _, usr, _, rcp, _, _, _, _, _ := Construct()
 	usr.Create(app.DB)
 	rcp.Create(app.DB)
 

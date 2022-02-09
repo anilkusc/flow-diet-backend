@@ -11,7 +11,7 @@ import (
 )
 
 func TestGetMyCalendar(t *testing.T) {
-	app, _, _, clndr, _, _, _, _, _ := Construct()
+	app, _, _, clndr, _, _, _, _, _, _ := Construct()
 	clndr.Create(app.DB)
 	tests := []struct {
 		input  uint
@@ -38,7 +38,7 @@ func TestGetMyCalendar(t *testing.T) {
 	Destruct(app)
 }
 func TestCreateCalendar(t *testing.T) {
-	app, _, _, clndr, _, _, _, _, _ := Construct()
+	app, _, _, clndr, _, _, _, _, _, _ := Construct()
 	clndrs := []calendar.Calendar{clndr}
 	calendarsJson, _ := json.Marshal(clndrs)
 	tests := []struct {
@@ -58,7 +58,7 @@ func TestCreateCalendar(t *testing.T) {
 	Destruct(app)
 }
 func TestUpdateCalendar(t *testing.T) {
-	app, _, _, clndr, _, _, _, _, _ := Construct()
+	app, _, _, clndr, _, _, _, _, _, _ := Construct()
 	clndr.Create(app.DB)
 	calendarJson, _ := json.Marshal(clndr)
 	tests := []struct {
@@ -78,7 +78,7 @@ func TestUpdateCalendar(t *testing.T) {
 	Destruct(app)
 }
 func TestDeleteCalendar(t *testing.T) {
-	app, _, _, clndr, _, _, _, _, _ := Construct()
+	app, _, _, clndr, _, _, _, _, _, _ := Construct()
 	clndr.Create(app.DB)
 	calendarJson, _ := json.Marshal(clndr)
 	tests := []struct {

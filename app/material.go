@@ -29,7 +29,7 @@ func (app *App) GetMaterial(materialJson string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	material.Read(app.DB)
+	err = material.Read(app.DB)
 	if err != nil {
 		return "", err
 	}
@@ -48,7 +48,7 @@ func (app *App) UpdateMaterial(materialJson string) error {
 		return err
 	}
 
-	material.Update(app.DB)
+	err = material.Update(app.DB)
 	if err != nil {
 		return err
 	}
@@ -64,7 +64,7 @@ func (app *App) DeleteMaterial(materialJson string) error {
 		return err
 	}
 
-	material.Delete(app.DB)
+	err = material.Delete(app.DB)
 	if err != nil {
 		return err
 	}

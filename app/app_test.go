@@ -9,6 +9,7 @@ import (
 
 	"github.com/anilkusc/flow-diet-backend/pkg/calendar"
 	"github.com/anilkusc/flow-diet-backend/pkg/recipe"
+	"github.com/anilkusc/flow-diet-backend/pkg/recipe/ingredient"
 	"github.com/anilkusc/flow-diet-backend/pkg/recipe/ingredient/material"
 	"github.com/anilkusc/flow-diet-backend/pkg/recommendation"
 	"github.com/anilkusc/flow-diet-backend/pkg/search"
@@ -18,7 +19,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shopping.Shopping, search.Search, recommendation.Recommendation, material.Material) {
+func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shopping.Shopping, search.Search, recommendation.Recommendation, material.Material, ingredient.Ingredient) {
 
 	godotenv.Load("../.env")
 	app := App{}
@@ -139,7 +140,17 @@ func Construct() (App, string, user.User, calendar.Calendar, recipe.Recipe, shop
 		Size:                200,
 		Quantity:            "gram",
 	}
-	return app, signInCookie, usr, calendar, recipe, shopping, search, recommendation, material
+
+	var ingredient = ingredient.Ingredient{
+		Model: gorm.Model{
+			//ID:        1,
+			UpdatedAt: time.Time{}, CreatedAt: time.Time{}, DeletedAt: gorm.DeletedAt{Time: time.Time{}, Valid: false},
+		},
+		Material_Id: 1,
+		IsOptional:  false,
+	}
+
+	return app, signInCookie, usr, calendar, recipe, shopping, search, recommendation, material, ingredient
 }
 func Destruct(app App) {
 	app.DB.Exec("DROP TABLE users")
@@ -147,4 +158,5 @@ func Destruct(app App) {
 	app.DB.Exec("DROP TABLE recipes")
 	app.DB.Exec("DROP TABLE shoppings")
 	app.DB.Exec("DROP TABLE materials")
+	app.DB.Exec("DROP TABLE ingredients")
 }

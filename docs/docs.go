@@ -147,6 +147,130 @@ var doc = `{
                 }
             }
         },
+        "/ingredients/create": {
+            "post": {
+                "description": "Create A New Ingredient",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ingredient"
+                ],
+                "summary": "Create a new ingredient",
+                "parameters": [
+                    {
+                        "description": "Create New Ingredient",
+                        "name": "ingredient",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ingredient.Ingredient"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/ingredients/delete": {
+            "delete": {
+                "description": "Delete Ingredient",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ingredient"
+                ],
+                "summary": "Delete Ingredient",
+                "parameters": [
+                    {
+                        "description": "Delete a Ingredient",
+                        "name": "ingredient",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ingredient.Ingredient"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/ingredients/get": {
+            "post": {
+                "description": "Get a ingredient",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ingredient"
+                ],
+                "summary": "Get a ingredient",
+                "parameters": [
+                    {
+                        "description": "Get Ingredient",
+                        "name": "ingredient",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ingredient.Ingredient"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/ingredients/update": {
+            "patch": {
+                "description": "Update Ingredient",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ingredient"
+                ],
+                "summary": "Update Ingredient",
+                "parameters": [
+                    {
+                        "description": "Update a Ingredient",
+                        "name": "ingredient",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ingredient.Ingredient"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/materials/create": {
             "post": {
                 "description": "Create A New Material",
@@ -736,6 +860,19 @@ var doc = `{
                     "example": 1
                 },
                 "user_id": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "ingredient.Ingredient": {
+            "type": "object",
+            "properties": {
+                "isoptional": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "material_id": {
                     "type": "integer",
                     "example": 1
                 }

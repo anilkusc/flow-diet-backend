@@ -12,7 +12,7 @@ import (
 )
 
 func TestSignupHandler(t *testing.T) {
-	app, _, user, _, _, _, _, _, _ := Construct()
+	app, _, user, _, _, _, _, _, _, _ := Construct()
 	userJson, _ := json.Marshal(user)
 	tests := []struct {
 		input  string
@@ -45,7 +45,7 @@ func TestSignupHandler(t *testing.T) {
 	Destruct(app)
 }
 func TestSigninHandler(t *testing.T) {
-	app, _, user, _, _, _, _, _, _ := Construct()
+	app, _, user, _, _, _, _, _, _, _ := Construct()
 	userJson, _ := json.Marshal(user)
 	app.Signup(string(userJson))
 	user.Password = ""
@@ -81,7 +81,7 @@ func TestSigninHandler(t *testing.T) {
 	Destruct(app)
 }
 func TestLogoutHandler(t *testing.T) {
-	app, cookie, _, _, _, _, _, _, _ := Construct()
+	app, cookie, _, _, _, _, _, _, _, _ := Construct()
 
 	tests := []struct {
 		cookie string
@@ -115,7 +115,7 @@ func TestLogoutHandler(t *testing.T) {
 }
 
 func TestGetCalendarRecipesHandler(t *testing.T) {
-	app, cookie, _, clndr, _, _, _, _, _ := Construct()
+	app, cookie, _, clndr, _, _, _, _, _, _ := Construct()
 	clndr.Create(app.DB)
 	calendar, _ := clndr.List(app.DB)
 	calendarJson, _ := json.Marshal(calendar)
@@ -150,7 +150,7 @@ func TestGetCalendarRecipesHandler(t *testing.T) {
 	Destruct(app)
 }
 func TestCreateCalendarRecipeHandler(t *testing.T) {
-	app, cookie, _, clndr, _, _, _, _, _ := Construct()
+	app, cookie, _, clndr, _, _, _, _, _, _ := Construct()
 	var calendars []calendar.Calendar
 	calendars = append(calendars, clndr)
 	calendarsJson, _ := json.Marshal(calendars)
@@ -187,7 +187,7 @@ func TestCreateCalendarRecipeHandler(t *testing.T) {
 }
 
 func TestUpdateCalendarRecipeHandler(t *testing.T) {
-	app, cookie, _, clndr, _, _, _, _, _ := Construct()
+	app, cookie, _, clndr, _, _, _, _, _, _ := Construct()
 	clndr.Create(app.DB)
 	calendarJson, _ := json.Marshal(clndr)
 
@@ -223,7 +223,7 @@ func TestUpdateCalendarRecipeHandler(t *testing.T) {
 }
 
 func TestDeleteCalendarRecipeHandler(t *testing.T) {
-	app, cookie, _, clndr, _, _, _, _, _ := Construct()
+	app, cookie, _, clndr, _, _, _, _, _, _ := Construct()
 	clndr.Create(app.DB)
 	calendarJson, _ := json.Marshal(clndr)
 
@@ -258,7 +258,7 @@ func TestDeleteCalendarRecipeHandler(t *testing.T) {
 	Destruct(app)
 }
 func TestGetAllRecipesHandler(t *testing.T) {
-	app, cookie, _, _, rcp, _, _, _, _ := Construct()
+	app, cookie, _, _, rcp, _, _, _, _, _ := Construct()
 	rcp.Create(app.DB)
 
 	tests := []struct {
@@ -297,7 +297,7 @@ func TestGetAllRecipesHandler(t *testing.T) {
 }
 
 func TestCreateRecipeHandler(t *testing.T) {
-	app, cookie, _, _, rcp, _, _, _, _ := Construct()
+	app, cookie, _, _, rcp, _, _, _, _, _ := Construct()
 	recipeJson, _ := json.Marshal(rcp)
 
 	tests := []struct {
@@ -330,7 +330,7 @@ func TestCreateRecipeHandler(t *testing.T) {
 	Destruct(app)
 }
 func TestGetRecipeHandler(t *testing.T) {
-	app, cookie, _, _, rcp, _, _, _, _ := Construct()
+	app, cookie, _, _, rcp, _, _, _, _, _ := Construct()
 	rcp.Create(app.DB)
 	recipeJson, _ := json.Marshal(rcp)
 
@@ -365,11 +365,10 @@ func TestGetRecipeHandler(t *testing.T) {
 }
 
 func TestUpdateRecipeHandler(t *testing.T) {
-	app, cookie, user, _, rcp, _, _, _, _ := Construct()
+	app, cookie, _, _, rcp, _, _, _, _, _ := Construct()
 	rcp.Create(app.DB)
 	rcp.ID = 1
 	rcp.Calori = 10
-	user.Role = "admin"
 	recipeJson, _ := json.Marshal(rcp)
 	tests := []struct {
 		input  string
@@ -402,7 +401,7 @@ func TestUpdateRecipeHandler(t *testing.T) {
 	Destruct(app)
 }
 func TestDeleteRecipeHandler(t *testing.T) {
-	app, cookie, _, _, rcp, _, _, _, _ := Construct()
+	app, cookie, _, _, rcp, _, _, _, _, _ := Construct()
 	rcp.Create(app.DB)
 	rcp.ID = 1
 	recipeJson, _ := json.Marshal(rcp)
@@ -438,7 +437,7 @@ func TestDeleteRecipeHandler(t *testing.T) {
 }
 
 func TestGetAllShoppingsHandler(t *testing.T) {
-	app, cookie, _, _, _, shp, _, _, _ := Construct()
+	app, cookie, _, _, _, shp, _, _, _, _ := Construct()
 	shp.Start_Date = 1643937031
 	shp.End_Date = 1644016231
 	shp.Create(app.DB)
@@ -469,7 +468,7 @@ func TestGetAllShoppingsHandler(t *testing.T) {
 }
 
 func TestCreateShoppingHandler(t *testing.T) {
-	app, cookie, _, _, _, shp, _, _, _ := Construct()
+	app, cookie, _, _, _, shp, _, _, _, _ := Construct()
 	shoppingJson, _ := json.Marshal(shp)
 
 	tests := []struct {
@@ -502,7 +501,7 @@ func TestCreateShoppingHandler(t *testing.T) {
 	Destruct(app)
 }
 func TestGetShoppingHandler(t *testing.T) {
-	app, cookie, _, _, _, shp, _, _, _ := Construct()
+	app, cookie, _, _, _, shp, _, _, _, _ := Construct()
 	shp.Create(app.DB)
 	shoppingJson, _ := json.Marshal(shp)
 
@@ -537,7 +536,7 @@ func TestGetShoppingHandler(t *testing.T) {
 }
 
 func TestUpdateShoppingHandler(t *testing.T) {
-	app, cookie, user, _, _, shp, _, _, _ := Construct()
+	app, cookie, user, _, _, shp, _, _, _, _ := Construct()
 	shp.Create(app.DB)
 	shp.ID = 1
 	shp.Start_Date = 10
@@ -575,7 +574,7 @@ func TestUpdateShoppingHandler(t *testing.T) {
 	Destruct(app)
 }
 func TestDeleteShoppingHandler(t *testing.T) {
-	app, cookie, _, _, _, shp, _, _, _ := Construct()
+	app, cookie, _, _, _, shp, _, _, _, _ := Construct()
 	shp.Create(app.DB)
 	shp.ID = 1
 	shoppingJson, _ := json.Marshal(shp)
@@ -611,7 +610,7 @@ func TestDeleteShoppingHandler(t *testing.T) {
 }
 
 func TestSearchRecipesHandler(t *testing.T) {
-	app, cookie, _, _, rcp, _, _, _, _ := Construct()
+	app, cookie, _, _, rcp, _, _, _, _, _ := Construct()
 	rcp.Create(app.DB)
 	tests := []struct {
 		input string
@@ -645,7 +644,7 @@ func TestSearchRecipesHandler(t *testing.T) {
 }
 
 func TestGetRecommendationsHandler(t *testing.T) {
-	app, cookie, user, _, rcp, _, _, _, _ := Construct()
+	app, cookie, user, _, rcp, _, _, _, _, _ := Construct()
 	user.Signup(app.DB)
 	rcp.Create(app.DB)
 	tests := []struct {
@@ -668,6 +667,286 @@ func TestGetRecommendationsHandler(t *testing.T) {
 
 		if rr.Result().StatusCode != test.status {
 			t.Errorf("Response status is: %v . Expected: %v", rr.Result().StatusCode, test.status)
+		}
+
+	}
+	Destruct(app)
+}
+
+func TestCreateIngredientHandler(t *testing.T) {
+	app, cookie, _, _, _, _, _, _, _, ingr := Construct()
+	ingredientJson, _ := json.Marshal(ingr)
+
+	tests := []struct {
+		input  string
+		output string
+		status int
+		err    error
+	}{
+		{input: string(ingredientJson), output: "OK\n", status: 200, err: nil},
+	}
+	for _, test := range tests {
+		req, err := http.NewRequest("POST", "/ingredients/create", strings.NewReader(test.input))
+		if err != nil {
+			t.Errorf("Error is: %v . Expected: %v", err, test.err)
+		}
+		req.AddCookie(&http.Cookie{Name: "session", Value: cookie})
+		rr := httptest.NewRecorder()
+		handler := http.HandlerFunc(app.Auth(app.CreateIngredientHandler))
+
+		handler.ServeHTTP(rr, req)
+
+		if rr.Result().StatusCode != test.status {
+			t.Errorf("Response status is: %v . Expected: %v", rr.Result().StatusCode, test.status)
+		}
+		body, _ := ioutil.ReadAll(rr.Body)
+		if string(body) != string(test.output) {
+			t.Errorf("Response is: %v . Expected: %v", string(body), test.output)
+		}
+	}
+	Destruct(app)
+}
+func TestGetIngredientHandler(t *testing.T) {
+	app, cookie, _, _, _, _, _, _, _, ingr := Construct()
+	ingr.Create(app.DB)
+	ingredientJson, _ := json.Marshal(ingr)
+
+	tests := []struct {
+		input  string
+		output string
+		status int
+		err    error
+	}{
+		{input: string(ingredientJson), output: string(ingredientJson) + "\n", status: 200, err: nil},
+	}
+	for _, test := range tests {
+		req, err := http.NewRequest("POST", "/ingredients/get", strings.NewReader(test.input))
+		if err != nil {
+			t.Errorf("Error is: %v . Expected: %v", err, test.err)
+		}
+		req.AddCookie(&http.Cookie{Name: "session", Value: cookie})
+		rr := httptest.NewRecorder()
+		handler := http.HandlerFunc(app.Auth(app.GetIngredientHandler))
+
+		handler.ServeHTTP(rr, req)
+
+		if rr.Result().StatusCode != test.status {
+			t.Errorf("Response status is: %v . Expected: %v", rr.Result().StatusCode, test.status)
+		}
+		body, _ := ioutil.ReadAll(rr.Body)
+		if string(body) != string(test.output) {
+			t.Errorf("Response is: %v . Expected: %v", string(body), test.output)
+		}
+	}
+	Destruct(app)
+}
+
+func TestUpdateIngredientHandler(t *testing.T) {
+	app, cookie, _, _, _, _, _, _, _, ingr := Construct()
+	ingr.Create(app.DB)
+	ingr.ID = 1
+	ingr.IsOptional = true
+	ingredientJson, _ := json.Marshal(ingr)
+	tests := []struct {
+		input  string
+		output string
+		status int
+		err    error
+	}{
+		{input: string(ingredientJson), output: "OK\n", status: 200, err: nil},
+	}
+	for _, test := range tests {
+		req, err := http.NewRequest("POST", "/ingredients/update", strings.NewReader(test.input))
+		if err != nil {
+			t.Errorf("Error is: %v . Expected: %v", err, test.err)
+		}
+		req.AddCookie(&http.Cookie{Name: "session", Value: cookie})
+		rr := httptest.NewRecorder()
+		handler := http.HandlerFunc(app.Auth(app.UpdateIngredientHandler))
+
+		handler.ServeHTTP(rr, req)
+
+		if rr.Result().StatusCode != test.status {
+			t.Errorf("Response status is: %v . Expected: %v", rr.Result().StatusCode, test.status)
+		}
+		body, _ := ioutil.ReadAll(rr.Body)
+		if string(body) != string(test.output) {
+			t.Errorf("Response is: %v . Expected: %v", string(body), test.output)
+		}
+
+	}
+	Destruct(app)
+}
+func TestDeleteIngredientHandler(t *testing.T) {
+	app, cookie, _, _, _, _, _, _, _, ingr := Construct()
+	ingr.Create(app.DB)
+	ingr.ID = 1
+	ingredientJson, _ := json.Marshal(ingr)
+	tests := []struct {
+		input  string
+		output string
+		status int
+		err    error
+	}{
+		{input: string(ingredientJson), output: "OK\n", status: 200, err: nil},
+	}
+	for _, test := range tests {
+		req, err := http.NewRequest("POST", "/ingredients/delete", strings.NewReader(test.input))
+		if err != nil {
+			t.Errorf("Error is: %v . Expected: %v", err, test.err)
+		}
+		req.AddCookie(&http.Cookie{Name: "session", Value: cookie})
+		rr := httptest.NewRecorder()
+		handler := http.HandlerFunc(app.Auth(app.DeleteIngredientHandler))
+
+		handler.ServeHTTP(rr, req)
+
+		if rr.Result().StatusCode != test.status {
+			t.Errorf("Response status is: %v . Expected: %v", rr.Result().StatusCode, test.status)
+		}
+		body, _ := ioutil.ReadAll(rr.Body)
+		if string(body) != string(test.output) {
+			t.Errorf("Response is: %v . Expected: %v", string(body), test.output)
+		}
+
+	}
+	Destruct(app)
+}
+
+func TestCreateMaterialHandler(t *testing.T) {
+	app, cookie, _, _, _, _, _, _, mtr, _ := Construct()
+	materialJson, _ := json.Marshal(mtr)
+
+	tests := []struct {
+		input  string
+		output string
+		status int
+		err    error
+	}{
+		{input: string(materialJson), output: "OK\n", status: 200, err: nil},
+	}
+	for _, test := range tests {
+		req, err := http.NewRequest("POST", "/materials/create", strings.NewReader(test.input))
+		if err != nil {
+			t.Errorf("Error is: %v . Expected: %v", err, test.err)
+		}
+		req.AddCookie(&http.Cookie{Name: "session", Value: cookie})
+		rr := httptest.NewRecorder()
+		handler := http.HandlerFunc(app.Auth(app.CreateMaterialHandler))
+
+		handler.ServeHTTP(rr, req)
+
+		if rr.Result().StatusCode != test.status {
+			t.Errorf("Response status is: %v . Expected: %v", rr.Result().StatusCode, test.status)
+		}
+		body, _ := ioutil.ReadAll(rr.Body)
+		if string(body) != string(test.output) {
+			t.Errorf("Response is: %v . Expected: %v", string(body), test.output)
+		}
+	}
+	Destruct(app)
+}
+func TestGetMaterialHandler(t *testing.T) {
+	app, cookie, _, _, _, _, _, _, mtr, _ := Construct()
+	mtr.Create(app.DB)
+	materialJson, _ := json.Marshal(mtr)
+
+	tests := []struct {
+		input  string
+		output string
+		status int
+		err    error
+	}{
+		{input: string(materialJson), output: string(materialJson) + "\n", status: 200, err: nil},
+	}
+	for _, test := range tests {
+		req, err := http.NewRequest("POST", "/materials/get", strings.NewReader(test.input))
+		if err != nil {
+			t.Errorf("Error is: %v . Expected: %v", err, test.err)
+		}
+		req.AddCookie(&http.Cookie{Name: "session", Value: cookie})
+		rr := httptest.NewRecorder()
+		handler := http.HandlerFunc(app.Auth(app.GetMaterialHandler))
+
+		handler.ServeHTTP(rr, req)
+
+		if rr.Result().StatusCode != test.status {
+			t.Errorf("Response status is: %v . Expected: %v", rr.Result().StatusCode, test.status)
+		}
+		body, _ := ioutil.ReadAll(rr.Body)
+		if string(body) != string(test.output) {
+			t.Errorf("Response is: %v . Expected: %v", string(body), test.output)
+		}
+	}
+	Destruct(app)
+}
+
+func TestUpdateMaterialHandler(t *testing.T) {
+	app, cookie, _, _, _, _, _, _, mtr, _ := Construct()
+	mtr.Create(app.DB)
+	mtr.ID = 1
+	mtr.Size = 10
+	materialJson, _ := json.Marshal(mtr)
+	tests := []struct {
+		input  string
+		output string
+		status int
+		err    error
+	}{
+		{input: string(materialJson), output: "OK\n", status: 200, err: nil},
+	}
+	for _, test := range tests {
+		req, err := http.NewRequest("POST", "/materials/update", strings.NewReader(test.input))
+		if err != nil {
+			t.Errorf("Error is: %v . Expected: %v", err, test.err)
+		}
+		req.AddCookie(&http.Cookie{Name: "session", Value: cookie})
+		rr := httptest.NewRecorder()
+		handler := http.HandlerFunc(app.Auth(app.UpdateMaterialHandler))
+
+		handler.ServeHTTP(rr, req)
+
+		if rr.Result().StatusCode != test.status {
+			t.Errorf("Response status is: %v . Expected: %v", rr.Result().StatusCode, test.status)
+		}
+		body, _ := ioutil.ReadAll(rr.Body)
+		if string(body) != string(test.output) {
+			t.Errorf("Response is: %v . Expected: %v", string(body), test.output)
+		}
+
+	}
+	Destruct(app)
+}
+func TestDeleteMaterialHandler(t *testing.T) {
+	app, cookie, _, _, _, _, _, _, mtr, _ := Construct()
+	mtr.Create(app.DB)
+	mtr.ID = 1
+	materialJson, _ := json.Marshal(mtr)
+	tests := []struct {
+		input  string
+		output string
+		status int
+		err    error
+	}{
+		{input: string(materialJson), output: "OK\n", status: 200, err: nil},
+	}
+	for _, test := range tests {
+		req, err := http.NewRequest("POST", "/materials/delete", strings.NewReader(test.input))
+		if err != nil {
+			t.Errorf("Error is: %v . Expected: %v", err, test.err)
+		}
+		req.AddCookie(&http.Cookie{Name: "session", Value: cookie})
+		rr := httptest.NewRecorder()
+		handler := http.HandlerFunc(app.Auth(app.DeleteMaterialHandler))
+
+		handler.ServeHTTP(rr, req)
+
+		if rr.Result().StatusCode != test.status {
+			t.Errorf("Response status is: %v . Expected: %v", rr.Result().StatusCode, test.status)
+		}
+		body, _ := ioutil.ReadAll(rr.Body)
+		if string(body) != string(test.output) {
+			t.Errorf("Response is: %v . Expected: %v", string(body), test.output)
 		}
 
 	}
