@@ -7,8 +7,6 @@
 	- Control for sent json objects
 	- Add language option to all of the returned backend object
 	- Add random recpie feature. It will be give random recipe which users mostly like.
-	- Do not return user id
-	- Seperate ingredients package
 	- paths are rehandled
 	- Return id after create 
 * Api
@@ -20,9 +18,7 @@
 	- mail or phone based authentication
 	- role based access
 	- user role control function in user object
-	- Signin and signup models will be seperated from user.
 	- User update will be implemented on the api
-	- Json ignore for user password
 * Shopping
 * Recommendation
 	- Add prepared diet recommendations
@@ -40,5 +36,3 @@
 	- pprof
 	- health probes
 	- add egress rule for security. If egress body is bigger than 50 Mb return error
-
-	Ingredients and materials api katmanı oluşturulacak.
